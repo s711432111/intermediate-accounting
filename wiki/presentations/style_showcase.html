@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="milktea">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>中會教學簡報 · 可愛低飽和粉彩風格提案與挑選器</title>
+  <!-- Google Fonts: 圓潤柔和的可愛繁中字體 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&family=M+PLUS+Rounded+1c:wght@400;500;700;800&family=Noto+Sans+TC:wght@400;500;700;900&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* =========================================================
+       THEME VARIABLES (3 套鮮明且柔和的低飽和粉彩色系)
+       ========================================================= */
+    
+    /* 風格 1【燕麥奶茶手帳風 (Cozy Milk Tea)】 */
+    :root[data-theme="milktea"],
+    html[data-theme="milktea"],
+    body[data-theme="milktea"] {
+      --bg-page: #f7f0e6;
+      --bg-slide: #fffdf9;
+      --bg-card: #f3e6d5;
+      --bg-card-alt: #ebd8c2;
+      --text-main: #423023;
+      --text-muted: #846f5d;
+      --primary: #ad7448;
+      --primary-soft: #f4e3d3;
+      --primary-border: #d6baa2;
+      --accent-pink: #e8a598;
+      --accent-green: #abc7ae;
+      --accent-yellow: #f2cb74;
+      --accent-purple: #cbb9da;
+      --washi-color: rgba(237, 206, 142, 0.85);
+      --card-radius: 20px;
+      --shadow-soft: 0 12px 30px rgba(138, 102, 74, 0.12);
+      --badge-bg: #eddccb;
+      --table-stripe: #faf3eb;
+    }
+
+    /* 風格 2【莫蘭迪馬卡龍粉彩風 (Pastel Macaron)】 */
+    :root[data-theme="macaron"],
+    html[data-theme="macaron"],
+    body[data-theme="macaron"] {
+      --bg-page: #fef0f5;
+      --bg-slide: #ffffff;
+      --bg-card: #fce1eb;
+      --bg-card-alt: #f1e4fc;
+      --text-main: #4a2838;
+      --text-muted: #8d6b7b;
+      --primary: #e65c87;
+      --primary-soft: #fde2ec;
+      --primary-border: #f8afc6;
+      --accent-pink: #f48fb1;
+      --accent-green: #bbf7d0;
+      --accent-yellow: #fef08a;
+      --accent-purple: #e9d5ff;
+      --washi-color: rgba(244, 168, 196, 0.85);
+      --card-radius: 28px;
+      --shadow-soft: 0 14px 35px rgba(230, 92, 135, 0.16);
+      --badge-bg: #fcd0df;
+      --table-stripe: #fdf2f7;
+    }
+
+    /* 風格 3【治癒系鼠尾草繪本風 (Cozy Sage Storybook)】 */
+    :root[data-theme="sage"],
+    html[data-theme="sage"],
+    body[data-theme="sage"] {
+      --bg-page: #eaf3ed;
+      --bg-slide: #ffffff;
+      --bg-card: #d9ecdf;
+      --bg-card-alt: #fef2df;
+      --text-main: #243d2c;
+      --text-muted: #5e7a66;
+      --primary: #4d8c65;
+      --primary-soft: #cde7d6;
+      --primary-border: #a0cbb0;
+      --accent-pink: #f7b2b7;
+      --accent-green: #86efac;
+      --accent-yellow: #fed7aa;
+      --accent-purple: #cbd5e1;
+      --washi-color: rgba(154, 203, 171, 0.85);
+      --card-radius: 18px;
+      --shadow-soft: 0 12px 30px rgba(68, 120, 88, 0.14);
+      --badge-bg: #c5e3cf;
+      --table-stripe: #f2f8f4;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      background: var(--bg-page);
+      color: var(--text-main);
+      font-family: 'M PLUS Rounded 1c', 'Noto Sans TC', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background 0.35s ease, color 0.35s ease;
+      overflow-x: hidden;
+    }
+
+    /* =========================================================
+       TOP THEME PICKER BAR
+       ========================================================= */
+    #theme-picker-bar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 2px dashed var(--primary-border);
+      padding: 12px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    }
+    .picker-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .picker-title {
+      font-weight: 800;
+      font-size: 1.05rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-main);
+    }
+    .theme-buttons {
+      display: flex;
+      gap: 10px;
+    }
+    .theme-chip {
+      border: 2px solid transparent;
+      padding: 7px 16px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      background: #f1ede5;
+      color: #6a5d52;
+    }
+    .theme-chip:hover {
+      transform: translateY(-2px);
+    }
+    .theme-chip.active {
+      transform: scale(1.05);
+      border-color: currentColor;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    }
+    .theme-chip[data-set="milktea"].active {
+      background: #f3e9de;
+      color: #925f38;
+      border-color: #c29b7f;
+    }
+    .theme-chip[data-set="macaron"].active {
+      background: #fde5ee;
+      color: #d84a75;
+      border-color: #f2a6bb;
+    }
+    .theme-chip[data-set="sage"].active {
+      background: #e1ede4;
+      color: #407957;
+      border-color: #8cb89f;
+    }
+
+    /* =========================================================
+       MAIN SLIDE CONTAINER (Simulating a slide deck)
+       ========================================================= */
+    #slide-viewport {
+      flex: 1;
+      padding: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .slide-wrapper {
+      width: 100%;
+      max-width: 1280px;
+      min-height: 740px;
+      background: var(--bg-slide);
+      border-radius: var(--card-radius);
+      box-shadow: var(--shadow-soft);
+      border: 3px solid var(--primary-border);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      padding: 40px 50px;
+      transition: all 0.35s ease;
+    }
+
+    /* Washi Tape Accent */
+    .washi-tape {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-1deg);
+      width: 170px;
+      height: 32px;
+      background: var(--washi-color);
+      border-left: 2px dashed rgba(0,0,0,0.15);
+      border-right: 2px dashed rgba(0,0,0,0.15);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+      z-index: 10;
+      transition: background 0.35s ease;
+    }
+
+    /* Corner Stickers */
+    .sticker-corner {
+      position: absolute;
+      bottom: -15px;
+      right: 20px;
+      width: 170px;
+      pointer-events: none;
+      filter: drop-shadow(0 10px 14px rgba(0,0,0,0.1));
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 20;
+    }
+    .sticker-corner:hover {
+      transform: scale(1.08) rotate(3deg);
+    }
+
+    /* Slide Header */
+    .slide-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .slide-tag-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--badge-bg);
+      color: var(--primary);
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+    }
+    .slide-title-main {
+      font-size: 2.1rem;
+      font-weight: 900;
+      color: var(--text-main);
+      margin-top: 8px;
+      line-height: 1.25;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .slide-title-sub {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+      font-weight: 500;
+    }
+
+    /* Grid Layouts */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    /* Cute Pastel Cards */
+    .cute-card {
+      background: var(--bg-card);
+      border-radius: calc(var(--card-radius) - 6px);
+      padding: 22px 26px;
+      border: 2px solid transparent;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+      position: relative;
+      transition: all 0.25s ease;
+    }
+    .cute-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--primary-border);
+      box-shadow: 0 10px 22px rgba(0,0,0,0.06);
+    }
+    .cute-card.alt {
+      background: var(--bg-card-alt);
+    }
+
+    .card-header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .card-title-text {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-icon-tag {
+      font-size: 0.75rem;
+      background: #ffffff;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-weight: 700;
+      color: var(--text-muted);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    }
+
+    .cute-card p, .cute-card li {
+      font-size: 0.98rem;
+      line-height: 1.7;
+      color: var(--text-main);
+    }
+    .cute-card ul {
+      padding-left: 20px;
+    }
+
+    /* =========================================================
+       CHARACTER DIALOGUE BUBBLES (Cute Pastel Style)
+       ========================================================= */
+    .dialogue-card {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 16px 22px;
+      margin-top: 14px;
+      border: 2px solid var(--primary-border);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+      position: relative;
+    }
+    .dialogue-avatar-box {
+      position: relative;
+      flex-shrink: 0;
+    }
+    .dialogue-avatar {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 3px solid #ffffff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      object-fit: cover;
+      display: block;
+    }
+    .dialogue-badge {
+      position: absolute;
+      bottom: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 12px;
+      white-space: nowrap;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .badge-prof { background: #fbe0e6; color: #b84366; }
+    .badge-ta { background: #e0f2fe; color: #0284c7; }
+    .badge-student { background: #fef3c7; color: #b45309; }
+    .badge-auditor { background: #dcfce7; color: #15803d; }
+
+    .dialogue-body {
+      flex: 1;
+    }
+    .dialogue-speaker-name {
+      font-size: 0.95rem;
+      font-weight: 800;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .dialogue-text {
+      font-size: 0.96rem;
+      line-height: 1.6;
+      color: var(--text-main);
+    }
+
+    /* Small Sticker Stamp Badge */
+    .sticker-stamp {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #fff;
+      border: 2px dashed var(--primary);
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--primary);
+      transform: rotate(-2deg);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.04);
+    }
+
+    /* =========================================================
+       SLIDE DEMO CONTROLS (Previewing Different Slides)
+       ========================================================= */
+    #slide-switcher {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      background: #ffffff;
+      border-top: 2px dashed var(--primary-border);
+    }
+    .slide-chip-btn {
+      background: var(--bg-card);
+      border: 2px solid transparent;
+      padding: 8px 18px;
+      border-radius: 50px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .slide-chip-btn:hover {
+      background: var(--primary-soft);
+      transform: translateY(-2px);
+    }
+    .slide-chip-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+    }
+
+    /* Table in Pastel */
+    .pastel-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-top: 14px;
+      background: #ffffff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+    .pastel-table th {
+      background: var(--primary-soft);
+      color: var(--text-main);
+      font-weight: 800;
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+    .pastel-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--primary-soft);
+      font-size: 0.93rem;
+      color: var(--text-main);
+    }
+    .pastel-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* Quiz Option in Pastel */
+    .cute-quiz-opt {
+      background: #ffffff;
+      border: 2px solid var(--primary-border);
+      border-radius: 14px;
+      padding: 12px 20px;
+      margin-bottom: 10px;
+      font-size: 0.96rem;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.2s;
+    }
+    .cute-quiz-opt:hover {
+      background: var(--primary-soft);
+      transform: translateX(4px);
+    }
+    .cute-quiz-opt.correct {
+      background: #ecfdf5 !important;
+      border-color: #34d399 !important;
+      color: #065f46 !important;
+    }
+
+    /* Slide visibility toggle */
+    .slide-view {
+      display: none;
+      animation: fadeInSlide 0.35s ease forwards;
+      flex: 1;
+      display: none;
+      flex-direction: column;
+    }
+    .slide-view.active {
+      display: flex;
+    }
+
+    @keyframes fadeInSlide {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body data-theme="milktea">
+
+  <!-- =========================================================
+       TOP THEME PICKER (切換風格看效果)
+       ========================================================= -->
+  <div id="theme-picker-bar">
+    <div class="picker-left">
+      <div class="picker-title">
+        <span>🎨 可愛粉彩風格挑選器</span>
+        <span style="font-size:0.8rem; font-weight:normal; color:var(--text-muted);">(請點擊以下3種風格切換感受)</span>
+      </div>
+      <div class="theme-buttons">
+        <button class="theme-chip active" data-set="milktea" onclick="changeTheme('milktea')">
+          <span>🧸 風格 A：日系燕麥奶茶手帳風</span>
+        </button>
+        <button class="theme-chip" data-set="macaron" onclick="changeTheme('macaron')">
+          <span>🍓 風格 B：莫蘭迪馬卡龍粉彩風</span>
+        </button>
+        <button class="theme-chip" data-set="sage" onclick="changeTheme('sage')">
+          <span>🌿 風格 C：治癒鼠尾草繪本風</span>
+        </button>
+      </div>
+    </div>
+    <div style="font-size:0.85rem; color:var(--text-muted);">
+      ✨ assets 內 24 款可愛表情貼圖已全面就位
+    </div>
+  </div>
+
+  <!-- =========================================================
+       MAIN SLIDE STAGE
+       ========================================================= -->
+  <div id="slide-viewport">
+    <div class="slide-wrapper">
+      <div class="washi-tape"></div>
+
+      <!-- =====================================================
+           DEMO SLIDE 1: 封面與引言 (展現大立繪與手帳感)
+           ===================================================== -->
+      <div id="demo-slide-1" class="slide-view active">
+        <div class="slide-top">
+          <div>
+            <div class="slide-tag-pill">
+              <span>📖 Kieso IFRS 5/e · Chapter 1</span>
+            </div>
+            <h1 class="slide-title-main">
+              財務報導之環境與觀念架構 🌸
+            </h1>
+            <div class="slide-title-sub">The Environment and Conceptual Framework for Financial Reporting</div>
+          </div>
+          <div class="sticker-stamp">
+            <span>✨ 第一次中會就上手</span>
+          </div>
+        </div>
+
+        <div class="grid-2" style="flex:1; align-items:center;">
+          <div>
+            <div class="cute-card" style="margin-bottom:18px;">
+              <div class="card-header-bar">
+                <div class="card-title-text">🌟 為什麼中會第一章如此關鍵？</div>
+                <span class="card-icon-tag">Core Mindset</span>
+              </div>
+              <p>
+                許多同學以為會計就是一直借貸寫分錄，但中會的靈魂其實是<strong>「觀念架構（Conceptual Framework）」</strong>！
+              </p>
+              <ul style="margin-top:10px;">
+                <li><strong>資本市場的共通語言</strong>：如何讓全世界看懂同一份財報。</li>
+                <li><strong>決策有用性的雙核心</strong>：攸關性（Relevance）與忠實表述（Faithful Representation）。</li>
+                <li><strong>所有會計分錄的憲法</strong>：租賃、收入、減損背後的底層邏輯。</li>
+              </ul>
+            </div>
+
+            <!-- Dialogue -->
+            <div class="dialogue-card">
+              <div class="dialogue-avatar-box">
+                <img src="../../assets/img1_char01.png" alt="主講教授" class="dialogue-avatar">
+                <span class="dialogue-badge badge-prof">主講教授</span>
+              </div>
+              <div class="dialogue-body">
+                <div class="dialogue-speaker-name" style="color:var(--primary);">
+                  <span>柯教授的暖心開場 ☕</span>
+                </div>
+                <div class="dialogue-text">
+                  「哈囉各位同學！別擔心會計準則很生硬，跟著我一起拆解 IASB 的世界觀，你會發現每條規則都是為了解決現實中的信任難題喔！」
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right side big showcase with stickers -->
+          <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; position:relative;">
+            <div style="background:var(--bg-card); border-radius:30px; padding:24px 32px; border:2px dashed var(--primary-border); text-align:center; max-width:400px; box-shadow:var(--shadow-soft);">
+              <img src="../../assets/img1_char02.png" alt="Character" style="width:200px; filter:drop-shadow(0 12px 16px rgba(0,0,0,0.08));">
+              <div style="font-size:1.1rem; font-weight:800; color:var(--text-main); margin-top:8px;">
+                「先喝杯拿鐵，我們開始吧！」
+              </div>
+              <div style="font-size:0.85rem; color:var(--text-muted); margin-top:4px;">
+                Chapter 1 · 13 個趣味模組準備出發
+              </div>
+            </div>
+
+            <!-- Floated Little Sticker -->
+            <img src="../../assets/img3_char01.png" alt="Little Student" style="position:absolute; bottom:-10px; right:30px; width:110px; transform:rotate(6deg); filter:drop-shadow(0 6px 10px rgba(0,0,0,0.1));">
+          </div>
+        </div>
+      </div>
+
+      <!-- =====================================================
+           DEMO SLIDE 2: 觀念架構倒金字塔 (卡片與對話呈現)
+           ===================================================== -->
+      <div id="demo-slide-2" class="slide-view">
+        <div class="slide-top">
+          <div>
+            <div class="slide-tag-pill">
+              <span>🏛️ 觀念架構三大層次</span>
+            </div>
+            <h1 class="slide-title-main">
+              觀念架構全景金字塔 📐
+            </h1>
+            <div class="slide-title-sub">從「為何報導」到「如何實踐」的倒金字塔指引系統</div>
+          </div>
+          <div class="sticker-stamp">
+            <span>💡 考點必備</span>
+          </div>
+        </div>
+
+        <div class="grid-3" style="margin-bottom:16px;">
+          <div class="cute-card">
+            <div class="card-header-bar">
+              <div class="card-title-text" style="color:#b84366;">🥇 第一層：目標</div>
+              <span class="card-icon-tag">The Why</span>
+            </div>
+            <strong style="font-size:0.95rem;">決策有用性 (Decision-Usefulness)</strong>
+            <p style="margin-top:6px; font-size:0.9rem;">
+              提供給現有及潛在投資人、貸與人與其他債權人，作成資源配置決策所需之有用資訊。
+            </p>
+          </div>
+
+          <div class="cute-card alt">
+            <div class="card-header-bar">
+              <div class="card-title-text" style="color:var(--primary);">🥈 第二層：橋樑</div>
+              <span class="card-icon-tag">The Bridge</span>
+            </div>
+            <strong style="font-size:0.95rem;">品質特性 & 五大要素</strong>
+            <p style="margin-top:6px; font-size:0.9rem;">
+              • 基本品質：攸關性、忠實表述。<br>
+              • 強化品質：可比、可驗證、時效、可了解。<br>
+              • 五要素：資產、負債、權益、收益、費損。
+            </p>
+          </div>
+
+          <div class="cute-card">
+            <div class="card-header-bar">
+              <div class="card-title-text" style="color:#b45309;">🥉 第三層：實務</div>
+              <span class="card-icon-tag">The How</span>
+            </div>
+            <strong style="font-size:0.95rem;">基本假設與原則</strong>
+            <p style="margin-top:6px; font-size:0.9rem;">
+              • 五大假設：企業個體、繼續經營、貨幣、期間、權責發生。<br>
+              • 四大原則：衡量、收入認列、費用認列、充分揭露。<br>
+              • 限制：成本效益限制。
+            </p>
+          </div>
+        </div>
+
+        <!-- Two cute interactive dialogue cards -->
+        <div class="grid-2">
+          <div class="dialogue-card">
+            <div class="dialogue-avatar-box">
+              <img src="../../assets/img3_char02.png" alt="學生" class="dialogue-avatar">
+              <span class="dialogue-badge badge-student">提問學生</span>
+            </div>
+            <div class="dialogue-body">
+              <div class="dialogue-speaker-name" style="color:#b45309;">小安同學</div>
+              <div class="dialogue-text">
+                「老師，如果觀念架構跟具體的 IFRS 16 租賃準則寫得不一樣，我們要聽誰的？」
+              </div>
+            </div>
+          </div>
+
+          <div class="dialogue-card">
+            <div class="dialogue-avatar-box">
+              <img src="../../assets/img2_char01.png" alt="助教" class="dialogue-avatar">
+              <span class="dialogue-badge badge-ta">學習助教</span>
+            </div>
+            <div class="dialogue-body">
+              <div class="dialogue-speaker-name" style="color:#0284c7;">助教秒回 🐰</div>
+              <div class="dialogue-text">
+                「一定要聽<strong>具體 IFRS 準則</strong>的！觀念架構不是準則本身，它是在缺乏具體準則時作為指引，絕不能推翻既有準則喔！」
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =====================================================
+           DEMO SLIDE 3: 附錄 1A 計算與表格 (展現粉彩表格美感)
+           ===================================================== -->
+      <div id="demo-slide-3" class="slide-view">
+        <div class="slide-top">
+          <div>
+            <div class="slide-tag-pill">
+              <span>🧮 Appendix 1A 實戰</span>
+            </div>
+            <h1 class="slide-title-main">
+              李萬醫師診所：現金轉權責工作底稿 🩺
+            </h1>
+            <div class="slide-title-sub">Kieso Illustration 1A.8 調節表粉彩化呈現</div>
+          </div>
+          <div class="sticker-stamp">
+            <span>📝 經典釋例</span>
+          </div>
+        </div>
+
+        <div class="grid-2" style="align-items:flex-start;">
+          <div>
+            <table class="pastel-table">
+              <thead>
+                <tr>
+                  <th>項目名稱</th>
+                  <th style="text-align:right;">現金收付制</th>
+                  <th style="text-align:right;">調整調節</th>
+                  <th style="text-align:right;">權責發生制</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>客戶收現</strong></td>
+                  <td style="text-align:right; font-weight:700;">$300,000</td>
+                  <td style="text-align:right; color:#8c7e72;">期初- / 期末+</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>服務收入小計</td>
+                  <td></td>
+                  <td style="text-align:right; color:#b84366;">-$7,000</td>
+                  <td style="text-align:right; font-weight:800; color:var(--primary);">$293,000</td>
+                </tr>
+                <tr>
+                  <td><strong>費用付現</strong></td>
+                  <td style="text-align:right; font-weight:700;">$170,000</td>
+                  <td style="text-align:right; color:#8c7e72;">預付/應付調節</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>營業費用小計</td>
+                  <td></td>
+                  <td style="text-align:right; color:#15803d;">+$2,600</td>
+                  <td style="text-align:right; font-weight:800; color:#b45309;">$172,600</td>
+                </tr>
+                <tr style="background:var(--primary-soft); font-weight:800;">
+                  <td><strong>本期淨利比較</strong></td>
+                  <td style="text-align:right;">$130,000 (淨現流)</td>
+                  <td style="text-align:right;">差額 -$9,600</td>
+                  <td style="text-align:right; color:#15803d; font-size:1.05rem;">$120,400 (權責淨利)</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div style="margin-top:14px; font-size:0.9rem; color:var(--text-muted);">
+              💡 提示：資產類（應收、預付）是「期末加、期初減」；負債類（預收、應付）是「期初加、期末減」！
+            </div>
+          </div>
+
+          <div>
+            <!-- Dialogue with auditor -->
+            <div class="dialogue-card" style="margin-top:0; margin-bottom:14px;">
+              <div class="dialogue-avatar-box">
+                <img src="../../assets/img4_char01.png" alt="審計員" class="dialogue-avatar">
+                <span class="dialogue-badge badge-auditor">執業會計師</span>
+              </div>
+              <div class="dialogue-body">
+                <div class="dialogue-speaker-name" style="color:#15803d;">張會計師</div>
+                <div class="dialogue-text">
+                  「這張表清楚呈現出：現金流量並不等於賺得的利潤！如果不把賒帳與未付款算進去，就無法真實評價診所這一年真正的經營成果喔。」
+                </div>
+              </div>
+            </div>
+
+            <!-- Quiz Component -->
+            <div class="cute-card">
+              <div class="card-title-text" style="margin-bottom:10px;">🎯 隨堂速測：李萬醫師的權責淨利是多少？</div>
+              <div class="cute-quiz-opt" onclick="this.classList.add('correct')">
+                <span>A. $120,400 (完全正確！收入293,000扣除費用172,600)</span>
+              </div>
+              <div class="cute-quiz-opt" onclick="alert('不對喔！130,000 只是純現金收支差額！')">
+                <span>B. $130,000 (這是現金淨流入喔)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Peeking sticker in the corner -->
+        <img src="../../assets/img2_char04.png" alt="Cute Sticker" class="sticker-corner" style="bottom:-10px; right:20px; width:130px;">
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =========================================================
+       BOTTOM SLIDE SWITCHER
+       ========================================================= -->
+  <div id="slide-switcher">
+    <span style="font-weight:700; color:var(--text-muted); font-size:0.9rem;">切換預覽投影片：</span>
+    <button class="slide-chip-btn active" onclick="showSlide(1, this)">
+      <span>Slide 1：課程封面 (立繪與手帳)</span>
+    </button>
+    <button class="slide-chip-btn" onclick="showSlide(2, this)">
+      <span>Slide 2：觀念金字塔 (三欄卡片與對話)</span>
+    </button>
+    <button class="slide-chip-btn" onclick="showSlide(3, this)">
+      <span>Slide 3：實例底稿與測驗 (粉彩表格與題卡)</span>
+    </button>
+  </div>
+
+  <script>
+    // Theme Changer
+    function changeTheme(themeName) {
+      document.documentElement.setAttribute('data-theme', themeName);
+      document.body.setAttribute('data-theme', themeName);
+      document.querySelectorAll('.theme-chip').forEach(chip => {
+        if (chip.getAttribute('data-set') === themeName) {
+          chip.classList.add('active');
+        } else {
+          chip.classList.remove('active');
+        }
+      });
+    }
+
+    // Slide Changer
+    function showSlide(num, btn) {
+      document.querySelectorAll('.slide-view').forEach(v => v.classList.remove('active'));
+      document.querySelectorAll('.slide-chip-btn').forEach(b => b.classList.remove('active'));
+      
+      const target = document.getElementById('demo-slide-' + num);
+      if (target) target.classList.add('active');
+      if (btn) btn.classList.add('active');
+    }
+  </script>
+</body>
+</html>

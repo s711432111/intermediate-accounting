@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 8 · 折舊、減損與折耗 | 中級會計學 IFRS 5/e 互動簡報</title>
+  
+  <!-- Google Fonts: Noto Sans TC & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+TC:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX for Accounting Formulas -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+          onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+  <style>
+    /* ==========================================
+       風格 A：日系燕麥奶茶手帳風 (Cozy Milk Tea Journal)
+       高可讀放大字級版 · 零滾動與防擠壓保證
+       ========================================== */
+    :root {
+      --bg-desk: #f4ede4;         /* 燕麥奶茶底色 */
+      --bg-slide: #fffdf9;        /* 溫潤手帳米白紙張 */
+      --bg-card: #f9f5f0;         /* 淺奶茶卡片 */
+      --bg-card-alt: #f3ece2;     /* 拿鐵色底 */
+      --bg-card-pure: #ffffff;    /* 純白便簽紙 */
+      --primary: #ad7448;         /* 溫暖拿鐵棕 */
+      --primary-soft: #f4e8dc;    /* 奶泡淺褐 */
+      --primary-border: #dcc8b4;  /* 手帳細線框 */
+      --text-main: #423023;       /* 深深褐暖字體 */
+      --text-muted: #826c5b;      /* 溫和次要說明 */
+      --washi-color: #eedcc9;     /* 和紙膠帶色 */
+      --badge-bg: #edd3c4;        /* 印章粉褐底 */
+      --accent-green: #528c61;    /* 抹茶綠（增值/正確） */
+      --accent-rose: #d96f86;     /* 玫瑰粉（警示/錯誤） */
+      --accent-blue: #2563eb;     /* 借方藍 */
+      --font-main: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-code: 'JetBrains Mono', Consolas, monospace;
+      --card-radius: 18px;
+      --shadow-soft: 0 10px 30px rgba(110, 80, 55, 0.08), 0 2px 6px rgba(110, 80, 55, 0.04);
+      --shadow-card: 0 4px 14px rgba(110, 80, 55, 0.05);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-desk);
+      color: var(--text-main);
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden; /* STRICTLY ZERO SCROLL */
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Top Progress Bar */
+    #progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: rgba(173, 116, 72, 0.15);
+      z-index: 1000;
+    }
+    #progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #c29b7f, #ad7448, #f2cb74);
+      transition: width 0.3s ease;
+    }
+
+    /* Header Nav */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 28px;
+      height: 48px;
+      background: rgba(255, 253, 249, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 2px dashed var(--primary-border);
+      z-index: 100;
+      flex-shrink: 0;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge-course {
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 50px;
+      letter-spacing: 0.05em;
+    }
+    .chapter-title {
+      font-size: 1.00rem;
+      color: var(--text-main);
+      font-weight: 800;
+    }
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-header {
+      background: var(--bg-card);
+      border: 1.5px solid var(--primary-border);
+      color: var(--text-main);
+      padding: 5px 14px;
+      border-radius: 50px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .btn-header:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    /* Main Slide Stage */
+    #slide-stage {
+      flex: 1;
+      width: 100%;
+      height: calc(100vh - 96px);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 16px;
+      box-sizing: border-box;
+    }
+
+    /* The Slide Card */
+    .slide {
+      display: none;
+      width: min(1380px, calc(100vw - 32px));
+      height: calc(100vh - 104px);
+      max-height: 890px;
+      min-height: 520px;
+      flex: 0 0 auto;
+      background: var(--bg-slide);
+      border: 2.5px solid var(--primary-border);
+      border-radius: var(--card-radius);
+      padding: 16px 28px;
+      box-shadow: var(--shadow-soft);
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    .slide.active {
+      display: flex;
+      animation: slideIn 0.25s ease-out forwards;
+      z-index: 10;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Washi Tape (紙膠帶裝飾) */
+    .washi-tape {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-0.8deg);
+      width: 150px;
+      height: 24px;
+      background: var(--washi-color);
+      border-left: 2px dashed rgba(66, 48, 35, 0.15);
+      border-right: 2px dashed rgba(66, 48, 35, 0.15);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      z-index: 20;
+    }
+
+    /* Sticker Stamp */
+    .sticker-stamp {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ffffff;
+      border: 1.5px dashed var(--primary);
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 0.90rem;
+      font-weight: 800;
+      color: var(--primary);
+      transform: rotate(-1.5deg);
+    }
+
+    /* Slide Header */
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1.5px dashed var(--primary-soft);
+      flex-shrink: 0;
+    }
+    .slide-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--badge-bg);
+      color: var(--primary);
+      font-size: 0.90rem;
+      font-weight: 800;
+      padding: 3px 12px;
+      border-radius: 50px;
+      letter-spacing: 0.04em;
+    }
+    .slide-h1 {
+      font-size: 1.76rem;
+      font-weight: 900;
+      color: var(--text-main);
+      line-height: 1.25;
+      margin-top: 3px;
+    }
+    .slide-subtitle {
+      font-size: 1.02rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+      font-weight: 500;
+    }
+
+    /* Content Layouts */
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      overflow: hidden;
+      user-select: text;
+      min-height: 0;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    /* Cute Cards */
+    .card {
+      background: var(--bg-card);
+      border-radius: 14px;
+      padding: 12px 18px;
+      border: 1.5px solid transparent;
+      box-shadow: var(--shadow-card);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover {
+      border-color: var(--primary-border);
+    }
+    .card.alt {
+      background: var(--bg-card-alt);
+    }
+    .card.pure {
+      background: var(--bg-card-pure);
+      border: 1.5px solid var(--primary-soft);
+    }
+
+    .card-title {
+      font-size: 1.20rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .card p, .card li {
+      font-size: 1.04rem;
+      line-height: 1.50;
+      color: var(--text-main);
+    }
+    .card ul, .card ol {
+      padding-left: 20px;
+    }
+    .card li {
+      margin-bottom: 4px;
+    }
+
+    /* Dialogue Box */
+    .dialogue-box {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 9px 18px;
+      border: 1.5px solid var(--primary-border);
+      box-shadow: 0 4px 12px rgba(138, 102, 74, 0.06);
+      flex-shrink: 0;
+    }
+    .dialogue-avatar-wrapper {
+      position: relative;
+      flex-shrink: 0;
+    }
+    .dialogue-avatar {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 6px rgba(66, 48, 35, 0.12);
+      object-fit: cover;
+      display: block;
+    }
+    .dialogue-role-badge {
+      position: absolute;
+      bottom: -3px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.70rem;
+      font-weight: 800;
+      padding: 1px 7px;
+      border-radius: 8px;
+      white-space: nowrap;
+    }
+    .badge-prof { background: #fbe0e6; color: #b84366; }
+    .badge-ta { background: #e0f2fe; color: #0284c7; }
+    .badge-student { background: #fef3c7; color: #b45309; }
+    .badge-auditor { background: #dcfce7; color: #15803d; }
+
+    .dialogue-content {
+      flex: 1;
+    }
+    .dialogue-name {
+      font-size: 1.04rem;
+      font-weight: 800;
+      margin-bottom: 3px;
+      color: var(--primary);
+    }
+    .dialogue-text {
+      font-size: 1.02rem;
+      line-height: 1.50;
+      color: var(--text-main);
+    }
+
+    /* Tables */
+    .pastel-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.94rem;
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1.5px solid var(--primary-border);
+    }
+    .pastel-table th {
+      background: var(--primary-soft);
+      color: var(--text-main);
+      text-align: left;
+      padding: 6px 12px;
+      font-weight: 800;
+      border-bottom: 1.5px solid var(--primary-border);
+      font-size: 0.96rem;
+    }
+    .pastel-table td {
+      padding: 5px 12px;
+      border-bottom: 1px solid var(--primary-soft);
+      color: var(--text-main);
+    }
+
+    /* Code Box */
+    .code-box {
+      background: #ffffff;
+      border: 1.5px dashed var(--primary-border);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-family: var(--font-code);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: var(--text-main);
+      white-space: pre;
+    }
+
+    /* Hero Standee Style */
+    .hero-standee-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(145deg, #ffffff, var(--bg-card-alt));
+      border: 2px dashed var(--primary-border);
+      border-radius: 16px;
+      padding: 16px;
+      height: 100%;
+      text-align: center;
+    }
+    .hero-standee-img {
+      width: 175px;
+      height: 175px;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 16px rgba(110, 80, 55, 0.18));
+      margin-bottom: 10px;
+    }
+
+    /* Quiz Arena */
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .quiz-btn {
+      background: #ffffff;
+      border: 1.5px solid var(--primary-border);
+      color: var(--text-main);
+      padding: 11px 18px;
+      border-radius: 12px;
+      text-align: left;
+      font-size: 1.02rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .quiz-btn:hover {
+      background: var(--primary-soft);
+      transform: translateX(3px);
+    }
+    .quiz-btn.correct {
+      background: #ecfdf5 !important;
+      border-color: #34d399 !important;
+      color: #065f46 !important;
+      font-weight: 800;
+    }
+    .quiz-btn.wrong {
+      background: #fef2f2 !important;
+      border-color: #f87171 !important;
+      color: #991b1b !important;
+    }
+    .quiz-feedback {
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 0.98rem;
+      display: none;
+      line-height: 1.50;
+    }
+
+    /* Footer Nav */
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 28px;
+      height: 48px;
+      background: rgba(255, 253, 249, 0.95);
+      border-top: 2px dashed var(--primary-border);
+      z-index: 100;
+      flex-shrink: 0;
+    }
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-btn {
+      background: var(--bg-card);
+      border: 1.5px solid var(--primary-border);
+      color: var(--text-main);
+      padding: 5px 16px;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+    .nav-btn:hover:not(:disabled) {
+      background: var(--primary);
+      color: #ffffff;
+    }
+    .nav-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .slide-counter {
+      font-family: var(--font-code);
+      font-size: 0.94rem;
+      font-weight: 800;
+      color: var(--primary);
+      padding: 4px 12px;
+      background: var(--bg-card);
+      border-radius: 50px;
+      border: 1px solid var(--primary-border);
+    }
+
+    /* Modal Dialogs */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(66, 48, 35, 0.45);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-card {
+      background: var(--bg-slide);
+      border: 2.5px solid var(--primary-border);
+      border-radius: 20px;
+      max-width: 820px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      position: relative;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      border-bottom: 2px dashed var(--primary-border);
+      padding-bottom: 10px;
+    }
+    .modal-title {
+      font-size: 1.30rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    .btn-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .overview-item {
+      background: var(--bg-card);
+      border: 1.5px solid var(--primary-border);
+      border-radius: 10px;
+      padding: 10px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    .overview-item:hover, .overview-item.active {
+      background: var(--primary);
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Progress Bar -->
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+  </div>
+
+  <!-- Header Nav -->
+  <header>
+    <div class="brand">
+      <span class="badge-course">KIESO IFRS 5/e</span>
+      <span class="chapter-title">Chapter 8 · 折舊、減損與折耗 (Depreciation, Impairments, and Depletion)</span>
+    </div>
+    <div class="header-controls">
+      <button class="btn-header" onclick="toggleOverview()"><span>📑</span><span>總覽 (O)</span></button>
+      <button class="btn-header" onclick="toggleNotes()"><span>💡</span><span>講者備忘錄 (N)</span></button>
+      <button class="btn-header" onclick="toggleFullscreen()"><span>⛶</span><span>全螢幕 (F)</span></button>
+    </div>
+  </header>
+
+  <!-- Slide Stage -->
+  <main id="slide-stage">
+
+    <!-- ==========================================
+         Slide 1: 封面與全章架構導引
+         ========================================== -->
+    <section class="slide active" id="slide-1" data-slide="1">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">CHAPTER 08 · 全章架構導引</span>
+          <h1 class="slide-h1">折舊、減損與天然資源折耗 📉</h1>
+          <div class="slide-subtitle">成本分攤體系 · IAS 36 減損決策模型 · 礦產折耗與附錄 8A 重估價</div>
+        </div>
+        <div class="sticker-stamp">📉 後續計量總覽</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="align-items: stretch; height: 100%;">
+          <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 10px;">
+            <div class="card pure" style="border-left: 5px solid var(--primary); flex: 1;">
+              <div class="card-title">🌱 資產取得後的生命週期衡量</div>
+              <p>
+                企業取得長期營運資產後，如何在各受益期間系統性分攤成本？何時面臨實質減損？本章將貫穿 <strong>IAS 16 四大經典折舊法</strong>、強制<strong>組件折舊與估計變動推延法</strong>，深探 <strong>IAS 36 減損模型（可回收金額取較高者與商譽分攤順序）</strong>、<strong>天然資源折耗</strong>，並在附錄 8A 解碼 <strong>PP&E 重估價模式之 OCI 與禁止損益重分類防線</strong>！
+              </p>
+            </div>
+
+            <div class="grid-3" style="gap: 10px;">
+              <div class="card" style="padding: 10px 14px;">
+                <div class="card-title" style="font-size: 1.05rem;">📐 成本分攤體系</div>
+                <p style="font-size: 0.95rem;">直線/活動量/加速折舊/組件</p>
+              </div>
+              <div class="card" style="padding: 10px 14px;">
+                <div class="card-title" style="font-size: 1.05rem;">🚦 IAS 36 減損</div>
+                <p style="font-size: 0.95rem;">可回收金額孰高/CGU/商譽</p>
+              </div>
+              <div class="card" style="padding: 10px 14px;">
+                <div class="card-title" style="font-size: 1.05rem;">⛏️ 折耗與重估價</div>
+                <p style="font-size: 0.95rem;">生產數量法/AOCI 禁轉損益</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="hero-standee-card">
+              <img src="../../assets/img1_char01.png" alt="主講人" class="hero-standee-img">
+              <div style="font-size: 1.15rem; font-weight: 800; color: var(--primary); margin-bottom: 4px;">Donald E. Kieso 經典中會</div>
+              <div style="font-size: 0.92rem; color: var(--text-muted);">第 5 版 IFRS Edition 精準對接<br>IAS 16 · IAS 36 · IFRS 6</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dialogue-box">
+        <div class="dialogue-avatar-wrapper">
+          <img src="../../assets/img1_char02.png" alt="柯教授" class="dialogue-avatar">
+          <span class="dialogue-role-badge badge-prof">柯教授</span>
+        </div>
+        <div class="dialogue-content">
+          <div class="dialogue-name">專業引導</div>
+          <div class="dialogue-text">「資產取得後，如何精確分攤其使用成本、何時認列減損，是衡量企業獲利品質與資產真實價值的核心命脈！」</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 2: 折舊本質與三大要素
+         ========================================== -->
+    <section class="slide" id="slide-2" data-slide="2">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">IAS 16 · 折舊哲學</span>
+          <h1 class="slide-h1">折舊之本質與三大決定要素 ⏳</h1>
+          <div class="slide-subtitle">系統且合理之成本分攤程序 · 實體壽命 vs. 經濟壽命</div>
+        </div>
+        <div class="sticker-stamp">🎯 成本分攤非評價</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-3" style="height: 100%;">
+          <div class="card">
+            <div class="card-title">💡 成本分攤之核心本質</div>
+            <p style="font-weight: 800; color: var(--primary); margin-bottom: 4px;">Cost Allocation</p>
+            <ul>
+              <li><strong>非評價過程</strong>：折舊並非嘗試衡量資產期末市場公允價值變動。</li>
+              <li><strong>不提供重置資金</strong>：分錄不產生現金流，重置資金是靠實際營運賺得！</li>
+              <li>落實收入費用跨期配合原則。</li>
+            </ul>
+          </div>
+          <div class="card pure" style="border: 1.5px solid var(--primary);">
+            <div class="card-title">⏳ 服務年限終結之兩大因數</div>
+            <p style="font-weight: 800; color: var(--accent-rose); margin-bottom: 4px;">Physical vs Economic</p>
+            <ul>
+              <li>① <strong>實體因素 (Physical)</strong>：正常磨損 (Wear & tear)、金屬疲勞老化與意外受損。</li>
+              <li>② <strong>經濟因素 (Economic)</strong>：技術革新導致淘汰陳舊 (Obsolescence) 或產能不符需求。</li>
+              <li><em>服務年限通常顯著短於實體物理壽命！</em></li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title">⚙️ 計算折舊的三大基本問題</div>
+            <p style="font-weight: 800; color: var(--primary); margin-bottom: 4px;">Three Fundamental Questions</p>
+            <ul>
+              <li>① <strong>應折舊基礎 (Depreciable Base)</strong>：原始成本扣除估計殘值 (Residual Value)。</li>
+              <li>② <strong>估計服務年限 (Useful Life)</strong>。</li>
+              <li>③ <strong>最佳成本分攤方法 (Method)</strong>。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="dialogue-box">
+        <div class="dialogue-avatar-wrapper">
+          <img src="../../assets/img3_char01.png" alt="小安同學" class="dialogue-avatar">
+          <span class="dialogue-role-badge badge-student">小安同學</span>
+        </div>
+        <div class="dialogue-content">
+          <div class="dialogue-name">盲點提問</div>
+          <div class="dialogue-text">「老師！折舊難道不是為了在機器報廢時，在帳上存下一筆錢去買新設備嗎？」</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 3: 四大經典折舊方法體系
+         ========================================== -->
+    <section class="slide" id="slide-3" data-slide="3">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">折舊方法計量</span>
+          <h1 class="slide-h1">四大經典折舊方法體系 📐</h1>
+          <div class="slide-subtitle">直線法、活動量法、年數合計法與倍數餘額遞減法</div>
+        </div>
+        <div class="sticker-stamp">⚖️ 系統且合理</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-4" style="height: 100%;">
+          <div class="card">
+            <div class="card-title">📏 直線法 (SL)</div>
+            <p style="font-size: 0.92rem; margin-bottom: 4px;">$$\text{年折舊} = \frac{\text{成本} - \text{殘值}}{n}$$</p>
+            <ul>
+              <li>各期折舊均勻平穩。</li>
+              <li>適用於效益隨時間均勻流逝、維護費用平穩之資產。</li>
+            </ul>
+          </div>
+          <div class="card pure" style="border: 1.5px solid var(--primary);">
+            <div class="card-title">🚗 活動量法 (Activity)</div>
+            <p style="font-size: 0.90rem; margin-bottom: 4px;">$$\text{單位折舊} = \frac{\text{成本} - \text{殘值}}{\text{總估計產量}}$$</p>
+            <ul>
+              <li>依實際產量或行駛里程計提。</li>
+              <li>損耗完全取決於實質運轉頻率，無閒置期間折舊扭曲。</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title">🔢 年數合計法 (SYD)</div>
+            <p style="font-size: 0.88rem; margin-bottom: 4px;">$$\text{分母} = \frac{n(n+1)}{2}$$</p>
+            <ul>
+              <li>分子為期初剩餘年數。</li>
+              <li>加速折舊：前期折舊多、後期少，與維護費互補。</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title">⚡ 倍數餘額遞減 (DDB)</div>
+            <p style="font-size: 0.88rem; margin-bottom: 4px;">$$\text{折舊率} = \frac{2}{n}$$</p>
+            <ul>
+              <li><strong>計算時不扣殘值</strong>（以期初帳面價值乘以比率）。</li>
+              <li>最後一年折舊受限於<strong>殘值底線煞車</strong>！</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="dialogue-box">
+        <div class="dialogue-avatar-wrapper">
+          <img src="../../assets/img2_char01.png" alt="兔兔助教" class="dialogue-avatar">
+          <span class="dialogue-role-badge badge-ta">兔兔助教</span>
+        </div>
+        <div class="dialogue-content">
+          <div class="dialogue-name">助教速記</div>
+          <div class="dialogue-text">「口訣：『直線均勻、活動看量、年數分母等差數、倍數遞減殘值先不扣但最後要煞車』！」</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 4: 組件折舊與不滿一年之折舊拆分
+         ========================================== -->
+    <section class="slide" id="slide-4" data-slide="4">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">實務折舊議題</span>
+          <h1 class="slide-h1">組件折舊與部分期間折舊處理 🧩</h1>
+          <div class="slide-subtitle">重大組成部分單獨提列 · 年中購入服務年與日曆年之交叉拆解</div>
+        </div>
+        <div class="sticker-stamp">✈️ IAS 16 強制規範</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="height: 100%;">
+          <div class="card pure">
+            <div class="card-title">✈️ IAS 16 組件折舊 (Component Depreciation)</div>
+            <ul>
+              <li><strong>重大性標準</strong>：PP&E 中成本相對於總成本屬重大且耐用年數不同的各組成部分，必須<strong>個別單獨提列折舊</strong>。</li>
+              <li><strong>經典實例（商用客機）</strong>：
+                <br>• 機身 (Airframe)：耐用 25 年，直線法
+                <br>• 引擎 (Engines)：耐用 8 年，飛行時數法
+                <br>• 座艙內裝 (Interior)：耐用 5 年，定期換新
+              </li>
+              <li><strong>重置效益</strong>：更換引擎時可精確除列舊引擎帳面價值與累計折舊，避免整機重估混亂。</li>
+            </ul>
+          </div>
+          <div class="card" style="border-left: 5px solid var(--primary);">
+            <div class="card-title">📅 不滿一年之折舊拆分 (Partial Periods)</div>
+            <ul>
+              <li>實務購置多於年中發生（如 7 月 1 日購入）。</li>
+              <li><strong>直線法</strong>：按實際在用月數比例計算（6/12）。</li>
+              <li><strong>加速折舊法（年數合計 / 倍數餘額）</strong>：
+                <br>① 先算出資產「第 1 服務年」、「第 2 服務年」之完整折舊額。
+                <br>② 再按月數比例跨日曆年度<strong>交叉拆分並加總</strong>！
+              </li>
+              <li><em>例：第 2 日曆年折舊 = 第 1 服務年 × 6/12 ＋ 第 2 服務年 × 6/12</em></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="dialogue-box">
+        <div class="dialogue-avatar-wrapper">
+          <img src="../../assets/img4_char01.png" alt="張會計師" class="dialogue-avatar">
+          <span class="dialogue-role-badge badge-auditor">張會計師</span>
+        </div>
+        <div class="dialogue-content">
+          <div class="dialogue-name">查核實務</div>
+          <div class="dialogue-text">「實務查核航空公司或晶圓代工廠時，組件折舊是查核重點！不能把整條產線或巨型客機打包成單一折舊率草率處理！」</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 5: 折舊估計變動之推延處理
+         ========================================== -->
+    <section class="slide" id="slide-5" data-slide="5">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">IAS 8 · 會計變動</span>
+          <h1 class="slide-h1">折舊估計變動之推延會計處理 🔄</h1>
+          <div class="slide-subtitle">耐用年數與殘值之重新評估 (IAS 8 Prospective Treatment)</div>
+        </div>
+        <div class="sticker-stamp">⏩ 往前看不回頭</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="height: 100%;">
+          <div class="card pure">
+            <div class="card-title">📋 IAS 8 會計估計變動之核心原則</div>
+            <ul>
+              <li>企業每年底必須重新檢視折舊年限、預估殘值與折舊方法。</li>
+              <li><strong>性質歸類</strong>：屬於<strong>會計估計變動 (Change in Accounting Estimate)</strong>。</li>
+              <li><strong>推延法 (Prospective Basis)</strong>：僅影響<strong>當期與未來期間</strong>！</li>
+              <li><strong>禁止追溯</strong>：絕對不得追溯重編以往年度報表，亦不調整期初保留盈餘，更不屬於會計錯誤！</li>
+            </ul>
+          </div>
+          <div class="card" style="border-left: 5px solid var(--primary);">
+            <div class="card-title">🧮 新折舊計算標準模型</div>
+            <p style="margin-bottom: 8px;">以<strong>變動當期期初之未折減帳面價值 (Book Value)</strong> 為全新起點：</p>
+            <div style="background: #ffffff; padding: 12px; border-radius: 10px; border: 1.5px dashed var(--primary-border); margin-bottom: 10px;">
+              $$\text{新每期折舊} = \frac{\text{期初帳面價值} - \text{新估計殘值}}{\text{新估計剩餘耐用年數}}$$
+            </div>
+            <p style="font-size: 0.94rem; color: var(--text-muted);">
+              舊成本與過去提列之累計折舊成為歷史封存數據，後續折舊計算不再回溯原始成本！
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="dialogue-box">
+        <div class="dialogue-avatar-wrapper">
+          <img src="../../assets/img2_char01.png" alt="兔兔助教" class="dialogue-avatar">
+          <span class="dialogue-role-badge badge-ta">兔兔助教</span>
+        </div>
+        <div class="dialogue-content">
+          <div class="dialogue-name">助教速記</div>
+          <div class="dialogue-text">「口訣：『估計變動往前看、既往不咎不回溯』！把變動當天的帳面價值當作新成本，除以剩下的年數就搞定！」</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 6: IAS 36 資產減損核心決策模型
+         ========================================== -->
+    <section class="slide" id="slide-6" data-slide="6">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">IAS 36 · 資產減損</span>
+          <h1 class="slide-h1">IAS 36 資產減損兩步驟決策模型 🚦</h1>
+          <div class="slide-subtitle">帳面金額 vs. 可回收金額 · 理性經理人取較高者原則</div>
+        </div>
+        <div class="sticker-stamp">🔍 減損兩步驟</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="height: 100%;">
+          <div class="card pure">
+            <div class="card-title">🚦 減損測試兩步驟 SOP</div>
+            <ul>
+              <li><strong>步驟 1：檢視減損跡象 (Indicators)</strong>
+                <br>• 外部跡象：市場利率飆升、資產市值暴跌、經濟法令重大不利變動。
+                <br>• 內部跡象：資產陳舊損毀、長期閒置、經濟績效劣於預期。
+              </li>
+              <li><strong>步驟 2：比較帳面與可回收金額</strong>
+                <br>當 $\text{帳面金額 (Carrying Amount)} > \text{可回收金額 (Recoverable Amount)}$：
+                <br>$$\text{減損損失} = \text{帳面金額} - \text{可回收金額}$$
+                <br>借記「減損損失 (P&L)」、貸記「累計減損」。
+              </li>
+            </ul>
+          </div>
+          <div class="card" style="border-left: 5px solid var(--primary);">
+            <div class="card-title">⚖️ 可回收金額：取兩者之【較高者】</div>
+            <div style="background: #ffffff; padding: 10px; border-radius: 8px; border: 1.5px dashed var(--primary-border); margin-bottom: 10px;">
+              $$\text{可回收金額} = \max(\text{FVLCS}, \text{VIU})$$
+            </div>
+            <ul>
+              <li>① <strong>公允價值減出售成本 (FVLCS)</strong>：公平交易下出售資產可淨取得之現金。</li>
+              <li>② <strong>使用價值 (Value-in-Use, VIU)</strong>：持續使用及最終處分預期產生之<strong>未來現金流量折現值</strong>。</li>
+              <li><em>理性經理人假設：賣掉賺就賣、留著用賺就留，故以較高者為回收衡量標準！</em></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="dialogue-box">
+        <div class="dialogue-avatar-wrapper">
+          <img src="../../assets/img3_char01.png" alt="小安同學" class="dialogue-avatar">
+          <span class="dialogue-role-badge badge-student">小安同學</span>
+        </div>
+        <div class="dialogue-content">
+          <div class="dialogue-name">盲點提問</div>
+          <div class="dialogue-text">「老師！為什麼可回收金額是取『較高者』，而不是會計一貫嚴格的『孰低法』呢？」</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 7: 現金產生單位 (CGU) 與商譽分攤順序
+         ========================================== -->
+    <section class="slide" id="slide-7" data-slide="7">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">組合測試防線</span>
+          <h1 class="slide-h1">現金產生單位 (CGU) 與商譽分攤 🏢</h1>
+          <div class="slide-subtitle">最小獨立現金流組合 · 商譽優先全額吸收損失防線</div>
+        </div>
+        <div class="sticker-stamp">🛡️ 商譽先受損</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="height: 100%;">
+          <div class="card pure">
+            <div class="card-title">🏢 現金產生單位 (CGU) 之界定</div>
+            <ul>
+              <li><strong>產生背景</strong>：許多單一設備（如半導體製程中的蝕刻機、產線輸送帶）<strong>無法獨立產生現金流入</strong>。</li>
+              <li><strong>CGU 定義</strong>：能產生實質上獨立於其他資產之現金流入的<strong>最小可辨認資產組合</strong>。</li>
+              <li>若單一資產無法估計可回收金額，必須將其歸屬之整組 CGU 進行減損測試。</li>
+            </ul>
+          </div>
+          <div class="card" style="border-left: 5px solid var(--primary);">
+            <div class="card-title">💥 兩階段減損損失分攤順序</div>
+            <ul>
+              <li><strong>第一階段：商譽最先全額沖減</strong>
+                <br>優先沖減分攤至該 CGU 之<strong>商譽 (Goodwill)</strong> 帳面金額至零！
+              </li>
+              <li><strong>第二階段：剩餘資產按比例分攤 (Pro-rata)</strong>
+                <br>超過商譽之其餘減損損失，依 CGU 內其他各資產之<strong>相對帳面金額比例</strong>分攤。
+              </li>
+              <li><strong>下限保護</strong>：個別資產分攤後帳面不得低於其自身之 FVLCS、VIU（若可衡量）與零之最高者。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="dialogue-box">
+        <div class="dialogue-avatar-wrapper">
+          <img src="../../assets/img4_char01.png" alt="張會計師" class="dialogue-avatar">
+          <span class="dialogue-role-badge badge-auditor">張會計師</span>
+        </div>
+        <div class="dialogue-content">
+          <div class="dialogue-name">查核實務</div>
+          <div class="dialogue-text">「商譽在減損測試中就像車子的『保險桿』！一旦發生減損，商譽必須最先犧牲沖減，而且商譽減損後依法永遠不得迴轉！」</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 8: 減損後折舊計提與迴轉天花板
+         ========================================== -->
+    <section class="slide" id="slide-8" data-slide="8">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">IAS 36 · 迴轉機制</span>
+          <h1 class="slide-h1">減損後折舊計提與迴轉天花板 🛡️</h1>
+          <div class="slide-subtitle">資產價值回升之承認界線 · 嚴禁反超未減損歷史帳面價值</div>
+        </div>
+        <div class="sticker-stamp">🧱 歷史折舊天花板</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="height: 100%;">
+          <div class="card pure">
+            <div class="card-title">📉 減損後之後續折舊計算</div>
+            <ul>
+              <li>認列減損損失後，資產之原歷史成本與累計折舊關係被打破。</li>
+              <li><strong>新折舊基礎</strong>：以減損後之<strong>新帳面金額（即當時的可回收金額）</strong>扣除估計殘值，於剩餘耐用年數內重新提列每期折舊。</li>
+              <li>每期折舊費用將相應減少。</li>
+            </ul>
+          </div>
+          <div class="card" style="border-left: 5px solid var(--primary);">
+            <div class="card-title">🧱 減損迴轉之法定天花板 (Reversal Cap)</div>
+            <ul>
+              <li>後續期間若減損成因消失，可認列<strong>「減損迴轉利益 (P&L)」</strong>。</li>
+              <li><strong>法定上限天花板</strong>：
+                <br>$$\text{迴轉後帳面金額} \le \text{假設未曾減損情況下之應有折舊後帳面價值}$$
+              </li>
+              <li><strong>嚴格禁令</strong>：分攤予<strong>商譽</strong>之減損損失，後續期間在任何情況下<strong>絕對禁止迴轉</strong>！</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="dialogue-box">
+        <div class="dialogue-avatar-wrapper">
+          <img src="../../assets/img2_char01.png" alt="兔兔助教" class="dialogue-avatar">
+          <span class="dialogue-role-badge badge-ta">兔兔助教</span>
+        </div>
+        <div class="dialogue-content">
+          <div class="dialogue-name">助教速記</div>
+          <div class="dialogue-text">「天花板口訣：『迴轉不能變超人』！即使機器市價大翻身，帳面最高也只能回到『當初如果沒減損』正常折舊後的金額！」</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 9: 待處分資產之減損與終止折舊
+         ========================================== -->
+    <section class="slide" id="slide-9" data-slide="9">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">IFRS 5 · 處分群組</span>
+          <h1 class="slide-h1">待處分資產之減損與終止折舊 📦</h1>
+          <div class="slide-subtitle">持有待售資產 (IFRS 5) 衡量 · 成本與淨變現價值孰低</div>
+        </div>
+        <div class="sticker-stamp">🛑 停止計提折舊</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="height: 100%;">
+          <div class="card">
+            <div class="card-title">🏭 繼續使用之資產 (IAS 36)</div>
+            <ul>
+              <li><strong>持有目的</strong>：供企業持續生產營運使用。</li>
+              <li><strong>減損衡量</strong>：帳面金額 vs. 可回收金額（FVLCS 與 VIU 孰高）。</li>
+              <li><strong>折舊處置</strong>：減損後<strong>持續提列折舊</strong>，將成本分攤至剩餘各受益期間。</li>
+              <li><strong>迴轉上限</strong>：受限於未減損之折舊後帳面價值天花板。</li>
+            </ul>
+          </div>
+          <div class="card pure" style="border: 2px solid var(--primary);">
+            <div class="card-title">📦 持有待售資產 (IFRS 5)</div>
+            <ul>
+              <li><strong>持有目的</strong>：已做出處分承諾，預期透過出售收回帳面金額。</li>
+              <li><strong>衡量準則</strong>：按「帳面金額」與「<strong>淨變現價值 (FV less Costs to Sell)</strong>」孰低衡量。</li>
+              <li><strong style="color: #d9534f;">🔥 核心處置：持有待售期間完全終止提列任何折舊或攤銷！</strong></li>
+              <li><strong>回升利益</strong>：後續若淨變現價值回升可認列利益，但以轉入待售前累計減損為限。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="dialogue-box">
+        <div class="dialogue-avatar-wrapper">
+          <img src="../../assets/img1_char02.png" alt="柯教授" class="dialogue-avatar">
+          <span class="dialogue-role-badge badge-prof">柯教授</span>
+        </div>
+        <div class="dialogue-content">
+          <div class="dialogue-name">準則原理</div>
+          <div class="dialogue-text">「資產既然已經準備出售，就不再為未來營業創造生產效益，因此『停止折舊』是落實配合原則的必然要求！」</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 10: 天然資源折耗之評價與計量
+         ========================================== -->
+    <section class="slide" id="slide-10" data-slide="10">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">IFRS 6 · 礦產資源</span>
+          <h1 class="slide-h1">天然資源折耗與探勘評估 (IFRS 6) ⛏️</h1>
+          <div class="slide-subtitle">實體不可再生資產之成本流轉 · 存貨資本化與清算股利</div>
+        </div>
+        <div class="sticker-stamp">⛏️ 生產數量法</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-3" style="height: 100%;">
+          <div class="card">
+            <div class="card-title">🏗️ 折耗基礎四大組成</div>
+            <p style="font-weight: 800; color: var(--primary); margin-bottom: 4px;">Depletion Base</p>
+            <ul>
+              <li>① <strong>取得成本</strong>：礦權購買價或租賃權。</li>
+              <li>② <strong>探勘前成本</strong>：未取得探勘權前列費用。</li>
+              <li>③ <strong>探勘評估 (E&E - IFRS 6)</strong>：取得採樣鑽探權後資本化。</li>
+              <li>④ <strong>開發與除役義務現值 (IAS 37)</strong>。</li>
+            </ul>
+          </div>
+          <div class="card pure" style="border: 1.5px solid var(--primary);">
+            <div class="card-title">📦 生產數量法與存貨流轉</div>
+            <p style="font-size: 0.90rem; margin-bottom: 4px;">$$\text{單位折耗} = \frac{\text{折耗基礎} - \text{殘值}}{\text{總估計可開採量}}$$</p>
+            <ul>
+              <li><strong>開採時先資本化入存貨</strong>：
+                <br>借：存貨－礦產、貸：累計折耗。
+              </li>
+              <li><strong>出售時始轉銷貨成本</strong>配合收入！</li>
+              <li>蘊藏量修正採<strong>推延法 (Prospective)</strong>。</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-title">💰 清算股利 (Liquidating)</div>
+            <p style="font-weight: 800; color: var(--accent-rose); margin-bottom: 4px;">Return of Capital</p>
+            <ul>
+              <li>礦產企業隨礦藏耗竭而步向清算。</li>
+              <li>向股東發放<strong>超過累積保留盈餘</strong>之股利。</li>
+              <li>超額部分實質上為<strong>投入資本之退回</strong>，借記「資本公積－清算股利」，必須向股東特別揭露！</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="dialogue-box">
+        <div class="dialogue-avatar-wrapper">
+          <img src="../../assets/img3_char01.png" alt="小安同學" class="dialogue-avatar">
+          <span class="dialogue-role-badge badge-student">小安同學</span>
+        </div>
+        <div class="dialogue-content">
+          <div class="dialogue-name">盲點提問</div>
+          <div class="dialogue-text">「開採出金礦時，不是直接列為當期費用，而是要先借記『存貨』喔？」</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 11: 附錄 8A：IAS 16 PP&E 重估價模式機制
+         ========================================== -->
+    <section class="slide" id="slide-11" data-slide="11">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Appendix 8A · IAS 16</span>
+          <h1 class="slide-h1">附錄 8A：PP&E 重估價模式機制 🏛️</h1>
+          <div class="slide-subtitle">IAS 16 自用資產重估價 · 增值進 OCI 權益與損失進損益</div>
+        </div>
+        <div class="sticker-stamp">📈 增值入 OCI</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="height: 100%;">
+          <div class="card pure">
+            <div class="card-title">🏛️ 重估價模式核心準則原則</div>
+            <ul>
+              <li>企業初始取得 PP&E 後，可就各類資產選用「成本模式」或「重估價模式」。</li>
+              <li><strong>整類一致性 (Entire Class)</strong>：若選擇重估建築物，所有建築物必須一併重估，嚴防企業挑選表現好的資產重估（Cherry-picking）！</li>
+              <li><strong>持續更新頻率</strong>：必須定期重估，確保帳面與期末公允價值無重大脫節。</li>
+            </ul>
+          </div>
+          <div class="card" style="border-left: 5px solid var(--primary);">
+            <div class="card-title">⚖️ 損益認列核心不對稱防線</div>
+            <ul>
+              <li><strong>重估增值（高於歷史成本）</strong>：
+                <br>貸記<strong>「其他綜合損益 (OCI - 重估增值)」</strong>，累積於權益項下 AOCI 重估儲備，<strong>絕不影響當期淨利！</strong>
+              </li>
+              <li><strong>重估下跌（低於歷史成本）</strong>：
+                <br>借記<strong>「當期損益 (重估損失 - P&L)」</strong>，直接扣減當期淨利與保留盈餘！
+              </li>
+              <li><em>經典案例：英國國鐵 Network Rail 曾重估鐵路網增值 42 億英鎊，全入權益！</em></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="dialogue-box">
+        <div class="dialogue-avatar-wrapper">
+          <img src="../../assets/img4_char01.png" alt="張會計師" class="dialogue-avatar">
+          <span class="dialogue-role-badge badge-auditor">張會計師</span>
+        </div>
+        <div class="dialogue-content">
+          <div class="dialogue-name">查核實務</div>
+          <div class="dialogue-text">「歐洲大型重工業（如公用事業與鐵路）非常普遍採用重估價模式！但切記：重估增值只進 OCI 權益，不能虛增營業淨利！」</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 12: 附錄 8A：重估增值沖抵與處分時轉入保留盈餘
+         ========================================== -->
+    <section class="slide" id="slide-12" data-slide="12">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Appendix 8A · 結轉禁令</span>
+          <h1 class="slide-h1">重估增值之跨期沖抵與處分結轉 ⚖️</h1>
+          <div class="slide-subtitle">回升沖抵過去損失 · 資產出售時 AOCI 直轉保留盈餘 (No Recycling)</div>
+        </div>
+        <div class="sticker-stamp">🚫 嚴禁重分類至損益</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="height: 100%;">
+          <div class="card pure">
+            <div class="card-title">🔄 跨期漲跌互抵原則</div>
+            <ul>
+              <li><strong>先漲後跌</strong>：先借記 OCI 沖減該資產既有之 AOCI 重估增值至零；超額下跌部分始借記「重估損失 (P&L)」。</li>
+              <li><strong>先跌後漲</strong>：優先貸記「重估回升利益 (P&L)」補足過去認列之損失金額；剩餘超出部分始貸記 OCI 重估增值！</li>
+            </ul>
+          </div>
+          <div class="card" style="border-left: 5px solid var(--primary);">
+            <div class="card-title">🚫 處分除列與結轉：嚴禁 Recycling！</div>
+            <ul>
+              <li>當重估增值之資產最終出售除列時，AOCI 內累積之重估增值：</li>
+              <li><strong style="color: #d9534f;">🔥 絕對禁止重分類轉入當期損益 (No Recycling to P&L)！</strong></li>
+              <li>只能直接於權益內部結轉至<strong>「保留盈餘 (Retained Earnings)」</strong>！</li>
+              <li><em>防止利潤被重複計算（先前已計入綜合損益總額）</em>。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="dialogue-box">
+        <div class="dialogue-avatar-wrapper">
+          <img src="../../assets/img1_char01.png" alt="柯教授" class="dialogue-avatar">
+          <span class="dialogue-role-badge badge-prof">柯教授</span>
+        </div>
+        <div class="dialogue-content">
+          <div class="dialogue-name">教授叮嚀</div>
+          <div class="dialogue-text">「這是高階會計師考試必考題：重估增值在出售時只能內轉保留盈餘，絕對不能灌進損益表美化 EPS！」</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 13: 隨堂測驗小擂台與全章 Recap
+         ========================================== -->
+    <section class="slide" id="slide-13" data-slide="13">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">觀念擂台與全章複習</span>
+          <h1 class="slide-h1">折舊、減損與折耗隨堂小擂台 🎯</h1>
+          <div class="slide-subtitle">檢驗核心準則盲點 · 全章重要知識點整合回顧</div>
+        </div>
+        <div class="sticker-stamp">🏆 單元驗收</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="height: 100%;">
+          <div class="card pure" style="border: 2px solid var(--primary);">
+            <div class="card-title">🎯 隨堂挑戰：減損迴轉天花板計算</div>
+            <p style="margin-bottom: 10px; font-weight: 700;">
+              甲公司某設備原提列減損損失 $200,000。後續年度市場好轉，評估可回收金額大增至 $720,000（當前帳面價值 $450,000）。若假設該設備未曾減損，截至目前之正常折舊後帳面價值應為 $600,000。甲公司當期最多可認列多少「減損迴轉利益」？
+            </p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuiz(this, false, '錯誤。減損迴轉不能反超未減損歷史帳面價值，不能直接衝到 $720,000！')">A. $270,000（回升至可回收金額 $720,000）</button>
+              <button class="quiz-btn" onclick="checkQuiz(this, true, '賓果！答對了！IAS 36 規定迴轉上限為未曾減損下應有之折舊後帳面價值 $600,000，故最多認列 $600,000 - $450,000 = $150,000！')">B. $150,000（受限於未減損帳面 $600,000 天花板）</button>
+              <button class="quiz-btn" onclick="checkQuiz(this, false, '錯誤。迴轉額受限於未減損折舊後帳面價值天花板，非直接依原減損總額。')">C. $200,000（受限於原認列減損損失總額）</button>
+              <button class="quiz-btn" onclick="checkQuiz(this, false, '錯誤。一般設備在減損跡象消除時是允許迴轉的（只有商譽絕對禁止迴轉）！')">D. $0（IAS 36 規定設備減損後一律不得迴轉）</button>
+            </div>
+            <div id="quiz-feedback" class="quiz-feedback" style="margin-top: 10px;"></div>
+          </div>
+
+          <div class="card" style="border-left: 5px solid var(--primary);">
+            <div class="card-title">📝 Chapter 8 核心知識點 Recap</div>
+            <ul>
+              <li><strong>折舊本質</strong>：成本分攤而非評價，組件重大必須單獨折舊，估計變動採推延法。</li>
+              <li><strong>IAS 36 減損</strong>：可回收金額取公允價值減出售成本與使用價值孰高；商譽先沖且永不迴轉。</li>
+              <li><strong>迴轉天花板</strong>：受限於未減損折舊後帳面價值；待處分資產立即終止折舊。</li>
+              <li><strong>折耗與重估價</strong>：天然資源開採先入存貨；重估增值進 OCI，處分時直轉保留盈餘嚴禁 Recycling。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="dialogue-box">
+        <div class="dialogue-avatar-wrapper">
+          <img src="../../assets/img1_char01.png" alt="柯教授" class="dialogue-avatar">
+          <span class="dialogue-role-badge badge-prof">柯教授</span>
+        </div>
+        <div class="dialogue-content">
+          <div class="dialogue-name">下單元預告</div>
+          <div class="dialogue-text">「恭喜大家完成 PP&E 後續衡量與減損！下一章 Chapter 9 我們將跨入數位經濟的價值核心『無形資產 (Intangible Assets - IAS 38) 與商譽』，敬請期待！」</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer Nav -->
+  <footer>
+    <div class="nav-controls">
+      <button class="nav-btn" id="btn-prev" onclick="changeSlide(-1)">◀ 上一頁</button>
+      <span class="slide-counter" id="slide-num">1 / 13</span>
+      <button class="nav-btn" id="btn-next" onclick="changeSlide(1)">下一頁 ▶</button>
+    </div>
+    <div style="font-size: 0.85rem; color: var(--text-muted); font-weight: 500;">
+      鍵盤 Space / 左右方向鍵切換 · F 全螢幕 · N 講稿 · O 總覽
+    </div>
+  </footer>
+
+  <!-- Modal: Overview -->
+  <div class="modal-overlay" id="overview-modal" onclick="closeOverviewModal(event)">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">📑 投影片導覽總覽 (Overview)</div>
+        <button class="btn-close" onclick="toggleOverview()">✕</button>
+      </div>
+      <div class="overview-grid" id="overview-grid">
+        <!-- Generated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Speaker Notes -->
+  <div class="modal-overlay" id="notes-modal" onclick="closeNotesModal(event)">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">💡 講者演講腳本與授課指引 (Speaker Notes)</div>
+        <button class="btn-close" onclick="toggleNotes()">✕</button>
+      </div>
+      <div id="notes-content" style="font-size: 1.05rem; line-height: 1.7; color: var(--text-main);">
+        <!-- Loaded by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Presentation Engine Script -->
+  <script>
+    const totalSlides = 13;
+    let currentSlide = 1;
+
+    const slideData = [
+      {
+        title: "封面與全章架構導引",
+        notes: "說明長期資產在取得後的生命週期管理：正常使用下的折舊、突發經濟惡化時的 IAS 36 減損，以及天然資源的折耗。"
+      },
+      {
+        title: "折舊之本質與三大要素",
+        notes: "破除「折舊提供重置基金」的迷思，強調折舊是會計上的成本分攤，而非價值評估。"
+      },
+      {
+        title: "四大經典折舊方法體系",
+        notes: "比較加速折舊法如何與維護費用互補，使資產各期總持有成本平準化。"
+      },
+      {
+        title: "組件折舊與部分期間折舊處理",
+        notes: "演示年中購置資產在 SYD 與 DDB 下的兩段式跨期交叉加總運算。"
+      },
+      {
+        title: "折舊估計變動之推延處理",
+        notes: "強調 IAS 8 對估計變動與政策變動/錯誤更正的嚴格區隔，推延法不回溯歷史。"
+      },
+      {
+        title: "IAS 36 資產減損兩步驟決策模型",
+        notes: "帶出理性企業經濟行為假設：可回收金額取公允價值減出售成本與使用價值之較高者。"
+      },
+      {
+        title: "現金產生單位 (CGU) 與商譽分攤",
+        notes: "強調商譽無實體防禦先沖銷的準則嚴厲性，且商譽減損後永遠不得迴轉。"
+      },
+      {
+        title: "減損後折舊計提與迴轉天花板",
+        notes: "推演數值釋例，說明為什麼減損迴轉不能超過未曾減損折舊後帳面價值天花板。"
+      },
+      {
+        title: "待處分資產之減損與終止折舊",
+        notes: "建立 IAS 36（使用中）與 IFRS 5（待出售）的清晰思維邊界，待售資產必須停提折舊。"
+      },
+      {
+        title: "天然資源折耗與探勘評估",
+        notes: "說明採礦業開採、存貨、銷貨之三階段成本流轉，以及清算股利資本返還性質。"
+      },
+      {
+        title: "附錄 8A：PP&E 重估價模式機制",
+        notes: "對照英國國鐵 Network Rail 實際案例，說明重估價模式在歐洲重工業之普及性與 OCI 處置。"
+      },
+      {
+        title: "重估增值之跨期沖抵與處分結轉",
+        notes: "強化 No Recycling 的會計哲學與防範利潤雙重計算機制，出售時 AOCI 只能內轉保留盈餘。"
+      },
+      {
+        title: "折舊、減損與折耗隨堂小擂台",
+        notes: "讚許學生掌握資產後續衡量的精髓，並為 Chapter 9「無形資產 IAS 38」做鋪墊。"
+      }
+    ];
+
+    function updatePresentation() {
+      // Slides display
+      document.querySelectorAll('.slide').forEach((slide, idx) => {
+        if (idx + 1 === currentSlide) {
+          slide.classList.add('active');
+        } else {
+          slide.classList.remove('active');
+        }
+      });
+
+      // Progress bar
+      const progress = ((currentSlide - 1) / (totalSlides - 1)) * 100;
+      document.getElementById('progress-bar').style.width = progress + '%';
+
+      // Counter
+      document.getElementById('slide-num').innerText = `${currentSlide} / ${totalSlides}`;
+
+      // Buttons
+      document.getElementById('btn-prev').disabled = (currentSlide === 1);
+      document.getElementById('btn-next').disabled = (currentSlide === totalSlides);
+
+      // Notes
+      const notesBox = document.getElementById('notes-content');
+      if (notesBox && slideData[currentSlide - 1]) {
+        notesBox.innerHTML = `<strong>第 ${currentSlide} 頁 · ${slideData[currentSlide - 1].title}</strong><br><br>${slideData[currentSlide - 1].notes}`;
+      }
+
+      // Sync URL hash
+      window.location.hash = `#${currentSlide}`;
+
+      // Update overview active item
+      document.querySelectorAll('.overview-item').forEach((item, idx) => {
+        if (idx + 1 === currentSlide) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+    }
+
+    function changeSlide(direction) {
+      const target = currentSlide + direction;
+      if (target >= 1 && target <= totalSlides) {
+        currentSlide = target;
+        updatePresentation();
+      }
+    }
+
+    function goToSlide(n) {
+      if (n >= 1 && n <= totalSlides) {
+        currentSlide = n;
+        updatePresentation();
+        const overviewModal = document.getElementById('overview-modal');
+        if (overviewModal) overviewModal.style.display = 'none';
+      }
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+          alert(`無法啟動全螢幕: ${err.message}`);
+        });
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    function toggleOverview() {
+      const modal = document.getElementById('overview-modal');
+      if (!modal) return;
+      if (modal.style.display === 'flex') {
+        modal.style.display = 'none';
+      } else {
+        populateOverview();
+        modal.style.display = 'flex';
+      }
+    }
+
+    function closeOverviewModal(e) {
+      if (e.target.id === 'overview-modal') {
+        document.getElementById('overview-modal').style.display = 'none';
+      }
+    }
+
+    function toggleNotes() {
+      const modal = document.getElementById('notes-modal');
+      if (!modal) return;
+      if (modal.style.display === 'flex') {
+        modal.style.display = 'none';
+      } else {
+        modal.style.display = 'flex';
+      }
+    }
+
+    function closeNotesModal(e) {
+      if (e.target.id === 'notes-modal') {
+        document.getElementById('notes-modal').style.display = 'none';
+      }
+    }
+
+    function populateOverview() {
+      const grid = document.getElementById('overview-grid');
+      if (!grid || grid.children.length > 0) return;
+      slideData.forEach((slide, idx) => {
+        const item = document.createElement('div');
+        item.className = `overview-item ${idx + 1 === currentSlide ? 'active' : ''}`;
+        item.innerHTML = `<strong>${String(idx + 1).padStart(2, '0')}.</strong> ${slide.title}`;
+        item.onclick = () => goToSlide(idx + 1);
+        grid.appendChild(item);
+      });
+    }
+
+    function checkQuiz(btn, isCorrect, explanation) {
+      const options = btn.parentElement.querySelectorAll('.quiz-btn');
+      options.forEach(b => {
+        b.disabled = true;
+      });
+
+      const feedback = document.getElementById('quiz-feedback');
+      feedback.style.display = 'block';
+
+      if (isCorrect) {
+        btn.classList.add('correct');
+        feedback.style.background = '#ecfdf5';
+        feedback.style.border = '1.5px solid #34d399';
+        feedback.style.color = '#065f46';
+        feedback.innerHTML = `<strong>🎉 完全正確！</strong> ${explanation}`;
+      } else {
+        btn.classList.add('wrong');
+        feedback.style.background = '#fef2f2';
+        feedback.style.border = '1.5px solid #f87171';
+        feedback.style.color = '#991b1b';
+        feedback.innerHTML = `<strong>⚠️ 觀念盲點！</strong> ${explanation}`;
+
+        options[1].classList.add('correct');
+      }
+    }
+
+    // Keyboard Shortcuts
+    window.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+      switch(e.key) {
+        case 'ArrowRight':
+        case ' ':
+          e.preventDefault();
+          changeSlide(1);
+          break;
+        case 'ArrowLeft':
+          e.preventDefault();
+          changeSlide(-1);
+          break;
+        case 'f':
+        case 'F':
+          e.preventDefault();
+          toggleFullscreen();
+          break;
+        case 'n':
+        case 'N':
+          e.preventDefault();
+          toggleNotes();
+          break;
+        case 'o':
+        case 'O':
+          e.preventDefault();
+          toggleOverview();
+          break;
+        case 'Escape':
+          const overviewModal = document.getElementById('overview-modal');
+          const notesModal = document.getElementById('notes-modal');
+          if (overviewModal && overviewModal.style.display === 'flex') toggleOverview();
+          if (notesModal && notesModal.style.display === 'flex') toggleNotes();
+          break;
+      }
+    });
+
+    // Touch Swipe Gestures
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const stage = document.getElementById('slide-stage');
+
+    stage.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, false);
+
+    stage.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, false);
+
+    function handleSwipe() {
+      const threshold = 40;
+      if (touchEndX < touchStartX - threshold) {
+        changeSlide(1);
+      }
+      if (touchEndX > touchStartX + threshold) {
+        changeSlide(-1);
+      }
+    }
+
+    // Init with Hash or Default to 1
+    window.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash.replace('#', '');
+      const initial = parseInt(hash, 10);
+      if (!isNaN(initial) && initial >= 1 && initial <= totalSlides) {
+        currentSlide = initial;
+      }
+      updatePresentation();
+    });
+  </script>
+</body>
+</html>

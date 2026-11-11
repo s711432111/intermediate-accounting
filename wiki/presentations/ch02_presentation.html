@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="milktea">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 2: 綜合損益表與相關資訊 | 中級會計學手帳風簡報</title>
+  
+  <!-- KaTeX for LaTeX Math -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+          onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+  
+  <!-- Google Fonts: 圓潤柔和的日系手帳繁中字體 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================
+       風格：日系燕麥奶茶手帳風 (Cozy Milk Tea Journal Theme)
+       ========================================================= */
+    :root {
+      --bg-page: #f7f0e6;
+      --bg-slide: #fffdf9;
+      --bg-card: #f4e8d8;
+      --bg-card-alt: #ebd8c2;
+      --bg-card-pure: #ffffff;
+      --text-main: #3e2d20;
+      --text-muted: #7e6957;
+      --primary: #ad7448;
+      --primary-soft: #f5e5d5;
+      --primary-border: #d8c0aa;
+      --accent-caramel: #c88349;
+      --accent-green: #528c61;
+      --accent-green-soft: #e2efe5;
+      --accent-pink: #d96f86;
+      --accent-pink-soft: #fde8ed;
+      --accent-blue: #2563eb;
+      --accent-blue-soft: #dbeafe;
+      --washi-color: rgba(237, 206, 142, 0.85);
+      --card-radius: 18px;
+      --shadow-soft: 0 10px 28px rgba(138, 102, 74, 0.1);
+      --shadow-card: 0 4px 12px rgba(138, 102, 74, 0.06);
+      --badge-bg: #eddccb;
+      --font-main: 'M PLUS Rounded 1c', 'Noto Sans TC', system-ui, sans-serif;
+      --font-code: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      background: var(--bg-page);
+      color: var(--text-main);
+      font-family: var(--font-main);
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden; /* STRICTLY ZERO SCROLL */
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Top Progress Bar */
+    #progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: rgba(173, 116, 72, 0.15);
+      z-index: 1000;
+    }
+    #progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #c29b7f, #ad7448, #f2cb74);
+      transition: width 0.3s ease;
+    }
+
+    /* Header Nav */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 24px;
+      height: 48px;
+      background: rgba(255, 253, 249, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 2px dashed var(--primary-border);
+      z-index: 100;
+      flex-shrink: 0;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge-course {
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 0.76rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 50px;
+      letter-spacing: 0.05em;
+    }
+    .chapter-title {
+      font-size: 1.00rem;
+      color: var(--text-main);
+      font-weight: 800;
+    }
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-header {
+      background: var(--bg-card);
+      border: 1.5px solid var(--primary-border);
+      color: var(--text-main);
+      padding: 5px 14px;
+      border-radius: 50px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .btn-header:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    /* Main Slide Stage (Calculated viewport fit) */
+    #slide-stage {
+      flex: 1;
+      width: 100%;
+      height: calc(100vh - 96px);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 16px;
+      box-sizing: border-box;
+    }
+
+    /* The Slide Card */
+    .slide {
+      display: none;
+      width: min(1380px, calc(100vw - 32px));
+      height: calc(100vh - 104px);
+      max-height: 890px;
+      min-height: 520px;
+      flex: 0 0 auto; /* PREVENT FLEX SHRINK INTO TINY COLUMN */
+      background: var(--bg-slide);
+      border: 2.5px solid var(--primary-border);
+      border-radius: var(--card-radius);
+      padding: 16px 28px;
+      box-shadow: var(--shadow-soft);
+      flex-direction: column;
+      overflow: hidden; /* ZERO SCROLL */
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    .slide.active {
+      display: flex;
+      animation: slideIn 0.25s ease-out forwards;
+      z-index: 10;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Washi Tape (紙膠帶裝飾) */
+    .washi-tape {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-0.8deg);
+      width: 150px;
+      height: 24px;
+      background: var(--washi-color);
+      border-left: 2px dashed rgba(66, 48, 35, 0.15);
+      border-right: 2px dashed rgba(66, 48, 35, 0.15);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      z-index: 20;
+    }
+
+    /* Sticker Stamp */
+    .sticker-stamp {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ffffff;
+      border: 1.5px dashed var(--primary);
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 0.90rem;
+      font-weight: 800;
+      color: var(--primary);
+      transform: rotate(-1.5deg);
+    }
+
+    /* Slide Header */
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1.5px dashed var(--primary-soft);
+      flex-shrink: 0;
+    }
+    .slide-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--badge-bg);
+      color: var(--primary);
+      font-size: 0.90rem;
+      font-weight: 800;
+      padding: 3px 12px;
+      border-radius: 50px;
+      letter-spacing: 0.04em;
+    }
+    .slide-h1 {
+      font-size: 1.76rem;
+      font-weight: 900;
+      color: var(--text-main);
+      line-height: 1.25;
+      margin-top: 3px;
+    }
+    .slide-subtitle {
+      font-size: 1.02rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+      font-weight: 500;
+    }
+
+    /* Content Layouts */
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      overflow: hidden; /* Strictly within viewport */
+      user-select: text;
+      min-height: 0;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    /* Cute Cards */
+    .card {
+      background: var(--bg-card);
+      border-radius: 14px;
+      padding: 12px 18px;
+      border: 1.5px solid transparent;
+      box-shadow: var(--shadow-card);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover {
+      border-color: var(--primary-border);
+    }
+    .card.alt {
+      background: var(--bg-card-alt);
+    }
+    .card.pure {
+      background: var(--bg-card-pure);
+      border: 1.5px solid var(--primary-soft);
+    }
+
+    .card-title {
+      font-size: 1.20rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .card p, .card li {
+      font-size: 1.04rem;
+      line-height: 1.50;
+      color: var(--text-main);
+    }
+    .card ul, .card ol {
+      padding-left: 20px;
+    }
+    .card li {
+      margin-bottom: 4px;
+    }
+
+    /* Dialogue Box */
+    .dialogue-box {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 9px 18px;
+      border: 1.5px solid var(--primary-border);
+      box-shadow: 0 4px 12px rgba(138, 102, 74, 0.06);
+      flex-shrink: 0;
+    }
+    .dialogue-avatar-wrapper {
+      position: relative;
+      flex-shrink: 0;
+    }
+    .dialogue-avatar {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 6px rgba(66, 48, 35, 0.12);
+      object-fit: cover;
+      display: block;
+    }
+    .dialogue-role-badge {
+      position: absolute;
+      bottom: -3px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.70rem;
+      font-weight: 800;
+      padding: 1px 7px;
+      border-radius: 8px;
+      white-space: nowrap;
+    }
+    .badge-prof { background: #fbe0e6; color: #b84366; }
+    .badge-ta { background: #e0f2fe; color: #0284c7; }
+    .badge-student { background: #fef3c7; color: #b45309; }
+    .badge-auditor { background: #dcfce7; color: #15803d; }
+
+    .dialogue-content {
+      flex: 1;
+    }
+    .dialogue-name {
+      font-size: 1.04rem;
+      font-weight: 800;
+      margin-bottom: 3px;
+      color: var(--primary);
+    }
+    .dialogue-text {
+      font-size: 1.02rem;
+      line-height: 1.50;
+      color: var(--text-main);
+    }
+
+    /* Tables */
+    .pastel-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.94rem;
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1.5px solid var(--primary-border);
+    }
+    .pastel-table th {
+      background: var(--primary-soft);
+      color: var(--text-main);
+      text-align: left;
+      padding: 6px 12px;
+      font-weight: 800;
+      border-bottom: 1.5px solid var(--primary-border);
+      font-size: 0.96rem;
+    }
+    .pastel-table td {
+      padding: 5px 12px;
+      border-bottom: 1px solid var(--primary-soft);
+      color: var(--text-main);
+    }
+
+    /* Code Box */
+    .code-box {
+      background: #ffffff;
+      border: 1.5px dashed var(--primary-border);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-family: var(--font-code);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: var(--text-main);
+    }
+
+    /* Quiz Arena */
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .quiz-btn {
+      background: #ffffff;
+      border: 1.5px solid var(--primary-border);
+      color: var(--text-main);
+      padding: 11px 18px;
+      border-radius: 12px;
+      text-align: left;
+      font-size: 1.02rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .quiz-btn:hover {
+      background: var(--primary-soft);
+      transform: translateX(3px);
+    }
+    .quiz-btn.correct {
+      background: #ecfdf5 !important;
+      border-color: #34d399 !important;
+      color: #065f46 !important;
+      font-weight: 800;
+    }
+    .quiz-btn.wrong {
+      background: #fef2f2 !important;
+      border-color: #f87171 !important;
+      color: #991b1b !important;
+    }
+    .quiz-feedback {
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 0.98rem;
+      display: none;
+      line-height: 1.50;
+    }
+
+    /* Footer Nav */
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 28px;
+      height: 48px;
+      background: rgba(255, 253, 249, 0.95);
+      border-top: 2px dashed var(--primary-border);
+      z-index: 100;
+      flex-shrink: 0;
+    }
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-btn {
+      background: var(--bg-card);
+      border: 1.5px solid var(--primary-border);
+      color: var(--text-main);
+      padding: 5px 16px;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+    .nav-btn:hover:not(:disabled) {
+      background: var(--primary);
+      color: #ffffff;
+    }
+    .nav-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+    .slide-indicator {
+      font-family: var(--font-code);
+      font-size: 0.94rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    /* Notes Modal */
+    #notes-modal {
+      display: none;
+      position: fixed;
+      bottom: 56px;
+      right: 24px;
+      width: 380px;
+      max-height: 360px;
+      background: rgba(255, 253, 249, 0.98);
+      border: 2px solid var(--primary);
+      border-radius: 14px;
+      box-shadow: 0 16px 36px rgba(66, 48, 35, 0.2);
+      padding: 14px 18px;
+      z-index: 500;
+      overflow-y: auto;
+      user-select: text;
+    }
+    #notes-modal h3 {
+      font-size: 0.92rem;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Overview Modal */
+    #overview-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(247, 240, 230, 0.96);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      padding: 30px;
+      overflow-y: auto;
+    }
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .overview-card {
+      background: #ffffff;
+      border: 1.5px solid var(--primary-border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .overview-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .overview-num {
+      font-size: 0.72rem;
+      color: var(--primary);
+      font-weight: 800;
+    }
+    .overview-title {
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Progress Bar -->
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="brand">
+      <span class="badge-course">中會 IFRS 5/e</span>
+      <span class="chapter-title">Chapter 2 · 綜合損益表與相關資訊 📜</span>
+    </div>
+    <div class="header-controls">
+      <button class="btn-header" onclick="toggleOverview()" title="投影片總覽導航 [O]">
+        <span>🗂️ 總覽 (O)</span>
+      </button>
+      <button class="btn-header" onclick="toggleNotes()" title="演講講稿提示 [N]">
+        <span>📝 講稿 (N)</span>
+      </button>
+      <button class="btn-header" onclick="toggleFullscreen()" title="全螢幕切換 [F]">
+        <span>⛶ 全螢幕 (F)</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Slide Stage -->
+  <main id="slide-stage">
+
+    <!-- ==========================================
+         Slide 1: 課程封面
+         ========================================== -->
+    <section class="slide active" data-slide="1" data-notes="歡迎各位同學進入第二章。損益表是衡量企業營運獲利與經營者受託責任的核心報表。本章將帶大家剖析多步驟格式、停業單位與綜合損益！">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">📖 Kieso, Weygandt, Warfield · 5th Edition</span>
+          <h1 class="slide-h1">綜合損益表與相關資訊 🌸</h1>
+          <div class="slide-subtitle">Income Statement and Related Information · 掌握經營績效與盈餘品質全貌</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>✨ 營運績效透視鏡</span>
+        </div>
+      </div>
+
+      <div class="slide-body" style="justify-content: center;">
+        <div class="grid-2" style="align-items: center;">
+          <div>
+            <div class="card pure" style="margin-bottom: 10px;">
+              <div class="card-title">☕ 為什麼第二章是財報分析的靈魂？</div>
+              <p>資產負債表是「瞬時快照」，而綜合損益表則是<strong>「經營成果的動態錄影帶」</strong>：</p>
+              <ul style="margin-top: 6px;">
+                <li><strong>區分核心與外圍獲利</strong>：本業獲利 vs 業外損益 vs 停業單位。</li>
+                <li><strong>透視盈餘品質</strong>：提防企業透過「盈餘管理」人為粉飾獲利。</li>
+                <li><strong>貫通權益兩大支柱</strong>：淨利流向保留盈餘，OCI 流向累計 OCI (AOCI)。</li>
+              </ul>
+            </div>
+
+            <div class="dialogue-box">
+              <div class="dialogue-avatar-wrapper">
+                <img src="../../assets/img1_char01.png" alt="柯教授" class="dialogue-avatar">
+                <span class="dialogue-role-badge badge-prof">主講教授</span>
+              </div>
+              <div class="dialogue-content">
+                <div class="dialogue-name">柯教授的開場叮嚀 🧸</div>
+                <div class="dialogue-text">
+                  「哈囉各位同學！大家常把『賺多少錢』掛在嘴邊，但財務報導中的『淨利』到底有多純？今天就跟著我一起拆解綜合損益表的秘密！」
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:center;">
+            <div class="card alt" style="align-items:center; text-align:center; padding:16px 24px; max-width:340px;">
+              <img src="../../assets/img1_char03.png" alt="Hero Standee" style="width:140px; margin-bottom:8px;">
+              <div style="font-size:1rem; font-weight:800; color:var(--text-main);">
+                「精確掌握獲利，拒絕霧裡看花！」
+              </div>
+              <div style="font-size:0.80rem; color:var(--text-muted); margin-top:3px;">
+                全章 13 頁暖心手帳式重點精講
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 2: 決策價值與三大先天限制
+         ========================================== -->
+    <section class="slide" data-slide="2" data-notes="說明損益表的三大用途與三大局限。特別強調損益表反映的是可客觀衡量的成果，須搭配資產負債表與附註綜合判讀。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 1 · 損益表價值定位</span>
+          <h1 class="slide-h1">損益表的決策價值與三大限制 ⚖️</h1>
+          <div class="slide-subtitle">Usefulness vs. Limitations · 報表不是萬靈丹，需理解其邊界</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>📊 價值與極限</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="card pure">
+            <div class="card-title">💡 三大核心用途 (Usefulness)</div>
+            <ul>
+              <li><strong>評估過去績效 (Evaluate past performance)</strong>：比較歷史獲利與同業競爭者（如 Ford vs Toyota）。</li>
+              <li><strong>預測未來績效 (Predicting future performance)</strong>：從經常性營運軌跡推估未來獲利趨勢。</li>
+              <li><strong>評估現金流風險 (Assess risk & uncertainty)</strong>：區隔常態核心營運與偶發項目，評估現金流量達成度。</li>
+            </ul>
+          </div>
+
+          <div class="card alt">
+            <div class="card-title" style="color:#d96f86;">⚠️ 三大先天限制 (Limitations)</div>
+            <ul>
+              <li><strong>遺漏無法可靠衡量之項目</strong>：優良商譽、品牌價值（Brand Value）、強大研發團隊無法入帳。</li>
+              <li><strong>受會計方法歧異影響</strong>：不同企業採直線折舊 vs 加速折舊，淨利難以直接等同對比。</li>
+              <li><strong>衡量高度涉及主觀判斷</strong>：耐用年限估計（10年 vs 20年）、壞帳率預估充滿人為預期。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img3_char01.png" alt="學生" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-student">提問學生</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">小安同學提問 💡</div>
+            <div class="dialogue-text">
+              「老師，既然損益表會遺漏像是『品牌價值』這麼重要的無形資產，那我們看淨利還準確嗎？」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 3: 盈餘品質與盈餘管理
+         ========================================== -->
+    <section class="slide" data-slide="3" data-notes="詳細說明盈餘管理（Earnings Management）對盈餘品質的損害。平滑化盈餘會使資訊失去預測現金流的真實價值。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 1 · 財務分析心法</span>
+          <h1 class="slide-h1">盈餘品質與盈餘管理警訊 (Quality of Earnings) 🔍</h1>
+          <div class="slide-subtitle">別被表面獲利蒙蔽：看懂數字背後的「水分」與人為痕跡</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>🚨 審計紅旗</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">🎯 企業管理盈餘的誘因 (Incentives)</div>
+            <ul>
+              <li><strong>達成市場預測目標 (Meet earnings targets)</strong>：滿足華爾街分析師預期以支撐股價。</li>
+              <li><strong>營造低風險外觀 (Make earnings look less risky)</strong>：減少獲利劇烈起伏，吸引保守型投資人。</li>
+              <li><strong>盈餘平滑化 (Income Smoothing)</strong>：在豐年提早提列大額費用（儲備餅乾罐 Cookie Jar），在荒年釋出。</li>
+            </ul>
+          </div>
+
+          <div class="card pure">
+            <div class="card-title" style="color:#528c61;">🛡️ 什麼是高品質的盈餘？</div>
+            <ul>
+              <li><strong>具高度預測力</strong>：淨利能實質反映本期經營活動，且能可靠預測未來現金流。</li>
+              <li><strong>本業營運現金流支撐</strong>：淨利有實質的營業現金流入（CFO）背書，而非應收帳款虛增。</li>
+              <li><strong>警訊</strong>：過度的盈餘管理會直接摧毀資訊的「忠實表述」，使財報失去決策有用性！</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img4_char02.png" alt="會計師" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-auditor">執業會計師</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">張會計師查核實務 💼</div>
+            <div class="dialogue-text">
+              「管理階層常有『平滑化盈餘』的衝動，把好年的利潤藏起來，壞年再放出來！查核時我們會特別緊盯非經常性重組費用、存貨跌價與評價準備的提列時點！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 4: 損益表要素：收益與費損
+         ========================================== -->
+    <section class="slide" data-slide="4" data-notes="剖析 Income（Revenues + Gains）與 Expenses（Expenses + Losses）的本質定義。本業通常活動與非通常附隨活動的區隔。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 2 · 準則要素定義</span>
+          <h1 class="slide-h1">損益表兩大要素拆解：收益與費損 ⚖️</h1>
+          <div class="slide-subtitle">Income & Expenses · 通常營業活動 vs 附隨非日常交易之嚴格區分</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>📐 概念架構要素</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Income -->
+          <div class="card pure" style="border-left: 5px solid #528c61;">
+            <div class="card-title" style="color:#528c61;">📈 收益 (Income) = 收入 + 利益</div>
+            <p style="font-size:0.84rem; margin-bottom:4px;">資產流入/增值或負債減少，致權益增加（排除業主出資）。</p>
+            <ul>
+              <li><strong>營業收入 (Revenues)</strong>：源自企業通常營業活動（如：銷貨收入、服務費收入、利息、股利、租金）。</li>
+              <li><strong>利益 (Gains)</strong>：可能源自通常活動或附隨交易（如：處分廠房設備利益、交易目的金融資產未實現評價利益）。</li>
+            </ul>
+          </div>
+
+          <!-- Expenses -->
+          <div class="card pure" style="border-left: 5px solid #d96f86;">
+            <div class="card-title" style="color:#d96f86;">📉 費損 (Expenses) = 費用 + 損失</div>
+            <p style="font-size:0.84rem; margin-bottom:4px;">資產流出/消耗或負債發生，致權益減少（排除分配給業主）。</p>
+            <ul>
+              <li><strong>營業費用 (Expenses)</strong>：通常營業活動耗費（如：銷貨成本、薪資折舊、租金水電、利息費用）。</li>
+              <li><strong>損失 (Losses)</strong>：非日常或突發事項（如：處分固定資產損失、組織重組費用、訴訟和解金、金融資產減損）。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img2_char01.png" alt="助教" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-ta">學習助教</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">兔兔助教考點提示 🐰</div>
+            <div class="dialogue-text">
+              「請大家記住：<strong>Revenues 與 Expenses 來自通常營業活動</strong>；而 <strong>Gains 與 Losses 則是外圍或非日常交易</strong>，兩者在多步驟損益表中要清楚劃分開來！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 5: IFRS 多步驟損益表標準階梯
+         ========================================== -->
+    <section class="slide" data-slide="5" data-notes="詳細解說多步驟損益表的層層小計。營業毛利反映產品定價能力，營業利益反映核心營運，繼續營業部門淨利反映可持續獲利。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 2 · 核心格式</span>
+          <h1 class="slide-h1">IFRS 多步驟損益表標準獲利階梯 🪜</h1>
+          <div class="slide-subtitle">Intermediate Components · 層層過濾，看清企業獲利的純度</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>🏆 經典多步驟</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="grid-template-columns: 1.35fr 1fr; gap:14px; align-items:stretch;">
+          <!-- Left: Multi-step Ladder -->
+          <div class="card pure" style="padding:12px 18px; justify-content:center;">
+            <div style="font-weight:800; font-size:1.02rem; color:var(--primary); margin-bottom:8px;">
+              🪜 多步驟獲利計算小計階梯
+            </div>
+            <div class="code-box" style="font-size:0.92rem; line-height:1.62;">
+              1. 銷貨收入 (Sales Revenue) − 銷貨成本 (COGS)<br>
+              &nbsp;&nbsp;$\mathbf{\Longrightarrow}$ <strong>營業毛利 (Gross Profit)</strong><br>
+              2. 減：推銷費用 (Selling) & 管理費用 (Admin)<br>
+              3. 加減：其他收益與費損 (Other Income & Expense)<br>
+              &nbsp;&nbsp;$\mathbf{\Longrightarrow}$ <strong>營業利益 (Income from Operations)</strong><br>
+              4. 減：財務成本 (Financing Costs / Interest)<br>
+              &nbsp;&nbsp;$\mathbf{\Longrightarrow}$ <strong>稅前淨利 (Income before Tax)</strong><br>
+              5. 減：所得稅費用 (Income Tax Expense)<br>
+              &nbsp;&nbsp;$\mathbf{\Longrightarrow}$ <strong>繼續營業部門淨利 (Continuing Operations)</strong><br>
+              6. 加減：停業單位損益 (Discontinued Operations, net of tax)<br>
+              &nbsp;&nbsp;$\mathbf{\Longrightarrow}$ <strong>本期淨利 (Net Income)</strong>
+            </div>
+          </div>
+
+          <!-- Right: Prof Card -->
+          <div style="display:flex; flex-direction:column; justify-content:space-between; gap:10px;">
+            <div class="dialogue-box">
+              <div class="dialogue-avatar-wrapper">
+                <img src="../../assets/img1_char04.png" alt="教授" class="dialogue-avatar">
+                <span class="dialogue-role-badge badge-prof">主講教授</span>
+              </div>
+              <div class="dialogue-content">
+                <div class="dialogue-name">柯教授的透視鏡 ☕</div>
+                <div class="dialogue-text">
+                  「多步驟階梯就像企業健康檢查的逐級關卡，能讓我們一眼看清企業是『本業賺錢』還是靠『賣祖產』在粉飾太平！」
+                </div>
+              </div>
+            </div>
+
+            <div class="card alt" style="padding:12px 14px; flex:1; justify-content:center;">
+              <div class="card-title" style="font-size:0.92rem;">💡 分析師最在意的指標</div>
+              <ul style="font-size:0.82rem; line-height:1.45;">
+                <li><strong>毛利率 (Gross Margin)</strong>：反映定價權與成本控管。</li>
+                <li><strong>營業利益率</strong>：衡量排除財務槓桿後之本業獲利實力。</li>
+                <li><strong>繼續營業淨利</strong>：作為預測未來現金流的最可靠基石。</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 6: 簡明損益表與附表支援
+         ========================================== -->
+    <section class="slide" data-slide="6" data-notes="說明 condensed income statement 與 supporting schedules 的實務配合。報表表面簡潔，附表充分揭露。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 2 · 實務表達技巧</span>
+          <h1 class="slide-h1">簡明損益表與附表支援 (Condensed Format) 📑</h1>
+          <div class="slide-subtitle">Condensed Income Statement & Supporting Schedules · 兼顧易讀性與充分揭露</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>💼 實務主流格式</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Main Statement -->
+          <div class="card pure">
+            <div class="card-title">📄 損益表主表：簡潔有力</div>
+            <p style="font-size:0.96rem; margin-bottom:8px;">主表僅列示重大總額，避免資訊超載：</p>
+            <div class="code-box" style="font-size:0.92rem; line-height:1.55;">
+              銷貨淨額 ......................... $2,972,413<br>
+              銷貨成本 ......................... (1,982,541)<br>
+              <strong>營業毛利</strong> ........................... $989,872<br>
+              推銷費用 (詳見附表 Note D) ....... (453,028)<br>
+              管理費用 (詳見附表 Note E) ....... (350,771)<br>
+              其他收益及費損 ................... 171,410<br>
+              <strong>營業利益</strong> ........................... $357,483
+            </div>
+          </div>
+
+          <!-- Schedule -->
+          <div class="card alt">
+            <div class="card-title">📋 附表 Note D：推銷費用明細</div>
+            <p style="font-size:0.96rem; margin-bottom:8px;">將大額項目展開於附註附表：</p>
+            <div class="code-box" style="font-size:0.92rem; line-height:1.55;">
+              • 業務人員薪資與佣金 ............ $202,644<br>
+              • 銷售辦公室薪資 ................ 59,200<br>
+              • 差旅及交際費 .................. 48,940<br>
+              • 廣告宣傳費 .................... 38,315<br>
+              • 運費與包裝耗材 ................ 65,921<br>
+              • 設備折舊與其他 ................ 37,908<br>
+              <strong>推銷費用合計</strong> .................... <strong>$453,028</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img4_char03.png" alt="會計師" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-auditor">執業會計師</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">張會計師查核實務 💼</div>
+            <div class="dialogue-text">
+              「實務上的上市公司年報若把水電文具全塞在主表，投資人會直接抓狂！因此主表只列大項總數，詳細清單一律拉到附表，完美落實充分揭露原則！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 7: 停業單位損益判定與列報 (IFRS 5)
+         ========================================== -->
+    <section class="slide" data-slide="7" data-notes="剖析停業單位的三大要件。強調停業單位損益必須以稅後淨額列報於繼續營業淨利之後，且 EPS 也必須單獨揭露。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 3 · 重大項目專題</span>
+          <h1 class="slide-h1">停業單位損益判定與列報 (IFRS 5) 🚪</h1>
+          <div class="slide-subtitle">Discontinued Operations · 割除腫瘤還是失去金雞母？分離非持續性營運</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>⚠️ 必考考點</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Conditions -->
+          <div class="card pure">
+            <div class="card-title">📌 停業單位三大構成要件</div>
+            <p style="font-size:0.84rem; margin-bottom:4px;">已處分或分類為<strong>待出售 (Held-for-sale)</strong> 之組成個體，且：</p>
+            <ul>
+              <li><strong>重大獨立業務或營運地理區域</strong>：如關閉歐洲全部實體門市、出售智慧型手機部門。</li>
+              <li><strong>單一協調處分計劃之一部分</strong>：有組織、有計劃退出某特定業務線。</li>
+              <li><strong>專為轉售而取得之子公司</strong>：非以長期經營為目的。</li>
+            </ul>
+          </div>
+
+          <!-- Presentation Rules -->
+          <div class="card alt">
+            <div class="card-title" style="color:#d96f86;">📑 報表列報黃金法則</div>
+            <ul>
+              <li><strong>列報位置</strong>：接續在「繼續營業部門淨利」之後單獨列示。</li>
+              <li><strong>稅後淨額列示 (Net of Tax)</strong>：停業部門之當期營運損益與處分損益，全數以扣除所得稅後淨額列示。</li>
+              <li><strong>EPS 強制拆分</strong>：報表表面或附註必須明確單獨揭露<strong>停業單位 EPS</strong>！</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img2_char03.png" alt="助教" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-ta">學習助教</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">兔兔助教解題秘笈 🐰</div>
+            <div class="dialogue-text">
+              「請大家在解題時眼睛放亮：停業單位一定要以<strong>『稅後淨額 (Net of Tax)』</strong>列報在繼續營業淨利之後！而且 EPS 也必須單獨拆出停業單位每股金額，絕不能混在一起！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 8: 期間內所得稅分攤
+         ========================================== -->
+    <section class="slide" data-slide="8" data-notes="詳細推導 Intraperiod Tax Allocation 原則。如果停業部門虧損帶來所得稅抵減，必須將節稅效益分配給停業部門。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 3 · 稅務分攤原則</span>
+          <h1 class="slide-h1">期間內所得稅分攤 (Intraperiod Tax Allocation) 💰</h1>
+          <div class="slide-subtitle">「讓稅追隨所得 (Let the tax follow the income)」· 精準歸屬稅負責任</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>🧮 稅務追隨原則</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Concept -->
+          <div class="card pure">
+            <div class="card-title">💡 為什麼需要期間內所得稅分攤？</div>
+            <p style="font-size:0.84rem; margin-bottom:6px;">避免非常態項目的稅務影響干擾繼續營業獲利之真實性：</p>
+            <ul>
+              <li><strong>繼續營業部門淨利</strong>：分攤與常態本業相關的所得稅費用。</li>
+              <li><strong>停業單位損益</strong>：單獨分攤停業部門營運與處分的所得稅（或節稅利益）。</li>
+              <li><strong>其他綜合損益 (OCI)</strong>：各自以稅後淨額或附註揭露稅額列報。</li>
+              <li><strong>前期損益調整</strong>：直接調節期初保留盈餘（稅後淨額）。</li>
+            </ul>
+          </div>
+
+          <!-- Illustration -->
+          <div class="card alt">
+            <div class="card-title">📊 經典實例演算：節稅利益歸屬</div>
+            <div class="code-box" style="font-size:0.80rem;">
+              繼續營業部門利益 $276,000 (稅前$460,000，稅40% $184,000)<br>
+              <strong>停業單位損益 (稅後淨額)：</strong><br>
+              &nbsp;&nbsp;• 比薩部門營運利益 (扣除稅$24,800) ......... $54,000<br>
+              &nbsp;&nbsp;• 處分比薩部門損失 (扣除節稅利益$41,000) .. <span style="color:#d96f86;">(90,000)</span><br>
+              停業單位損失淨額 ........................... <span style="color:#d96f86;">$(36,000)</span><br>
+              <strong>本期淨利 (Net Income)</strong> ...................... <strong>$240,000</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img1_char02.png" alt="教授" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-prof">主講教授</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">柯教授深度解析 ☕</div>
+            <div class="dialogue-text">
+              「如果停業部門處分大虧損帶來了 $41,000 的節稅效益，這筆好處必須直接扣抵處分損失，絕不能拿去稀釋繼續營業部門的所得稅！這就是『讓稅追隨所得』的公平精神！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 9: 每股盈餘 (EPS) 衡量與強制拆分
+         ========================================== -->
+    <section class="slide" data-slide="9" data-notes="說明 EPS 是資本市場最重要的指標，必須在報表表面強制揭露。若有停業單位，必須拆分繼續營業 EPS 與停業單位 EPS。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 3 · 關鍵指標</span>
+          <h1 class="slide-h1">每股盈餘 (EPS) 衡量與強制拆分揭露 📈</h1>
+          <div class="slide-subtitle">Earnings Per Share · 資本市場最注視的一行數字，嚴禁混淆經常性來源</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>⭐ 表面強制揭露</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Formula -->
+          <div class="card pure">
+            <div class="card-title">🧮 基本每股盈餘公式</div>
+            <div class="code-box" style="margin-bottom:6px; font-size:0.84rem; text-align:center;">
+              $$\text{EPS} = \frac{\text{本期淨利} - \text{特別股股利}}{\text{普通股加權平均流通在外股數}}$$
+            </div>
+            <ul>
+              <li><strong>代表普通股每股獲利份額</strong>：為本益比 (P/E) 與企業評價的核心指標。</li>
+              <li><strong>強制列示於表面 (Face)</strong>：IAS 33 強制要求必須在損益表表面顯著列示，不得僅藏於附註。</li>
+            </ul>
+          </div>
+
+          <!-- Disclosed Presentation -->
+          <div class="card alt">
+            <div class="card-title">📑 停業單位 EPS 拆分示範</div>
+            <p style="font-size:0.84rem; margin-bottom:4px;">若有停業單位，必須依序拆分揭露：</p>
+            <div class="code-box" style="font-size:0.80rem;">
+              普通股每股盈餘 (Per Share Amounts)：<br>
+              &nbsp;&nbsp;• 繼續營業部門淨利每股盈餘 ............. $2.76<br>
+              &nbsp;&nbsp;• 停業部門營運淨利益每股盈餘 ........... 0.54<br>
+              &nbsp;&nbsp;• 處分停業部門損失每股金額 ............. <span style="color:#d96f86;">(0.90)</span><br>
+              <strong>本期淨利每股盈餘 (Net Income Per Share)</strong> .. <strong>$2.40</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img3_char03.png" alt="學生" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-student">提問學生</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">小安同學恍然大悟 💡</div>
+            <div class="dialogue-text">
+              「原來 EPS 不能只報一個最終數字！如果一家公司每股賺 $2.40，但其中繼續營業淨利是 $2.76、停業損失 $(0.36)，若沒拆開看，明年少了停業損失，獲利反而可能上升呢！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 10: 三大會計變動與錯誤更正 (IAS 8)
+         ========================================== -->
+    <section class="slide" data-slide="10" data-notes="詳細區分政策變動（追溯）、估計變動（推延）與錯誤更正（前期損益調整）。折舊年限改動是正常估計修正，絕不能當作錯誤追溯。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 4 · IAS 8 準則規範</span>
+          <h1 class="slide-h1">三大會計變動與錯誤更正處理對比 (IAS 8) 🔄</h1>
+          <div class="slide-subtitle">Accounting Changes & Errors · 維持跨期可比性 vs 正常估計修正</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>📐 IAS 8 核心三界</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-3">
+          <!-- Principle -->
+          <div class="card pure" style="border-top: 4px solid #ad7448;">
+            <div class="card-title" style="font-size:1.06rem;">1. 會計政策變動</div>
+            <p style="font-size:0.96rem; margin-bottom:4px;"><strong>追溯調整法 (Retrospective)</strong></p>
+            <p style="font-size:0.94rem; line-height:1.55;">
+              • 調整期初保留盈餘累積影響數。<br>
+              • 重編前期報表以維持跨期可比性。<br>
+              • <em>例：存貨 FIFO 改採平均法。</em>
+            </p>
+          </div>
+
+          <!-- Estimate -->
+          <div class="card pure" style="border-top: 4px solid #528c61;">
+            <div class="card-title" style="font-size:1.06rem; color:#528c61;">2. 會計估計變動</div>
+            <p style="font-size:0.96rem; margin-bottom:4px;"><strong>推延適用法 (Prospective)</strong></p>
+            <p style="font-size:0.94rem; line-height:1.55;">
+              • 僅影響當期及未來期間。<br>
+              • 不追溯重編，不視為錯誤。<br>
+              • <em>例：設備耐用年限、殘值、壞帳率。</em>
+            </p>
+          </div>
+
+          <!-- Error -->
+          <div class="card pure" style="border-top: 4px solid #d96f86;">
+            <div class="card-title" style="font-size:1.06rem; color:#d96f86;">3. 前期錯誤更正</div>
+            <p style="font-size:0.96rem; margin-bottom:4px;"><strong>前期損益調整 (Restatement)</strong></p>
+            <p style="font-size:0.94rem; line-height:1.55;">
+              • 算術計算錯誤、遺漏或誤用準則。<br>
+              • 重編前期報表，調整期初保留盈餘。<br>
+              • <em>以稅後淨額 (Net of Tax) 列示。</em>
+            </p>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img2_char02.png" alt="助教" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-ta">學習助教</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">兔兔助教速記口訣 🐰</div>
+            <div class="dialogue-text">
+              「請大家背好口訣：<strong>『政策要追溯、估計看未來、錯誤當前期更正』</strong>！廠房折舊年限因技術進步縮短是正常估計修正，千萬不要把它當成前期錯誤去追溯重編喔！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 11: 其他綜合損益 (OCI) 與兩大表達途徑
+         ========================================== -->
+    <section class="slide" data-slide="11" data-notes="詳細剖析 Comprehensive Income = Net Income + OCI。說明單一連續報表法與兩張分立報表法的優缺點與實務選擇。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 5 · 權益報表串接</span>
+          <h1 class="slide-h1">其他綜合損益 (OCI) 與兩大表達途徑 🌈</h1>
+          <div class="slide-subtitle">Comprehensive Income · 超越傳統損益表：繞過淨利的未實現權益變動</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>💎 OCI 與 AOCI</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- OCI Definition -->
+          <div class="card pure">
+            <div class="card-title">🌟 綜合損益核心公式</div>
+            <div class="code-box" style="margin-bottom:8px; font-size:0.96rem; text-align:center;">
+              $$\text{綜合損益} = \text{本期淨利 (Net Income)} + \text{其他綜合損益 (OCI)}$$
+            </div>
+            <ul>
+              <li><strong>繞過損益表</strong>：暫不列入本期淨利之未實現利得/損失（如 FVOCI 金融資產評價、國外營運機構換算差額）。</li>
+              <li><strong>累計歸宿</strong>：本期淨利累計於<strong>保留盈餘 (RE)</strong>；OCI 累計於<strong>累計其他綜合損益 (AOCI)</strong>！</li>
+            </ul>
+          </div>
+
+          <!-- 2 Approaches -->
+          <div class="card alt">
+            <div class="card-title">📑 IAS 1 規範之兩大表達途徑</div>
+            <ul>
+              <li><strong>單一連續報表法 (One Statement)</strong>：
+                <div style="font-size:0.94rem; color:var(--text-muted); margin-top:3px; line-height:1.5;">在一張表內先算本期淨利，再接續列示 OCI 得出綜合損益（缺點：淨利常被埋在中間）。</div>
+              </li>
+              <li><strong>兩張分立連續報表法 (Two Statement)</strong>：
+                <div style="font-size:0.94rem; color:var(--text-muted); margin-top:3px; line-height:1.5;">獨立損益表結算淨利 $\rightarrow$ 緊接著第二張獨立的綜合損益表（實務主流，凸顯傳統淨利地位）。</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img4_char01.png" alt="會計師" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-auditor">執業會計師</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">張會計師深度點評 💼</div>
+            <div class="dialogue-text">
+              「OCI 是未實現但確實影響公司淨值的項目。它最終會累積在資產負債表的『AOCI』專項，與保留盈餘並列，是頂尖投資人檢驗公司真實身價的必看之地！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 12: 課堂互動小擂台 (Interactive Quiz)
+         ========================================== -->
+    <section class="slide" data-slide="12" data-notes="讓聽眾現場互動選擇，檢驗第二章核心知識點。點擊選項即可立即顯示判定、解析與角色表情！">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Interactive Quiz · 課堂即時檢測</span>
+          <h1 class="slide-h1">觀念小擂台：何者應「以稅後淨額」單獨列於繼續營業之後？ 🎯</h1>
+          <div class="slide-subtitle">測試你對損益表階梯位置、停業單位與所得稅分攤的精準判斷力</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>🏆 互動挑戰</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="grid-template-columns: 1.25fr 1fr; gap: 16px; align-items: start;">
+          <div class="quiz-options">
+            <button class="quiz-btn" onclick="checkAnswer(this, false, 'A')">
+              <span>A. 企業因組織整併所發生之廠房設備減損損失（Restructuring Impairment）</span>
+            </button>
+            <button class="quiz-btn" onclick="checkAnswer(this, false, 'B')">
+              <span>B. 廠房設備耐用年限因技術進步縮短所產生之額外折舊費用</span>
+            </button>
+            <button class="quiz-btn" onclick="checkAnswer(this, true, 'C')">
+              <span>C. 符合處分條件之重大獨立事業部停業單位損益（Discontinued Operations）</span>
+            </button>
+            <button class="quiz-btn" onclick="checkAnswer(this, false, 'D')">
+              <span>D. 本期因海外市場大擴張所增加之巨額業務人員銷售佣金</span>
+            </button>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div id="quiz-result" class="quiz-feedback">
+              💡 請點選左側選項進行測驗！
+            </div>
+
+            <div class="dialogue-box" style="margin-top:0;">
+              <div class="dialogue-avatar-wrapper">
+                <img src="../../assets/img1_char05.png" alt="教授" class="dialogue-avatar" id="quiz-avatar">
+                <span class="dialogue-role-badge badge-prof" id="quiz-badge">主講教授</span>
+              </div>
+              <div class="dialogue-content">
+                <div class="dialogue-name" id="quiz-speaker">柯教授解題引導 🧸</div>
+                <div class="dialogue-text" id="quiz-explanation">
+                  「請牢記多步驟階梯：選項 A 屬於其他費損；選項 B 是會計估計變動納入本期營業費用；選項 D 是正常推銷費用；<strong>只有選項 C（停業單位）必須以稅後淨額單獨成項列示於繼續營業部門淨利之後</strong>！」
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 13: 全章學習精要 Recap 與結語
+         ========================================== -->
+    <section class="slide" data-slide="13" data-notes="回顧第二章全章五大板塊重點，慶祝學生完成學習，預告第三章資產負債表！">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 6 · 總結與展望</span>
+          <h1 class="slide-h1">第二章全景學習精要與下一站預告 🌸</h1>
+          <div class="slide-subtitle">掌握損益動態藍圖，邁向資產負債表與現金流量表殿堂</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>🎉 Chapter 2 完成</span>
+        </div>
+      </div>
+
+      <div class="slide-body" style="justify-content: center;">
+        <div class="grid-2" style="align-items: center;">
+          <div class="card pure">
+            <div class="card-title">🌟 第二章必考精華 Recap</div>
+            <ul style="font-size:0.98rem; line-height:1.55;">
+              <li><strong>多步驟獲利階梯</strong>：毛利 $\rightarrow$ 營業利益 $\rightarrow$ 稅前 $\rightarrow$ 繼續營業淨利 $\rightarrow$ 本期淨利。</li>
+              <li><strong>停業單位損益 (IFRS 5)</strong>：三大要件，單獨以<strong>稅後淨額</strong>列報，EPS 須拆分。</li>
+              <li><strong>期間內所得稅分攤</strong>：「讓稅追隨所得」，分別分攤至繼續營業、停業單位與 OCI。</li>
+              <li><strong>會計變動三劃分 (IAS 8)</strong>：政策變動追溯重編；估計變動推延未來；錯誤當前期更正。</li>
+              <li><strong>綜合損益 (OCI)</strong>：本期淨利流入保留盈餘；OCI 流入 AOCI，雙軌健全權益體系。</li>
+            </ul>
+          </div>
+
+          <div class="card alt" style="align-items:center; text-align:center; padding:18px 24px;">
+            <img src="../../assets/img1_char06.png" alt="Cheers" style="width:140px; margin-bottom:8px;">
+            <div style="font-size:1.15rem; font-weight:800; color:var(--text-main);">
+              「恭喜各位同學完成第二章！」
+            </div>
+            <p style="font-size:0.94rem; color:var(--text-muted); margin-top:4px; max-width:360px; line-height:1.5;">
+              掌握了損益表的獲利純度與 OCI，後續進入資產負債表與現金流量表，就能游刃有餘地穿梭於各表勾稽之中！
+            </p>
+            <div style="margin-top:12px;">
+              <button class="nav-btn" style="display:inline-flex;" onclick="goToSlide(1)">
+                <span>🔄 重新回顧第一張投影片</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer Nav Controls -->
+  <footer>
+    <div class="nav-controls">
+      <button id="btn-prev" class="nav-btn" onclick="prevSlide()">
+        <span>◀ 上一張</span>
+      </button>
+      <button id="btn-next" class="nav-btn" onclick="nextSlide()">
+        <span>下一張 ▶</span>
+      </button>
+    </div>
+    
+    <div class="slide-indicator">
+      SLIDE <span id="current-slide-num" style="color:var(--primary); font-weight:800;">1</span> / <span id="total-slides-num">13</span>
+    </div>
+
+    <div>
+      <span style="font-size:0.80rem; color:var(--text-muted);">
+        ⌨️ 導航：方向鍵 / Space / Click
+      </span>
+    </div>
+  </footer>
+
+  <!-- Speaker Notes Modal -->
+  <div id="notes-modal">
+    <h3>
+      <span>📝 演講備忘錄 (Speaker Notes)</span>
+      <button style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:1.1rem;" onclick="toggleNotes()">✕</button>
+    </h3>
+    <div id="notes-content" style="font-size:0.84rem; line-height:1.5; color:var(--text-main); margin-top:8px;">
+      講稿加載中...
+    </div>
+  </div>
+
+  <!-- Overview Grid Modal -->
+  <div id="overview-modal">
+    <div style="max-width:1200px; margin:0 auto 16px; display:flex; justify-content:space-between; align-items:center;">
+      <h2 style="font-size:1.25rem; font-weight:900; color:var(--primary);">🗂️ 投影片縮圖總覽導航</h2>
+      <button class="btn-header" onclick="toggleOverview()">✕ 關閉總覽</button>
+    </div>
+    <div class="overview-grid" id="overview-grid">
+      <!-- Generated dynamically by JS -->
+    </div>
+  </div>
+
+  <script>
+    // State
+    let currentSlide = 1;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    document.getElementById('total-slides-num').innerText = totalSlides;
+
+    // Support URL Hash (#1 ~ #13)
+    const hashMatch = window.location.hash.match(/#(\d+)/);
+    if (hashMatch) {
+      const target = parseInt(hashMatch[1], 10);
+      if (target >= 1 && target <= totalSlides) currentSlide = target;
+    }
+
+    // Switch Slide Function
+    function updateSlide() {
+      slides.forEach((s, idx) => {
+        const slideNum = idx + 1;
+        if (slideNum === currentSlide) {
+          s.classList.add('active');
+        } else {
+          s.classList.remove('active');
+        }
+      });
+
+      // Update counters & progress
+      document.getElementById('current-slide-num').innerText = currentSlide;
+      const progressPercent = ((currentSlide - 1) / (totalSlides - 1)) * 100;
+      document.getElementById('progress-bar').style.width = progressPercent + '%';
+
+      // Update button disabled state
+      document.getElementById('btn-prev').disabled = (currentSlide === 1);
+      document.getElementById('btn-next').disabled = (currentSlide === totalSlides);
+      history.replaceState(null, '', '#' + currentSlide);
+
+      // Update notes
+      const activeSlideElem = document.querySelector(`.slide[data-slide="${currentSlide}"]`);
+      if (activeSlideElem) {
+        const noteText = activeSlideElem.getAttribute('data-notes') || '本頁無特定講稿備忘錄。';
+        document.getElementById('notes-content').innerText = noteText;
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        currentSlide++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    function goToSlide(num) {
+      if (num >= 1 && num <= totalSlides) {
+        currentSlide = num;
+        updateSlide();
+        closeModals();
+      }
+    }
+
+    // Quiz Check
+    function checkAnswer(btn, isCorrect, choice) {
+      const parent = btn.parentElement;
+      const buttons = parent.querySelectorAll('.quiz-btn');
+      buttons.forEach(b => {
+        b.disabled = true;
+      });
+
+      const resultBox = document.getElementById('quiz-result');
+      resultBox.style.display = 'block';
+
+      const avatar = document.getElementById('quiz-avatar');
+      const speaker = document.getElementById('quiz-speaker');
+      const explanation = document.getElementById('quiz-explanation');
+
+      if (isCorrect) {
+        btn.classList.add('correct');
+        resultBox.style.background = '#ecfdf5';
+        resultBox.style.border = '1.5px solid #34d399';
+        resultBox.style.color = '#065f46';
+        resultBox.innerHTML = `<strong>🎉 太棒了！回答完全正確！</strong> 選項 C（停業單位損益）依據 IFRS 5 規範，<strong>必須以稅後淨額 (Net of Tax) 單獨列示於繼續營業部門淨利之後</strong>！`;
+        
+        avatar.src = '../../assets/img1_char01.png';
+        speaker.innerText = '柯教授開心讚賞 🌸';
+        explanation.innerText = '「太厲害了！完全抓到精髓！停業單位屬於不可持續項目，單獨以稅後淨額成項，能幫助分析師一眼看清企業未來的可持續獲利實力！」';
+      } else {
+        btn.classList.add('wrong');
+        buttons[2].classList.add('correct');
+        resultBox.style.background = '#fef2f2';
+        resultBox.style.border = '1.5px solid #f87171';
+        resultBox.style.color = '#991b1b';
+        resultBox.innerHTML = `<strong>⚠️ 答錯囉！正確答案是 (C)</strong> 選項 A 屬於其他收益及費損（營業利益之前）；選項 B 折舊估計修正屬於營業費用；選項 D 屬於推銷費用。只有選項 C（停業單位）單獨以稅後淨額列示於繼續營業部門淨利之後。`;
+        
+        avatar.src = '../../assets/img2_char04.png';
+        const badge = document.getElementById('quiz-badge');
+        badge.className = 'dialogue-role-badge badge-ta';
+        badge.innerText = '學習助教';
+        speaker.innerText = '兔兔助教貼心提醒 🐰';
+        explanation.innerText = '「別灰心！再記一次口訣：重組減損本業扣、折舊估計正常攤、停業單位稅後單獨列！下次一定能做對！」';
+      }
+    }
+
+    // Modals
+    function toggleNotes() {
+      const m = document.getElementById('notes-modal');
+      m.style.display = (m.style.display === 'block') ? 'none' : 'block';
+    }
+
+    function toggleOverview() {
+      const m = document.getElementById('overview-modal');
+      m.style.display = (m.style.display === 'block') ? 'none' : 'block';
+    }
+
+    function closeModals() {
+      document.getElementById('notes-modal').style.display = 'none';
+      document.getElementById('overview-modal').style.display = 'none';
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+          alert(`無法進入全螢幕：${err.message}`);
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    // Build Overview Grid
+    function generateOverview() {
+      const grid = document.getElementById('overview-grid');
+      grid.innerHTML = '';
+      slides.forEach((s, idx) => {
+        const num = idx + 1;
+        const title = s.querySelector('.slide-h1')?.innerText || `Slide ${num}`;
+        const card = document.createElement('div');
+        card.className = 'overview-card';
+        card.onclick = () => goToSlide(num);
+        card.innerHTML = `
+          <div class="overview-num">SLIDE ${num} / ${totalSlides}</div>
+          <div class="overview-title">${title}</div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key.toLowerCase() === 'f') {
+        toggleFullscreen();
+      } else if (e.key.toLowerCase() === 'n') {
+        toggleNotes();
+      } else if (e.key.toLowerCase() === 'o') {
+        toggleOverview();
+      } else if (e.key === 'Escape') {
+        closeModals();
+      }
+    });
+
+    // Touch swipe support
+    let touchStartX = 0;
+    let touchEndX = 0;
+    window.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+    window.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      if (touchStartX - touchEndX > 50) nextSlide();
+      if (touchEndX - touchStartX > 50) prevSlide();
+    });
+
+    // Init
+    generateOverview();
+    updateSlide();
+  </script>
+</body>
+</html>

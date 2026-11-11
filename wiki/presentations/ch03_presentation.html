@@ -1,0 +1,1602 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="milktea">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 3: 財務狀況表與現金流量表 | 中級會計學手帳風簡報</title>
+  
+  <!-- KaTeX for LaTeX Math -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+          onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+  
+  <!-- Google Fonts: 圓潤柔和的日系手帳繁中字體 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================
+       風格：日系燕麥奶茶手帳風 (Cozy Milk Tea Journal Theme)
+       ========================================================= */
+    :root {
+      --bg-page: #f7f0e6;
+      --bg-slide: #fffdf9;
+      --bg-card: #f4e8d8;
+      --bg-card-alt: #ebd8c2;
+      --bg-card-pure: #ffffff;
+      --text-main: #3e2d20;
+      --text-muted: #7e6957;
+      --primary: #ad7448;
+      --primary-soft: #f5e5d5;
+      --primary-border: #d8c0aa;
+      --accent-caramel: #c88349;
+      --accent-green: #528c61;
+      --accent-green-soft: #e2efe5;
+      --accent-pink: #d96f86;
+      --accent-pink-soft: #fde8ed;
+      --accent-blue: #2563eb;
+      --accent-blue-soft: #dbeafe;
+      --washi-color: rgba(237, 206, 142, 0.85);
+      --card-radius: 18px;
+      --shadow-soft: 0 10px 28px rgba(138, 102, 74, 0.1);
+      --shadow-card: 0 4px 12px rgba(138, 102, 74, 0.06);
+      --badge-bg: #eddccb;
+      --font-main: 'M PLUS Rounded 1c', 'Noto Sans TC', system-ui, sans-serif;
+      --font-code: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      background: var(--bg-page);
+      color: var(--text-main);
+      font-family: var(--font-main);
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden; /* STRICTLY ZERO SCROLL */
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Top Progress Bar */
+    #progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: rgba(173, 116, 72, 0.15);
+      z-index: 1000;
+    }
+    #progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #c29b7f, #ad7448, #f2cb74);
+      transition: width 0.3s ease;
+    }
+
+    /* Header Nav */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 24px;
+      height: 48px;
+      background: rgba(255, 253, 249, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 2px dashed var(--primary-border);
+      z-index: 100;
+      flex-shrink: 0;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge-course {
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 0.76rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 50px;
+      letter-spacing: 0.05em;
+    }
+    .chapter-title {
+      font-size: 1.00rem;
+      color: var(--text-main);
+      font-weight: 800;
+    }
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-header {
+      background: var(--bg-card);
+      border: 1.5px solid var(--primary-border);
+      color: var(--text-main);
+      padding: 5px 14px;
+      border-radius: 50px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .btn-header:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    /* Main Slide Stage (Calculated viewport fit) */
+    #slide-stage {
+      flex: 1;
+      width: 100%;
+      height: calc(100vh - 96px);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 16px;
+      box-sizing: border-box;
+    }
+
+    /* The Slide Card */
+    .slide {
+      display: none;
+      width: min(1380px, calc(100vw - 32px));
+      height: calc(100vh - 104px);
+      max-height: 890px;
+      min-height: 520px;
+      flex: 0 0 auto; /* PREVENT FLEX SHRINK */
+      background: var(--bg-slide);
+      border: 2.5px solid var(--primary-border);
+      border-radius: var(--card-radius);
+      padding: 16px 28px;
+      box-shadow: var(--shadow-soft);
+      flex-direction: column;
+      overflow: hidden; /* ZERO SCROLL */
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    .slide.active {
+      display: flex;
+      animation: slideIn 0.25s ease-out forwards;
+      z-index: 10;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Washi Tape (紙膠帶裝飾) */
+    .washi-tape {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-0.8deg);
+      width: 150px;
+      height: 24px;
+      background: var(--washi-color);
+      border-left: 2px dashed rgba(66, 48, 35, 0.15);
+      border-right: 2px dashed rgba(66, 48, 35, 0.15);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      z-index: 20;
+    }
+
+    /* Sticker Stamp */
+    .sticker-stamp {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ffffff;
+      border: 1.5px dashed var(--primary);
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 0.90rem;
+      font-weight: 800;
+      color: var(--primary);
+      transform: rotate(-1.5deg);
+    }
+
+    /* Slide Header */
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1.5px dashed var(--primary-soft);
+      flex-shrink: 0;
+    }
+    .slide-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--badge-bg);
+      color: var(--primary);
+      font-size: 0.90rem;
+      font-weight: 800;
+      padding: 3px 12px;
+      border-radius: 50px;
+      letter-spacing: 0.04em;
+    }
+    .slide-h1 {
+      font-size: 1.76rem;
+      font-weight: 900;
+      color: var(--text-main);
+      line-height: 1.25;
+      margin-top: 3px;
+    }
+    .slide-subtitle {
+      font-size: 1.02rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+      font-weight: 500;
+    }
+
+    /* Content Layouts */
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      overflow: hidden; /* Strictly within viewport */
+      user-select: text;
+      min-height: 0;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    /* Cute Cards */
+    .card {
+      background: var(--bg-card);
+      border-radius: 14px;
+      padding: 12px 18px;
+      border: 1.5px solid transparent;
+      box-shadow: var(--shadow-card);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover {
+      border-color: var(--primary-border);
+    }
+    .card.alt {
+      background: var(--bg-card-alt);
+    }
+    .card.pure {
+      background: var(--bg-card-pure);
+      border: 1.5px solid var(--primary-soft);
+    }
+
+    .card-title {
+      font-size: 1.20rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .card p, .card li {
+      font-size: 1.04rem;
+      line-height: 1.50;
+      color: var(--text-main);
+    }
+    .card ul, .card ol {
+      padding-left: 20px;
+    }
+    .card li {
+      margin-bottom: 4px;
+    }
+
+    /* Dialogue Box */
+    .dialogue-box {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 9px 18px;
+      border: 1.5px solid var(--primary-border);
+      box-shadow: 0 4px 12px rgba(138, 102, 74, 0.06);
+      flex-shrink: 0;
+    }
+    .dialogue-avatar-wrapper {
+      position: relative;
+      flex-shrink: 0;
+    }
+    .dialogue-avatar {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 6px rgba(66, 48, 35, 0.12);
+      object-fit: cover;
+      display: block;
+    }
+    .dialogue-role-badge {
+      position: absolute;
+      bottom: -3px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.70rem;
+      font-weight: 800;
+      padding: 1px 7px;
+      border-radius: 8px;
+      white-space: nowrap;
+    }
+    .badge-prof { background: #fbe0e6; color: #b84366; }
+    .badge-ta { background: #e0f2fe; color: #0284c7; }
+    .badge-student { background: #fef3c7; color: #b45309; }
+    .badge-auditor { background: #dcfce7; color: #15803d; }
+
+    .dialogue-content {
+      flex: 1;
+    }
+    .dialogue-name {
+      font-size: 1.04rem;
+      font-weight: 800;
+      margin-bottom: 3px;
+      color: var(--primary);
+    }
+    .dialogue-text {
+      font-size: 1.02rem;
+      line-height: 1.50;
+      color: var(--text-main);
+    }
+
+    /* Tables */
+    .pastel-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.94rem;
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1.5px solid var(--primary-border);
+    }
+    .pastel-table th {
+      background: var(--primary-soft);
+      color: var(--text-main);
+      text-align: left;
+      padding: 6px 12px;
+      font-weight: 800;
+      border-bottom: 1.5px solid var(--primary-border);
+      font-size: 0.96rem;
+    }
+    .pastel-table td {
+      padding: 5px 12px;
+      border-bottom: 1px solid var(--primary-soft);
+      color: var(--text-main);
+    }
+
+    /* Code Box */
+    .code-box {
+      background: #ffffff;
+      border: 1.5px dashed var(--primary-border);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-family: var(--font-code);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: var(--text-main);
+    }
+
+    /* Quiz Arena */
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .quiz-btn {
+      background: #ffffff;
+      border: 1.5px solid var(--primary-border);
+      color: var(--text-main);
+      padding: 11px 18px;
+      border-radius: 12px;
+      text-align: left;
+      font-size: 1.02rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .quiz-btn:hover {
+      background: var(--primary-soft);
+      transform: translateX(3px);
+    }
+    .quiz-btn.correct {
+      background: #ecfdf5 !important;
+      border-color: #34d399 !important;
+      color: #065f46 !important;
+      font-weight: 800;
+    }
+    .quiz-btn.wrong {
+      background: #fef2f2 !important;
+      border-color: #f87171 !important;
+      color: #991b1b !important;
+    }
+    .quiz-feedback {
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 0.98rem;
+      display: none;
+      line-height: 1.50;
+    }
+
+    /* Footer Nav */
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 28px;
+      height: 48px;
+      background: rgba(255, 253, 249, 0.95);
+      border-top: 2px dashed var(--primary-border);
+      z-index: 100;
+      flex-shrink: 0;
+    }
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-btn {
+      background: var(--bg-card);
+      border: 1.5px solid var(--primary-border);
+      color: var(--text-main);
+      padding: 5px 16px;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+    .nav-btn:hover:not(:disabled) {
+      background: var(--primary);
+      color: #ffffff;
+    }
+    .nav-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+    .slide-indicator {
+      font-family: var(--font-code);
+      font-size: 0.94rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    /* Notes Modal */
+    #notes-modal {
+      display: none;
+      position: fixed;
+      bottom: 56px;
+      right: 24px;
+      width: 380px;
+      max-height: 360px;
+      background: rgba(255, 253, 249, 0.98);
+      border: 2px solid var(--primary);
+      border-radius: 14px;
+      box-shadow: 0 16px 36px rgba(66, 48, 35, 0.2);
+      padding: 14px 18px;
+      z-index: 500;
+      overflow-y: auto;
+      user-select: text;
+    }
+    #notes-modal h3 {
+      font-size: 0.92rem;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Overview Modal */
+    #overview-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(247, 240, 230, 0.96);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      padding: 30px;
+      overflow-y: auto;
+    }
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .overview-card {
+      background: #ffffff;
+      border: 1.5px solid var(--primary-border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .overview-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .overview-num {
+      font-size: 0.72rem;
+      color: var(--primary);
+      font-weight: 800;
+    }
+    .overview-title {
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Progress Bar -->
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="brand">
+      <span class="badge-course">中會 IFRS 5/e</span>
+      <span class="chapter-title">Chapter 3 · 財務狀況表與現金流量表 🏛️</span>
+    </div>
+    <div class="header-controls">
+      <button class="btn-header" onclick="toggleOverview()" title="投影片總覽導航 [O]">
+        <span>🗂️ 總覽 (O)</span>
+      </button>
+      <button class="btn-header" onclick="toggleNotes()" title="演講講稿提示 [N]">
+        <span>📝 講稿 (N)</span>
+      </button>
+      <button class="btn-header" onclick="toggleFullscreen()" title="全螢幕切換 [F]">
+        <span>⛶ 全螢幕 (F)</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Slide Stage -->
+  <main id="slide-stage">
+
+    <!-- ==========================================
+         Slide 1: 課程封面
+         ========================================== -->
+    <section class="slide active" data-slide="1" data-notes="歡迎大家進入第三章。損益表告訴我們企業賺不賺錢，但財務狀況表與現金流量表才真正決定企業能不能在金融市場中生存！">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">📖 Kieso, Weygandt, Warfield · 5th Edition</span>
+          <h1 class="slide-h1">財務狀況表與現金流量表 🏛️</h1>
+          <div class="slide-subtitle">Statement of Financial Position & Statement of Cash Flows · 掌握資產質量與真實造血能力</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>✨ 雙星合璧</span>
+        </div>
+      </div>
+
+      <div class="slide-body" style="justify-content: center;">
+        <div class="grid-2" style="align-items: center;">
+          <div>
+            <div class="card pure" style="margin-bottom: 10px;">
+              <div class="card-title">☕ 為什麼第三章決定企業的生存命脈？</div>
+              <p>獲利是「意見」，現金與資產才是<strong>「客觀事實」</strong>：</p>
+              <ul style="margin-top: 6px;">
+                <li><strong>財務狀況表（靜態快照）</strong>：衡量企業的流動性、長期償債能力與財務彈性。</li>
+                <li><strong>現金流量表（動態造血）</strong>：拆解營業、投資與籌資金流，戳破「黑字倒閉」假象。</li>
+                <li><strong>自由現金流量 (FCF)</strong>：衡量企業真正能自由支配的「真金白銀」。</li>
+              </ul>
+            </div>
+
+            <div class="dialogue-box">
+              <div class="dialogue-avatar-wrapper">
+                <img src="../../assets/img1_char01.png" alt="柯教授" class="dialogue-avatar">
+                <span class="dialogue-role-badge badge-prof">主講教授</span>
+              </div>
+              <div class="dialogue-content">
+                <div class="dialogue-name">柯教授的開場引導 🧸</div>
+                <div class="dialogue-text">
+                  「哈囉各位同學！損益表告訴我們企業『賺不賺錢』，但財務狀況表與現金流量表才真正決定企業『能不能活下去』！今天就讓我們一起解鎖這兩大生存密碼！」
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:center;">
+            <div class="card alt" style="align-items:center; text-align:center; padding:16px 24px; max-width:340px;">
+              <img src="../../assets/img1_char02.png" alt="Hero Standee" style="width:140px; margin-bottom:8px;">
+              <div style="font-size:1rem; font-weight:800; color:var(--text-main);">
+                「真金白銀，看懂企業體質！」
+              </div>
+              <div style="font-size:0.80rem; color:var(--text-muted); margin-top:3px;">
+                全章 13 頁暖心手帳式重點精講
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 2: 決策價值與三大限制
+         ========================================== -->
+    <section class="slide" data-slide="2" data-notes="詳細剖析資產負債表評估企業三性（流動性、償債能力、財務彈性）的核心用途，以及歷史成本與主觀估計帶來的限制。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 1 · 財務狀況表價值</span>
+          <h1 class="slide-h1">財務狀況表的決策價值與三大限制 ⚖️</h1>
+          <div class="slide-subtitle">Usefulness vs. Limitations · 評估企業抗風險體質的三大維度</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>📊 體質診斷書</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="card pure">
+            <div class="card-title">💡 三大核心評估用途 (Usefulness)</div>
+            <ul>
+              <li><strong>流動性 (Liquidity)</strong>：資產在不折價情況下迅速變現以償付到期短期債務之能力。</li>
+              <li><strong>長期償債能力 (Solvency)</strong>：企業長期債務到期時，本金與利息的清償保障程度。</li>
+              <li><strong>財務彈性 (Financial Flexibility)</strong>：面對突發經營危機或意外投資機會時，調整資金策略的能力。</li>
+            </ul>
+          </div>
+
+          <div class="card alt">
+            <div class="card-title" style="color:#d96f86;">⚠️ 三大先天限制 (Limitations)</div>
+            <ul>
+              <li><strong>多數項目以歷史成本計價</strong>：未反映當前公允價值，房地產增值無法反映在帳面。</li>
+              <li><strong>依賴主觀估計與判斷</strong>：壞帳備抵、折舊年限、未決訴訟之負債準備充滿估計誤差。</li>
+              <li><strong>遺漏關鍵財務價值資產</strong>：優秀人力資本、工程師團隊、品牌忠誠度無法量化入表。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img3_char01.png" alt="學生" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-student">提問學生</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">小安同學提問 💡</div>
+            <div class="dialogue-text">
+              「老師，這幾年許多科技巨頭最寶貴的人才跟專利算法，為什麼在資產負債表上都看不到呢？」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 3: 資產要素與分類
+         ========================================== -->
+    <section class="slide" data-slide="3" data-notes="解說非流動資產四大類與流動資產五大項目。重點強調營業週期標準與流動資產的順序排列。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 1 · 資產板塊劃分</span>
+          <h1 class="slide-h1">資產要素分類：非流動資產 vs 流動資產 📦</h1>
+          <div class="slide-subtitle">Classification of Assets · 一年或一正常營業週期（取較長者）之黃金準則</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>📐 資產流動性排序</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Non-Current -->
+          <div class="card pure" style="border-left: 5px solid #ad7448;">
+            <div class="card-title">🏢 非流動資產 (Non-Current Assets)</div>
+            <p style="font-size:0.96rem; margin-bottom:6px;">預期變現或耗用期間超過一年或一營業週期：</p>
+            <ul>
+              <li><strong>長期投資 (Investments)</strong>：長期股權債券、閒置土地、償債基金 (Sinking Fund)。</li>
+              <li><strong>不動產廠房及設備 (PPE)</strong>：供營業使用之有形資產（土地不提折舊，其餘提折舊）。</li>
+              <li><strong>無形資產 (Intangibles)</strong>：專利權、商標權、商譽（有限年限攤銷，非確定年限減損測試）。</li>
+              <li><strong>其他資產</strong>：長期預付租金、催收款項。</li>
+            </ul>
+          </div>
+
+          <!-- Current -->
+          <div class="card pure" style="border-left: 5px solid #528c61;">
+            <div class="card-title" style="color:#528c61;">⚡ 流動資產 (Current Assets)</div>
+            <p style="font-size:0.96rem; margin-bottom:6px;">依變現順序（或流動性反向）常態列示：</p>
+            <ul>
+              <li><strong>預付費用 (Prepaid Expenses)</strong>：預付保險、辦公耗材（成本計價）。</li>
+              <li><strong>存貨 (Inventories)</strong>：原物料、在製品、製成品（成本與淨變現價值 LCNRV 孰低）。</li>
+              <li><strong>應收帳款 (Receivables)</strong>：扣除預期信用損失備抵後之可收回淨額。</li>
+              <li><strong>短期投資 (Short-Term Investments)</strong>：公允價值評價之流動金融資產。</li>
+              <li><strong>現金及約當現金 (Cash & Equivalents)</strong>：3個月內到期、高流動性投資。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img2_char01.png" alt="助教" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-ta">學習助教</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">兔兔助教考點提示 🐰</div>
+            <div class="dialogue-text">
+              「請記住流動資產的黃金標準：<strong>『一年或一正常營業週期，兩者取較長者』</strong>！造船業或釀酒業週期長達兩年，相關在製品存貨仍屬流動資產喔！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 4: 負債與權益結構分類
+         ========================================== -->
+    <section class="slide" data-slide="4" data-notes="剖析流動負債與非流動負債的劃分。強調一年內到期長期借款的重分類，並介紹權益六大構成。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 1 · 索償權結構</span>
+          <h1 class="slide-h1">負債與權益結構分類：誰對企業擁有索償權？ 📑</h1>
+          <div class="slide-subtitle">Liabilities & Equity · 債權人優先受償 vs 股東剩餘權益之六大板塊</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>⚖️ 資本結構全貌</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Liabilities -->
+          <div class="card">
+            <div class="card-title">🧾 負債板塊 (Liabilities)</div>
+            <ul>
+              <li><strong>流動負債 (Current Liabilities)</strong>：預期一年或營業週期內清償者（應付帳款、短期借款、預收款項、<strong>一年內到期之長期負債</strong>）。</li>
+              <li><strong>非流動負債 (Non-Current Liabilities)</strong>：特定融資活動產生（應付公司債、長期借款、租賃負債、員工確定福利義務）。</li>
+              <li><em>重要提醒：短期負債若有意圖且有融資合約展期至一年以上，方可列為非流動。</em></li>
+            </ul>
+          </div>
+
+          <!-- Equity -->
+          <div class="card alt">
+            <div class="card-title">👑 權益六大構成板塊 (Equity)</div>
+            <ul>
+              <li><strong>股本 (Share Capital)</strong>：發行股份之面額（普通股、特別股）。</li>
+              <li><strong>資本公積 (Share Premium)</strong>：溢價發行股票之超額出資。</li>
+              <li><strong>保留盈餘 (Retained Earnings)</strong>：歷年未分配之累積營運利潤。</li>
+              <li><strong>累計其他綜合損益 (AOCI)</strong>：未實現利得損失之權益專項。</li>
+              <li><strong>庫藏股 (Treasury Shares)</strong>：買回本公司股票（權益減項）。</li>
+              <li><strong>非控制權益 (NCI)</strong>：子公司中未被母公司持有之少數股權。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img4_char03.png" alt="會計師" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-auditor">執業會計師</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">張會計師查核實務 💼</div>
+            <div class="dialogue-text">
+              「查核實務中，一年內到期的長期借款必須重分類為<strong>『一年內到期之長期負債（流動負債）』</strong>，否則會嚴重美化營運資金與流動比率、誤導銀行評估信用風險！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 5: 現金流量表之核心目的與三大活動
+         ========================================== -->
+    <section class="slide" data-slide="5" data-notes="詳細說明現金流量表的三大活動。回答三個問題：錢從哪裡來？花去哪裡？餘額變動多少？營業現金流是核心造血源泉。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 2 · 現金流量表 (IAS 7)</span>
+          <h1 class="slide-h1">現金流量表之核心目的與三大活動 🌊</h1>
+          <div class="slide-subtitle">Statement of Cash Flows · 錢從哪裡來？花去哪裡？餘額變動多少？</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>💧 企業造血功能</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-3">
+          <!-- Operating -->
+          <div class="card pure" style="border-top: 4px solid #528c61;">
+            <div class="card-title" style="font-size:1.06rem; color:#528c61;">1. 營業活動 (Operating)</div>
+            <p style="font-size:0.96rem; margin-bottom:6px;"><strong>涉及損益決定之交易與營運</strong></p>
+            <p style="font-size:0.94rem; line-height:1.55;">
+              • 現金流入：銷貨收現、勞務收費、收取利息與股利。<br>
+              • 現金流出：支付進貨款、員工薪資、租金水電、繳納所得稅。<br>
+              • <em>衡量企業本業是否具備自體造血機能。</em>
+            </p>
+          </div>
+
+          <!-- Investing -->
+          <div class="card pure" style="border-top: 4px solid #ad7448;">
+            <div class="card-title" style="font-size:1.06rem;">2. 投資活動 (Investing)</div>
+            <p style="font-size:0.96rem; margin-bottom:6px;"><strong>長期資產與投資之購置處分</strong></p>
+            <p style="font-size:0.94rem; line-height:1.55;">
+              • 現金流入：出售不動產廠房設備、處分其他公司股權債券、收回貸款本金。<br>
+              • 現金流出：購置廠房設備、購買非流動金融資產、對外放款。<br>
+              • <em>反映企業未來的擴張企圖心。</em>
+            </p>
+          </div>
+
+          <!-- Financing -->
+          <div class="card pure" style="border-top: 4px solid #2563eb;">
+            <div class="card-title" style="font-size:1.06rem; color:#2563eb;">3. 籌資活動 (Financing)</div>
+            <p style="font-size:0.96rem; margin-bottom:6px;"><strong>權益與借款規模結構之變動</strong></p>
+            <p style="font-size:0.94rem; line-height:1.55;">
+              • 現金流入：發行新股溢價收現、發行公司債、銀行舉借長期借款。<br>
+              • 現金流出：償還債務本金、買回庫藏股、發放現金股利。<br>
+              • <em>反映企業資本結構之調整。</em>
+            </p>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img1_char03.png" alt="教授" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-prof">主講教授</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">柯教授的洞察 ☕</div>
+            <div class="dialogue-text">
+              「健康的企業通常具有<strong>充沛的營業現金流入（+）</strong>，並將其投入<strong>擴張性投資活動（−）</strong>，再將剩餘資金回饋股東或償債<strong>籌資活動（−）</strong>！這是黃金的『+ − −』造血輪廓！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 6: 現金流量表編製四步驟 (間接法)
+         ========================================== -->
+    <section class="slide" data-slide="6" data-notes="詳細推導間接法（Indirect Method）。由權責基礎淨利出發，加回非現金費用，調整營運資金之反向增減。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 2 · 編製技術核心</span>
+          <h1 class="slide-h1">現金流量表編製四步驟與間接法原理 🔄</h1>
+          <div class="slide-subtitle">Indirect Method · 權責淨利如何精確調節為營業現金流？</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>🧮 間接法調節矩陣</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- 4 Steps -->
+          <div class="card pure">
+            <div class="card-title">📝 編製四大標準步驟</div>
+            <ol style="font-size:0.96rem; line-height:1.55;">
+              <li><strong>決定營業活動淨現金流</strong>：將損益表淨利調節為營業現金收支。</li>
+              <li><strong>決定投資與籌資活動淨現金流</strong>：分析資產負債表非流動科目變動。</li>
+              <li><strong>計算本期現金淨增減數</strong>：三大活動現金流相加。</li>
+              <li><strong>核對期初與期末現金餘額</strong>：驗證與財務狀況表現金餘額完全一致！</li>
+            </ol>
+          </div>
+
+          <!-- Indirect Formula -->
+          <div class="card alt">
+            <div class="card-title">⚡ 間接法反向調節黃金律</div>
+            <div class="code-box" style="font-size:0.92rem; line-height:1.55;">
+              <strong>本期淨利 (Net Income)</strong><br>
+              &nbsp;&nbsp;+ <strong>非現金費用加回</strong>（折舊費用、無形資產攤銷）<br>
+              &nbsp;&nbsp;− <strong>非營業利益扣除</strong> / + <strong>非營業損失加回</strong>（處分資產損益）<br>
+              &nbsp;&nbsp;− <strong>流動資產增加</strong> / + <strong>流動資產減少</strong>（$\Delta$ 應收、$\Delta$ 存貨）<br>
+              &nbsp;&nbsp;+ <strong>流動負債增加</strong> / − <strong>流動負債減少</strong>（$\Delta$ 應付帳款、$\Delta$ 應付費用）<br>
+              $\mathbf{\Longrightarrow}$ <strong>營業活動淨現金流量 (CFO)</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img2_char02.png" alt="助教" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-ta">學習助教</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">兔兔助教解題秘笈 🐰</div>
+            <div class="dialogue-text">
+              「記住口訣：<strong>『非現金費用加回來、資產增加錢被壓走（扣除）、負債增加欠錢延後付（加回）』</strong>！掌握反向調節邏輯，間接法表格一秒套出正解！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 7: 經典案例：為什麼賺錢卻會倒閉？ (Hu Inc.)
+         ========================================== -->
+    <section class="slide" data-slide="7" data-notes="講解 Hu Inc. 經典釋例（Illustration 3.28）。淨利 8 萬，但應收與存貨積壓 17.5 萬，導致營業現金流為負 9.5 萬。揭露黑字倒閉的危險。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 2 · 經典釋例演練</span>
+          <h1 class="slide-h1">經典案例剖析：為什麼賺錢卻會倒閉？ (Hu Inc.) 💥</h1>
+          <div class="slide-subtitle">Illustration 3.28 · 帳面獲利與現金流脫節的致命陷阱「黑字倒閉」</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>🚨 營運資金失控</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Data Table -->
+          <div class="card pure">
+            <div class="card-title">📊 Hu Inc. 營業活動數據調節表</div>
+            <div class="code-box" style="font-size:0.92rem; line-height:1.62;">
+              <strong>本期淨利 (Net Income)</strong> .......................... <strong>HK$ 80,000</strong><br>
+              調節非現金營運資金變動：<br>
+              &nbsp;&nbsp;• 應收帳款大幅增加 (未收現) ............ <span style="color:#d96f86;">(75,000)</span><br>
+              &nbsp;&nbsp;• 存貨大量積壓 (付現囤貨) ............ <span style="color:#d96f86;">(100,000)</span><br>
+              營運資金淨佔用 ................................. <span style="color:#d96f86;">(175,000)</span><br>
+              <strong>營業活動淨現金流量 (CFO)</strong> ................. <span style="color:#d96f86; font-weight:800;">HK$ (95,000)</span>
+            </div>
+          </div>
+
+          <!-- Diagnostic -->
+          <div class="card alt">
+            <div class="card-title" style="color:#d96f86;">⚠️ 診斷：黑字倒閉 (Profitable Bankruptcy)</div>
+            <ul>
+              <li><strong>盲目衝刺銷貨</strong>：為了做出好看的營收放寬信用條件，銷貨全部變成收不回來的應收帳款。</li>
+              <li><strong>盲目囤積存貨</strong>：大量現金壓在倉庫原料與庫存，資金周轉完全斷裂。</li>
+              <li><strong>致命結果</strong>：帳面賺了 8 萬，但帳戶實際透支 9.5 萬！若無銀行緊急融資，下個月薪水與貨款直接跳票！</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img4_char02.png" alt="會計師" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-auditor">執業會計師</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">張會計師查核警訊 💼</div>
+            <div class="dialogue-text">
+              「這就是著名的『黑字倒閉』！淨利是主觀會計估計的產物，而現金流才是客觀生存的血液！查核時只要看到營收增長但營業現金流持續為負，就會立即拉響警報！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 8: 重大非現金投資與籌資活動
+         ========================================== -->
+    <section class="slide" data-slide="8" data-notes="解構重大非現金交易的會計規範。不涉及現金的重大投資籌資交易，嚴禁列入表體，必須於附註充分揭露。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 2 · IAS 7 揭露規範</span>
+          <h1 class="slide-h1">重大非現金投資與籌資活動規範 📜</h1>
+          <div class="slide-subtitle">Significant Non-Cash Activities · 不動一分錢的重大交易，該如何向投資人交待？</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>📑 附註專項揭露</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Types -->
+          <div class="card pure">
+            <div class="card-title">📌 四大經典非現金交易案例</div>
+            <ul>
+              <li><strong>發行普通股購買固定資產</strong>：公司直接增發股票作價換取廠房土地。</li>
+              <li><strong>可轉換公司債轉換為普通股</strong>：債權人將公司債轉為股權，免除還本義務。</li>
+              <li><strong>舉借長期債務以取得資產</strong>：以機器設備為擔保直接辦理分期融資負債。</li>
+              <li><strong>長期非流動資產之互換</strong>：以廠房設備交換其他生產設備。</li>
+            </ul>
+          </div>
+
+          <!-- IAS 7 Rule -->
+          <div class="card alt">
+            <div class="card-title" style="color:#ad7448;">⚖️ IAS 7 嚴格列報準則</div>
+            <ul>
+              <li><strong>禁止列入現金流量表體</strong>：因整筆交易完全無任何現金收付，若強行編入表體會虛增現金流動規模。</li>
+              <li><strong>強制於「附註」中專項充分揭露</strong>：此類交易嚴重影響企業未來資本結構與資產規模，準則強制要求在附註詳細說明！</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img3_char02.png" alt="學生" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-student">提問學生</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">小安同學提問 💡</div>
+            <div class="dialogue-text">
+              「如果公司直接印股票去換一棟 5 億的辦公大樓，完全沒有動到任何現金，這在現金流量表上要寫在哪裡呢？」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 9: 自由現金流量 (Free Cash Flow)
+         ========================================== -->
+    <section class="slide" data-slide="9" data-notes="詳細剖析自由現金流量公式。營業現金流扣除維持產能的資本支出與必要股利，才是企業真正能自主支配的真金白銀。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 3 · 估值核心指標</span>
+          <h1 class="slide-h1">自由現金流量 (Free Cash Flow, FCF) 💎</h1>
+          <div class="slide-subtitle">巴菲特最鍾愛的價值指標 · 扣除必要資本支出後的「真金白銀」</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>⭐ 價值投資核心</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Formula -->
+          <div class="card pure">
+            <div class="card-title">🧮 自由現金流量公式推導</div>
+            <div class="code-box" style="margin-bottom:6px; font-size:0.84rem; text-align:center;">
+              $$\text{FCF} = \text{營業活動淨現金流 (CFO)} - \text{資本支出 (CapEx)} - \text{現金股利}$$
+            </div>
+            <ul>
+              <li><strong>資本支出 (Capital Expenditures)</strong>：維持目前營運產能與競爭力所不可或缺的廠房設備支出。</li>
+              <li><strong>現金股利 (Cash Dividends)</strong>：維持股東基本報酬與市場信心的必要分配。</li>
+            </ul>
+          </div>
+
+          <!-- 4 Usages -->
+          <div class="card alt">
+            <div class="card-title">🎯 自由資金之四大戰略用途</div>
+            <ul>
+              <li><strong>進行額外新事業投資</strong>：併購同業擴大市場版圖。</li>
+              <li><strong>提前清償長期負債</strong>：降低利息費用與財務槓桿風險。</li>
+              <li><strong>買回庫藏股 (Buyback)</strong>：在股價低估時回購股票提升每股淨值。</li>
+              <li><strong>充實流動性儲備</strong>：建立高額現金安全邊際以抵禦景氣黑天鵝。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img1_char04.png" alt="教授" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-prof">主講教授</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">柯教授深度解析 ☕</div>
+            <div class="dialogue-text">
+              「巴菲特最看重的指標就是自由現金流量！扣除了維持工廠運轉的資本支出與必要股利後，剩下的錢才是企業真正能自主支配的『自由資金』，也是現金流折現 (DCF) 模型的核心基石！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 10: 財務比率分析全景 (附錄 3A)
+         ========================================== -->
+    <section class="slide" data-slide="10" data-notes="綜覽附錄 3A 的四大維度財務比率：流動性、活動性、獲利能力、償債保障比率。建立立體診斷思維。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 3 · 附錄 3A 財務比率</span>
+          <h1 class="slide-h1">企業健康儀表板：四大維度財務比率全景 🚗</h1>
+          <div class="slide-subtitle">Financial Ratios Overview · 四輪平衡，企業才能在市場中行穩致遠</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>📐 綜合診斷矩陣</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-4">
+          <!-- Liquidity -->
+          <div class="card pure" style="border-top: 4px solid #528c61;">
+            <div class="card-title" style="font-size:1.04rem; color:#528c61;">1. 流動性比率</div>
+            <p style="font-size:0.94rem; line-height:1.52;">
+              • <strong>流動比率</strong>：流動資產 / 流動負債<br>
+              • <strong>速動比率</strong>：(現金+短投+應收) / 流動負債<br>
+              • <em>衡量即刻還債油量。</em>
+            </p>
+          </div>
+
+          <!-- Activity -->
+          <div class="card pure" style="border-top: 4px solid #ad7448;">
+            <div class="card-title" style="font-size:1.04rem;">2. 活動性比率</div>
+            <p style="font-size:0.94rem; line-height:1.52;">
+              • <strong>應收帳款週轉率</strong>：銷貨 / 平均應收<br>
+              • <strong>存貨週轉率</strong>：銷貨成本 / 平均存貨<br>
+              • <em>衡量資產運轉效率。</em>
+            </p>
+          </div>
+
+          <!-- Profitability -->
+          <div class="card pure" style="border-top: 4px solid #d96f86;">
+            <div class="card-title" style="font-size:1.04rem; color:#d96f86;">3. 獲利能力比率</div>
+            <p style="font-size:0.94rem; line-height:1.52;">
+              • <strong>純益率</strong>：本期淨利 / 營業收入<br>
+              • <strong>總資產報酬率 (ROA)</strong><br>
+              • <strong>權益報酬率 (ROE)</strong><br>
+              • <em>衡量引擎獲利馬力。</em>
+            </p>
+          </div>
+
+          <!-- Coverage -->
+          <div class="card pure" style="border-top: 4px solid #2563eb;">
+            <div class="card-title" style="font-size:1.04rem; color:#2563eb;">4. 償債保障比率</div>
+            <p style="font-size:0.94rem; line-height:1.52;">
+              • <strong>負債比率</strong>：總負債 / 總資產<br>
+              • <strong>利息保障倍數</strong>：EBIT / 利息費用<br>
+              • <strong>現金債務保障比率</strong><br>
+              • <em>衡量車身抗撞抗震度。</em>
+            </p>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img2_char03.png" alt="助教" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-ta">學習助教</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">兔兔助教的比喻 🐰</div>
+            <div class="dialogue-text">
+              「財務比率就像汽車儀表板：流動比率看油量夠不夠、週轉率看跑得快不快、負債比率看車身重不重！四個輪子平衡，企業才能開得長長久久！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 11: 財務報表大三通：三表勾稽網絡
+         ========================================== -->
+    <section class="slide" data-slide="11" data-notes="串連損益表、資產負債表與現金流量表的大三通勾稽關係。淨利連向保留盈餘，現金流量表期末現金連向資產負債表。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 3 · 報表大三通</span>
+          <h1 class="slide-h1">財務報表大三通：三表勾稽網絡 (Interrelationships) 🌐</h1>
+          <div class="slide-subtitle">綜合損益表、財務狀況表與現金流量表的嚴密勾稽通道</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>🔗 報表立體網絡</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Flow Chart Card -->
+          <div class="card pure">
+            <div class="card-title">🔄 三大報表黃金勾稽通道</div>
+            <div class="code-box" style="font-size:0.94rem; line-height:1.62;">
+              1. <strong>綜合損益表 $\Longrightarrow$ 財務狀況表</strong>：<br>
+              &nbsp;&nbsp;• 本期淨利 (Net Income) $\longrightarrow$ 結轉至<strong>保留盈餘 (RE)</strong>。<br>
+              &nbsp;&nbsp;• 其他綜合損益 (OCI) $\longrightarrow$ 結轉至<strong>累計 OCI (AOCI)</strong>。<br><br>
+              2. <strong>財務狀況表 $\Longrightarrow$ 現金流量表</strong>：<br>
+              &nbsp;&nbsp;• 兩期資產負債差額提供現金流量表間接法營運資金變動來源。<br><br>
+              3. <strong>現金流量表 $\Longrightarrow$ 財務狀況表</strong>：<br>
+              &nbsp;&nbsp;• 現金流量表結算出之<strong>期末現金及約當現金</strong>，必須與財務狀況表現金科目<strong>分毫不差、完全一致</strong>！
+            </div>
+          </div>
+
+          <!-- Insight Card -->
+          <div class="card alt">
+            <div class="card-title">💡 現代會計人的立體思維</div>
+            <ul>
+              <li><strong>孤木不成林</strong>：只看損益表會落入虛假盈餘陷阱；只看資產負債表看不出動態獲利動力；只看現金流量表無法衡量長期資本投入產出。</li>
+              <li><strong>三表一體化</strong>：現代財務分析師必須同時拉出三張報表，透過跨表勾稽交叉驗證，才能還原企業最真實的經濟實質！</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img4_char04.png" alt="會計師" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-auditor">執業會計師</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">張會計師查核心法 💼</div>
+            <div class="dialogue-text">
+              「查核任何一家上市櫃公司，三表勾稽是第一道防線！只要淨利、保留盈餘與現金期末數對不上，就代表內部控制或調節分錄存在嚴重瑕疵！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 12: 課堂觀念隨堂小擂台 (Quiz)
+         ========================================== -->
+    <section class="slide" data-slide="12" data-notes="課堂互動小測驗。檢驗學生對重大非現金交易列報位置的掌握。點擊選項即可立即顯示正確與否判定！">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Interactive Quiz · 課堂即時檢測</span>
+          <h1 class="slide-h1">觀念小擂台：企業「發行普通股以購買廠房大樓」，該如何列報？ 🎯</h1>
+          <div class="slide-subtitle">測試你對現金流量表表體列報與 IAS 7 重大非現金交易揭露規範的理解</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>🏆 互動挑戰</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="grid-template-columns: 1.25fr 1fr; gap: 16px; align-items: start;">
+          <div class="quiz-options">
+            <button class="quiz-btn" onclick="checkAnswer(this, false, 'A')">
+              <span>A. 列入現金流量表之「投資活動」現金流出</span>
+            </button>
+            <button class="quiz-btn" onclick="checkAnswer(this, false, 'B')">
+              <span>B. 列入現金流量表之「籌資活動」現金流入</span>
+            </button>
+            <button class="quiz-btn" onclick="checkAnswer(this, true, 'C')">
+              <span>C. 不得列入現金流量表表體，應於「財務報表附註」專項充分揭露</span>
+            </button>
+            <button class="quiz-btn" onclick="checkAnswer(this, false, 'D')">
+              <span>D. 直接抵減當期營業活動淨現金流量</span>
+            </button>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div id="quiz-result" class="quiz-feedback">
+              💡 請點選左側選項進行測驗！
+            </div>
+
+            <div class="dialogue-box" style="margin-top:0;">
+              <div class="dialogue-avatar-wrapper">
+                <img src="../../assets/img1_char05.png" alt="教授" class="dialogue-avatar" id="quiz-avatar">
+                <span class="dialogue-role-badge badge-prof" id="quiz-badge">主講教授</span>
+              </div>
+              <div class="dialogue-content">
+                <div class="dialogue-name" id="quiz-speaker">柯教授解題引導 🧸</div>
+                <div class="dialogue-text" id="quiz-explanation">
+                  「請牢記 IAS 7 規範：<strong>重大非現金投資籌資活動（如股票買設備、可轉債轉股）完全不涉及現金收付，嚴禁列入現金流量表現金表體</strong>！必須於<strong>附註</strong>中專項充分揭露！」
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 13: 全章學習精要 Recap 與結語
+         ========================================== -->
+    <section class="slide" data-slide="13" data-notes="全章總結回顧。慶祝學生攻克財報三大核心支柱，預告後續更深入的各項資產與負債評價課題！">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 4 · 總結與展望</span>
+          <h1 class="slide-h1">第三章全景學習精要與財報大成 🌸</h1>
+          <div class="slide-subtitle">觀念架構、綜合損益表、財務狀況表與現金流量表——四大支柱功德圓滿</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>🎉 Chapter 3 完成</span>
+        </div>
+      </div>
+
+      <div class="slide-body" style="justify-content: center;">
+        <div class="grid-2" style="align-items: center;">
+          <div class="card pure">
+            <div class="card-title">🌟 第三章必考精華 Recap</div>
+            <ul style="font-size:0.98rem; line-height:1.55;">
+              <li><strong>財務狀況表三性</strong>：流動性、償債能力、財務彈性；營業週期一年取較長者。</li>
+              <li><strong>現金流量表三大活動</strong>：營業（本業造血）、投資（產能擴張）、籌資（股權債務融通）。</li>
+              <li><strong>間接法核心口訣</strong>：非現金費用加回、資產增加扣除、負債增加加回。</li>
+              <li><strong>重大非現金活動</strong>：不入表體，強制於附註專項揭露。</li>
+              <li><strong>自由現金流量 (FCF)</strong>：$\text{CFO} - \text{資本支出} - \text{股利}$，價值投資真金白銀。</li>
+            </ul>
+          </div>
+
+          <div class="card alt" style="align-items:center; text-align:center; padding:18px 24px;">
+            <img src="../../assets/img1_char06.png" alt="Cheers" style="width:140px; margin-bottom:8px;">
+            <div style="font-size:1.15rem; font-weight:800; color:var(--text-main);">
+              「恭喜全體同學完成前三章基礎！」
+            </div>
+            <p style="font-size:0.94rem; color:var(--text-muted); margin-top:4px; max-width:360px; line-height:1.5;">
+              我們已經完全掌握中會的核心骨架（觀念架構、損益表、資產負債表與現金流量表）！後續進入各章深入專題，你已經具備無懈可擊的理論基石！
+            </p>
+            <div style="margin-top:12px;">
+              <button class="nav-btn" style="display:inline-flex;" onclick="goToSlide(1)">
+                <span>🔄 重新回顧第一張投影片</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer Nav Controls -->
+  <footer>
+    <div class="nav-controls">
+      <button id="btn-prev" class="nav-btn" onclick="prevSlide()">
+        <span>◀ 上一張</span>
+      </button>
+      <button id="btn-next" class="nav-btn" onclick="nextSlide()">
+        <span>下一張 ▶</span>
+      </button>
+    </div>
+    
+    <div class="slide-indicator">
+      SLIDE <span id="current-slide-num" style="color:var(--primary); font-weight:800;">1</span> / <span id="total-slides-num">13</span>
+    </div>
+
+    <div>
+      <span style="font-size:0.80rem; color:var(--text-muted);">
+        ⌨️ 導航：方向鍵 / Space / Click
+      </span>
+    </div>
+  </footer>
+
+  <!-- Speaker Notes Modal -->
+  <div id="notes-modal">
+    <h3>
+      <span>📝 演講備忘錄 (Speaker Notes)</span>
+      <button style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:1.1rem;" onclick="toggleNotes()">✕</button>
+    </h3>
+    <div id="notes-content" style="font-size:0.84rem; line-height:1.5; color:var(--text-main); margin-top:8px;">
+      講稿加載中...
+    </div>
+  </div>
+
+  <!-- Overview Grid Modal -->
+  <div id="overview-modal">
+    <div style="max-width:1200px; margin:0 auto 16px; display:flex; justify-content:space-between; align-items:center;">
+      <h2 style="font-size:1.25rem; font-weight:900; color:var(--primary);">🗂️ 投影片縮圖總覽導航</h2>
+      <button class="btn-header" onclick="toggleOverview()">✕ 關閉總覽</button>
+    </div>
+    <div class="overview-grid" id="overview-grid">
+      <!-- Generated dynamically by JS -->
+    </div>
+  </div>
+
+  <script>
+    // State
+    let currentSlide = 1;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    document.getElementById('total-slides-num').innerText = totalSlides;
+
+    // Support URL Hash (#1 ~ #13)
+    const hashMatch = window.location.hash.match(/#(\d+)/);
+    if (hashMatch) {
+      const target = parseInt(hashMatch[1], 10);
+      if (target >= 1 && target <= totalSlides) currentSlide = target;
+    }
+
+    // Switch Slide Function
+    function updateSlide() {
+      slides.forEach((s, idx) => {
+        const slideNum = idx + 1;
+        if (slideNum === currentSlide) {
+          s.classList.add('active');
+        } else {
+          s.classList.remove('active');
+        }
+      });
+
+      // Update counters & progress
+      document.getElementById('current-slide-num').innerText = currentSlide;
+      const progressPercent = ((currentSlide - 1) / (totalSlides - 1)) * 100;
+      document.getElementById('progress-bar').style.width = progressPercent + '%';
+
+      // Update button disabled state
+      document.getElementById('btn-prev').disabled = (currentSlide === 1);
+      document.getElementById('btn-next').disabled = (currentSlide === totalSlides);
+      history.replaceState(null, '', '#' + currentSlide);
+
+      // Update notes
+      const activeSlideElem = document.querySelector(`.slide[data-slide="${currentSlide}"]`);
+      if (activeSlideElem) {
+        const noteText = activeSlideElem.getAttribute('data-notes') || '本頁無特定講稿備忘錄。';
+        document.getElementById('notes-content').innerText = noteText;
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        currentSlide++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    function goToSlide(num) {
+      if (num >= 1 && num <= totalSlides) {
+        currentSlide = num;
+        updateSlide();
+        closeModals();
+      }
+    }
+
+    // Quiz Check
+    function checkAnswer(btn, isCorrect, choice) {
+      const parent = btn.parentElement;
+      const buttons = parent.querySelectorAll('.quiz-btn');
+      buttons.forEach(b => {
+        b.disabled = true;
+      });
+
+      const resultBox = document.getElementById('quiz-result');
+      resultBox.style.display = 'block';
+
+      const avatar = document.getElementById('quiz-avatar');
+      const speaker = document.getElementById('quiz-speaker');
+      const explanation = document.getElementById('quiz-explanation');
+
+      if (isCorrect) {
+        btn.classList.add('correct');
+        resultBox.style.background = '#ecfdf5';
+        resultBox.style.border = '1.5px solid #34d399';
+        resultBox.style.color = '#065f46';
+        resultBox.innerHTML = `<strong>🎉 太棒了！回答完全正確！</strong> 依據 IAS 7 規範，重大非現金投資與籌資活動（如增發股票購買廠房大樓）因無實際現金流動，<strong>嚴禁列入現金流量表表體，必須於「財務報表附註」專項充分揭露</strong>！`;
+        
+        avatar.src = '../../assets/img1_char01.png';
+        speaker.innerText = '柯教授開心讚賞 🌸';
+        explanation.innerText = '「太厲害了！完全抓到準則精髓！不涉及現金的重大交易如果硬塞進現金流量表表體，會嚴重扭曲現金流動規模，在附註揭露才是最符合充分揭露原則的做法！」';
+      } else {
+        btn.classList.add('wrong');
+        buttons[2].classList.add('correct');
+        resultBox.style.background = '#fef2f2';
+        resultBox.style.border = '1.5px solid #f87171';
+        resultBox.style.color = '#991b1b';
+        resultBox.innerHTML = `<strong>⚠️ 答錯囉！正確答案是 (C)</strong> 選項 A、B 錯誤，因為該交易完全沒有任何現金流入或流出，不能進表體；選項 D 錯誤，它與營業活動無關。正確做法是依 IAS 7 於<strong>財務報表附註</strong>專項充分揭露。`;
+        
+        avatar.src = '../../assets/img2_char04.png';
+        const badge = document.getElementById('quiz-badge');
+        badge.className = 'dialogue-role-badge badge-ta';
+        badge.innerText = '學習助教';
+        speaker.innerText = '兔兔助教貼心提醒 🐰';
+        explanation.innerText = '「別灰心！再記一次口訣：沒動現金不進表、重大非現金附註找！下次遇到類似考題一定能秒殺！」';
+      }
+    }
+
+    // Modals
+    function toggleNotes() {
+      const m = document.getElementById('notes-modal');
+      m.style.display = (m.style.display === 'block') ? 'none' : 'block';
+    }
+
+    function toggleOverview() {
+      const m = document.getElementById('overview-modal');
+      m.style.display = (m.style.display === 'block') ? 'none' : 'block';
+    }
+
+    function closeModals() {
+      document.getElementById('notes-modal').style.display = 'none';
+      document.getElementById('overview-modal').style.display = 'none';
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+          alert(`無法進入全螢幕：${err.message}`);
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    // Build Overview Grid
+    function generateOverview() {
+      const grid = document.getElementById('overview-grid');
+      grid.innerHTML = '';
+      slides.forEach((s, idx) => {
+        const num = idx + 1;
+        const title = s.querySelector('.slide-h1')?.innerText || `Slide ${num}`;
+        const card = document.createElement('div');
+        card.className = 'overview-card';
+        card.onclick = () => goToSlide(num);
+        card.innerHTML = `
+          <div class="overview-num">SLIDE ${num} / ${totalSlides}</div>
+          <div class="overview-title">${title}</div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key.toLowerCase() === 'f') {
+        toggleFullscreen();
+      } else if (e.key.toLowerCase() === 'n') {
+        toggleNotes();
+      } else if (e.key.toLowerCase() === 'o') {
+        toggleOverview();
+      } else if (e.key === 'Escape') {
+        closeModals();
+      }
+    });
+
+    // Touch swipe support
+    let touchStartX = 0;
+    let touchEndX = 0;
+    window.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+    window.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      if (touchStartX - touchEndX > 50) nextSlide();
+      if (touchEndX - touchStartX > 50) prevSlide();
+    });
+
+    // Init
+    generateOverview();
+    updateSlide();
+  </script>
+</body>
+</html>

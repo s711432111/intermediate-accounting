@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="milktea">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>中級會計學 (IFRS 5/e) 互動簡報總導航 | Cozy Milk Tea Journal</title>
+  
+  <!-- Google Fonts: 圓潤柔和的日系手帳繁中字體 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================
+       風格：日系燕麥奶茶手帳風 (Cozy Milk Tea Journal Theme)
+       ========================================================= */
+    :root {
+      --bg-page: #f7f0e6;
+      --bg-card: #fffdf9;
+      --bg-card-alt: #f4e8d8;
+      --bg-card-subtle: #faf5ed;
+      --text-main: #3e2d20;
+      --text-muted: #7e6957;
+      --primary: #ad7448;
+      --primary-soft: #f5e5d5;
+      --primary-border: #d8c0aa;
+      --accent-caramel: #c88349;
+      --accent-green: #528c61;
+      --accent-green-soft: #e2efe5;
+      --accent-pink: #d96f86;
+      --accent-pink-soft: #fde8ed;
+      --accent-blue: #3b82f6;
+      --accent-blue-soft: #e0f2fe;
+      --washi-color: rgba(237, 206, 142, 0.85);
+      --washi-pink: rgba(247, 198, 207, 0.85);
+      --card-radius: 20px;
+      --shadow-soft: 0 12px 32px rgba(138, 102, 74, 0.08);
+      --shadow-hover: 0 16px 36px rgba(138, 102, 74, 0.15);
+      --badge-bg: #eddccb;
+      --font-main: 'M PLUS Rounded 1c', 'Noto Sans TC', system-ui, sans-serif;
+      --font-code: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--bg-page);
+      color: var(--text-main);
+      font-family: var(--font-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      background-image: radial-gradient(rgba(173, 116, 72, 0.06) 1.5px, transparent 1.5px);
+      background-size: 24px 24px;
+    }
+
+    /* Container */
+    .container {
+      width: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 36px 24px 60px;
+      flex: 1;
+    }
+
+    /* Top Washi Accents */
+    .washi-tape-hero {
+      width: 200px;
+      height: 28px;
+      background: var(--washi-color);
+      margin: 0 auto -14px;
+      transform: rotate(-1deg);
+      border-left: 3px dashed rgba(66, 48, 35, 0.15);
+      border-right: 3px dashed rgba(66, 48, 35, 0.15);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Hero Banner */
+    .hero-card {
+      background: var(--bg-card);
+      border: 2.5px solid var(--primary-border);
+      border-radius: var(--card-radius);
+      padding: 32px 36px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .hero-content {
+      flex: 1;
+    }
+
+    .hero-badge-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .stamp-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #ffffff;
+      border: 1.5px dashed var(--primary);
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 800;
+      color: var(--primary);
+      transform: rotate(-1deg);
+    }
+
+    .hero-tag {
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-size: 0.82rem;
+      font-weight: 800;
+      padding: 3px 12px;
+      border-radius: 50px;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-title {
+      font-size: 2.3rem;
+      font-weight: 900;
+      color: var(--text-main);
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+
+    .hero-subtitle {
+      font-size: 1.08rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      max-width: 680px;
+    }
+
+    .hero-characters {
+      display: flex;
+      align-items: flex-end;
+      gap: 12px;
+      flex-shrink: 0;
+      background: var(--bg-card-alt);
+      border: 2px dashed var(--primary-border);
+      padding: 12px 18px;
+      border-radius: 18px;
+    }
+
+    .hero-char-wrapper {
+      text-align: center;
+    }
+
+    .hero-char-img {
+      width: 78px;
+      height: 78px;
+      object-fit: cover;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 2px solid #ffffff;
+      box-shadow: 0 4px 10px rgba(66, 48, 35, 0.12);
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .hero-char-img:hover {
+      transform: scale(1.1) translateY(-4px);
+    }
+
+    .hero-char-label {
+      font-size: 0.80rem;
+      font-weight: 800;
+      margin-top: 4px;
+      display: block;
+      color: var(--text-main);
+    }
+
+    /* Section Header */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+      padding-bottom: 10px;
+      border-bottom: 2px dashed var(--primary-border);
+    }
+
+    .section-title {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chapter-counter {
+      font-family: var(--font-code);
+      font-size: 0.94rem;
+      background: var(--bg-card);
+      border: 1.5px solid var(--primary-border);
+      padding: 5px 14px;
+      border-radius: 50px;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    /* Chapters Grid */
+    .chapters-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 24px;
+    }
+
+    /* Chapter Card */
+    .chapter-card {
+      background: var(--bg-card);
+      border: 2px solid var(--primary-border);
+      border-radius: var(--card-radius);
+      padding: 24px 26px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      overflow: hidden;
+    }
+
+    .chapter-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--primary);
+    }
+
+    .chapter-card.ready {
+      border-top: 5px solid var(--primary);
+    }
+
+    .chapter-card.upcoming {
+      background: rgba(255, 253, 249, 0.65);
+      border-style: dashed;
+      opacity: 0.8;
+    }
+
+    .card-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .chapter-num-badge {
+      background: var(--primary);
+      color: #ffffff;
+      font-family: var(--font-code);
+      font-size: 0.88rem;
+      font-weight: 800;
+      padding: 3px 12px;
+      border-radius: 50px;
+    }
+
+    .status-pill {
+      font-size: 0.82rem;
+      font-weight: 800;
+      padding: 3px 12px;
+      border-radius: 50px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .status-ready {
+      background: var(--accent-green-soft);
+      color: var(--accent-green);
+      border: 1px solid var(--accent-green);
+    }
+    .status-draft {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: 1px dashed var(--primary);
+    }
+
+    .chapter-name {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 8px;
+      line-height: 1.35;
+    }
+
+    .chapter-desc {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 16px;
+      flex: 1;
+    }
+
+    /* Tags */
+    .tags-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .tag-item {
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--primary-border);
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 6px;
+    }
+
+    /* Card Footer Details */
+    .card-footer {
+      border-top: 1.5px dashed var(--primary-soft);
+      padding-top: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .slide-meta {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-launch {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary);
+      color: #ffffff;
+      text-decoration: none;
+      font-size: 0.86rem;
+      font-weight: 800;
+      padding: 7px 16px;
+      border-radius: 50px;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 4px 10px rgba(173, 116, 72, 0.25);
+    }
+    .btn-launch:hover {
+      background: var(--accent-caramel);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(173, 116, 72, 0.35);
+    }
+
+    .btn-disabled {
+      background: var(--badge-bg);
+      color: var(--text-muted);
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    /* Footer Note */
+    footer {
+      text-align: center;
+      padding: 24px;
+      border-top: 2px dashed var(--primary-border);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      background: rgba(255, 253, 249, 0.8);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Hero Tape -->
+    <div class="washi-tape-hero"></div>
+
+    <!-- Hero Banner -->
+    <header class="hero-card">
+      <div class="hero-content">
+        <div class="hero-badge-group">
+          <span class="hero-tag">Donald E. Kieso · IFRS 5/e</span>
+          <div class="stamp-badge">✨ LLM Wiki 互動講義</div>
+        </div>
+        <h1 class="hero-title">中級會計學 (Intermediate Accounting) 🌸</h1>
+        <p class="hero-subtitle">
+          依循 Andrej Karpathy LLM Wiki 與三階段 Graph 流程精心打造。結合日系燕麥奶茶手帳風美學、角色漫才對白引導與零滾動互動工程，讓每一堂會計課都溫暖、清晰且深刻。
+        </p>
+      </div>
+
+      <!-- Character Avatars Dock -->
+      <div class="hero-characters">
+        <div class="hero-char-wrapper">
+          <img src="assets/img1_char01.png" alt="柯教授" class="hero-char-img" title="柯教授 · 主講引導">
+          <span class="hero-char-label">柯教授 ☕</span>
+        </div>
+        <div class="hero-char-wrapper">
+          <img src="assets/img2_char01.png" alt="兔兔助教" class="hero-char-img" title="兔兔助教 · 解題口訣">
+          <span class="hero-char-label">兔兔助教 🐰</span>
+        </div>
+        <div class="hero-char-wrapper">
+          <img src="assets/img3_char01.png" alt="小安" class="hero-char-img" title="小安 · 盲點提問">
+          <span class="hero-char-label">小安同學 💡</span>
+        </div>
+        <div class="hero-char-wrapper">
+          <img src="assets/img4_char01.png" alt="張會計師" class="hero-char-img" title="張會計師 · 實務查核">
+          <span class="hero-char-label">張會計師 💼</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Section: Chapters Presentation List -->
+    <section>
+      <div class="section-header">
+        <div class="section-title">
+          <span>📚 章節互動簡報清單</span>
+        </div>
+        <div class="chapter-counter">已收錄 8 章 · 104 頁投影片</div>
+      </div>
+
+      <div class="chapters-grid">
+
+        <!-- Chapter 1 (Ready) -->
+        <article class="chapter-card ready">
+          <div>
+            <div class="card-top-row">
+              <span class="chapter-num-badge">CHAPTER 01</span>
+              <span class="status-pill status-ready">● 已上線 (Ready)</span>
+            </div>
+            <h2 class="chapter-name">財務報導之環境與觀念架構 🌸</h2>
+            <p class="chapter-desc">
+              探討全球資本配置與 IFRS 誕生背景、觀念架構三層金字塔、品質特性門檻、IFRS 13 公允價值三層級，以及附錄現金轉權責工作底稿與迴轉分錄三大法則。
+            </p>
+            <div class="tags-list">
+              <span class="tag-item">觀念架構</span>
+              <span class="tag-item">攸關性 vs 忠實表述</span>
+              <span class="tag-item">IFRS 13 公允價值</span>
+              <span class="tag-item">李萬醫師底稿</span>
+              <span class="tag-item">迴轉分錄</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="slide-meta">
+              <span>📊 13 頁 · 零滾動手帳風</span>
+            </div>
+            <a href="wiki/presentations/ch01_presentation.html" class="btn-launch" target="_blank">
+              <span>▶ 開啟簡報</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Chapter 2 (Ready) -->
+        <article class="chapter-card ready">
+          <div>
+            <div class="card-top-row">
+              <span class="chapter-num-badge">CHAPTER 02</span>
+              <span class="status-pill status-ready">● 已上線 (Ready)</span>
+            </div>
+            <h2 class="chapter-name">綜合損益表與相關資訊 📜</h2>
+            <p class="chapter-desc">
+              深入剖析多步驟損益獲利階梯、盈餘管理警訊、IFRS 5 停業單位稅後淨額列示、期間內所得稅分攤原則、IAS 8 會計變動三劃分，以及 OCI 雙軌權益串接。
+            </p>
+            <div class="tags-list">
+              <span class="tag-item">多步驟損益表</span>
+              <span class="tag-item">停業單位 IFRS 5</span>
+              <span class="tag-item">讓稅追隨所得</span>
+              <span class="tag-item">EPS 拆分</span>
+              <span class="tag-item">會計變動 IAS 8</span>
+              <span class="tag-item">其他綜合損益 OCI</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="slide-meta">
+              <span>📊 13 頁 · 零滾動手帳風</span>
+            </div>
+            <a href="wiki/presentations/ch02_presentation.html" class="btn-launch" target="_blank">
+              <span>▶ 開啟簡報</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Chapter 3 (Ready) -->
+        <article class="chapter-card ready">
+          <div>
+            <div class="card-top-row">
+              <span class="chapter-num-badge">CHAPTER 03</span>
+              <span class="status-pill status-ready">● 已上線 (Ready)</span>
+            </div>
+            <h2 class="chapter-name">財務狀況表與現金流量表 🏛️</h2>
+            <p class="chapter-desc">
+              掌握資產負債三性（流動性、償債能力、財務彈性）、現金流量表營業/投資/籌資三大活動、間接法反向調節、重大非現金活動附註揭露，以及自由現金流量 (FCF)。
+            </p>
+            <div class="tags-list">
+              <span class="tag-item">財務狀況表</span>
+              <span class="tag-item">現金流量表 IAS 7</span>
+              <span class="tag-item">間接法編製</span>
+              <span class="tag-item">黑字倒閉診斷</span>
+              <span class="tag-item">自由現金流 FCF</span>
+              <span class="tag-item">三表勾稽大三通</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="slide-meta">
+              <span>📊 13 頁 · 零滾動手帳風</span>
+            </div>
+            <a href="wiki/presentations/ch03_presentation.html" class="btn-launch" target="_blank">
+              <span>▶ 開啟簡報</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Chapter 4 (Ready) -->
+        <article class="chapter-card ready">
+          <div>
+            <div class="card-top-row">
+              <span class="chapter-num-badge">CHAPTER 04</span>
+              <span class="status-pill status-ready">● 已上線 (Ready)</span>
+            </div>
+            <h2 class="chapter-name">會計與貨幣時間價值 ⏳</h2>
+            <p class="chapter-desc">
+              掌握中會核心計量引擎！深入單利與複利效應、五大利率因子表鏡像對稱、未知期數與利率逆向推導、普通年金 vs 到期年金 $(1+i)$ 秘訣、遞延年金兩段式折現、長期公司債雙現金流評價與有效利率法攤銷，以及 IFRS 13 期望現金流量法。
+            </p>
+            <div class="tags-list">
+              <span class="tag-item">貨幣時間價值</span>
+              <span class="tag-item">複利頻率與收益率</span>
+              <span class="tag-item">普通年金 vs 到期年金</span>
+              <span class="tag-item">遞延年金折現</span>
+              <span class="tag-item">公司債評價</span>
+              <span class="tag-item">有效利率法攤銷</span>
+              <span class="tag-item">IFRS 13 期望現金流</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="slide-meta">
+              <span>📊 13 頁 · 零滾動手帳風</span>
+            </div>
+            <a href="wiki/presentations/ch04_presentation.html" class="btn-launch" target="_blank">
+              <span>▶ 開啟簡報</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Chapter 5 (Ready) -->
+        <article class="chapter-card ready">
+          <div>
+            <div class="card-top-row">
+              <span class="chapter-num-badge">CHAPTER 05</span>
+              <span class="status-pill status-ready">● 已上線 (Ready)</span>
+            </div>
+            <h2 class="chapter-name">現金與應收款項 🪙</h2>
+            <p class="chapter-desc">
+              掌握企業流動性動脈！解析約當現金 3 個月判定、受限制現金與銀行透支抵銷；對接 IFRS 15 交易價格與現金折扣雙軌模型；精通 IFRS 9 簡化備抵法與帳齡分析表；解構零息票據有效利率法攤銷；深入應收帳款承購 (Factoring) 與除列三道防線決策樹，以及附錄 5A 銀行存款調節表四象限平衡。
+            </p>
+            <div class="tags-list">
+              <span class="tag-item">現金及約當現金</span>
+              <span class="tag-item">受限制現金</span>
+              <span class="tag-item">銀行透支抵銷</span>
+              <span class="tag-item">現金折扣淨額法</span>
+              <span class="tag-item">退款負債</span>
+              <span class="tag-item">備抵法與帳齡分析</span>
+              <span class="tag-item">零息票據折價攤銷</span>
+              <span class="tag-item">Factoring 承購融資</span>
+              <span class="tag-item">IFRS 9 除列決策樹</span>
+              <span class="tag-item">銀行存款調節表</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="slide-meta">
+              <span>📊 13 頁 · 零滾動手帳風</span>
+            </div>
+            <a href="wiki/presentations/ch05_presentation.html" class="btn-launch" target="_blank">
+              <span>▶ 開啟簡報</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Chapter 6 (Ready) -->
+        <article class="chapter-card ready">
+          <div>
+            <div class="card-top-row">
+              <span class="chapter-num-badge">CHAPTER 06</span>
+              <span class="status-pill status-ready">● 已上線 (Ready)</span>
+            </div>
+            <h2 class="chapter-name">存貨之衡量與評價 (Inventories) 📦</h2>
+            <p class="chapter-desc">
+              掌握商業營運最核心流動資產！剖析永續 vs 定期盤存制、進貨折扣淨額法；解密 FIFO 與平均成本法在通膨下的稅務天秤與 LIFO 禁制；分析存貨錯誤兩期自動抵銷；精通 IAS 2 成本與淨變現價值孰低法 (LCNRV) 逐項比較與跌價回升上限；掌握毛利率法加價率轉換與傳統零售價法。
+            </p>
+            <div class="tags-list">
+              <span class="tag-item">IAS 2 存貨</span>
+              <span class="tag-item">永續 vs 定期盤存</span>
+              <span class="tag-item">FIFO 與加權平均</span>
+              <span class="tag-item">LIFO 禁制原因</span>
+              <span class="tag-item">存貨錯誤跨期抵銷</span>
+              <span class="tag-item">LCNRV 逐項比較</span>
+              <span class="tag-item">跌價回升上限</span>
+              <span class="tag-item">生物資產 IAS 41</span>
+              <span class="tag-item">虧損採購合約</span>
+              <span class="tag-item">毛利率法</span>
+              <span class="tag-item">傳統零售價法</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="slide-meta">
+              <span>📊 13 頁 · 零滾動手帳風</span>
+            </div>
+            <a href="wiki/presentations/ch06_presentation.html" class="btn-launch" target="_blank">
+              <span>▶ 開啟簡報</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Chapter 7 (Ready) -->
+        <article class="chapter-card ready">
+          <div>
+            <div class="card-top-row">
+              <span class="chapter-num-badge">CHAPTER 07</span>
+              <span class="status-pill status-ready">● 已上線 (Ready)</span>
+            </div>
+            <h2 class="chapter-name">不動產、廠房及設備 (PP&E) 取得與處分 🏛️</h2>
+            <p class="chapter-desc">
+              資產取得成本嚴謹界線、自建廠房製造費用分攤、IAS 23 借款利息資本化（WAAE 孰低法）、非貨幣性資產交換商業實質檢驗，以及附錄 7A IAS 40 投資性不動產雙軌模式。
+            </p>
+            <div class="tags-list">
+              <span class="tag-item">IAS 16 PP&E</span>
+              <span class="tag-item">IAS 23 借款資本化</span>
+              <span class="tag-item">非貨幣交換商業實質</span>
+              <span class="tag-item">IAS 40 投資性不動產</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="slide-meta">
+              <span>📖 13 頁 · 互動投影片</span>
+            </div>
+            <a href="wiki/presentations/ch07_presentation.html" class="btn-launch" target="_blank">
+              <span>▶ 開啟簡報</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Chapter 8 (Ready) -->
+        <article class="chapter-card ready">
+          <div>
+            <div class="card-top-row">
+              <span class="chapter-num-badge">CHAPTER 08</span>
+              <span class="status-pill status-ready">● 已上線 (Ready)</span>
+            </div>
+            <h2 class="chapter-name">折舊、減損與天然資源折耗 📉</h2>
+            <p class="chapter-desc">
+              系統合理成本分攤、四大經典折舊方法、IAS 16 組件折舊與估計變動推延法、IAS 36 減損兩步驟（可回收金額取較高者與商譽分攤）、減損迴轉天花板，以及附錄 8A 重估價模式 OCI 處置。
+            </p>
+            <div class="tags-list">
+              <span class="tag-item">IAS 16 折舊與組件</span>
+              <span class="tag-item">IAS 36 資產減損</span>
+              <span class="tag-item">現金產生單位 CGU</span>
+              <span class="tag-item">重估價 OCI 模式</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="slide-meta">
+              <span>📖 13 頁 · 互動投影片</span>
+            </div>
+            <a href="wiki/presentations/ch08_presentation.html" class="btn-launch" target="_blank">
+              <span>▶ 開啟簡報</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Chapter 9 (Upcoming) -->
+        <article class="chapter-card upcoming">
+          <div>
+            <div class="card-top-row">
+              <span class="chapter-num-badge" style="background:#b09b88;">CHAPTER 09</span>
+              <span class="status-pill status-draft">⏳ 等待教材攝取</span>
+            </div>
+            <h2 class="chapter-name">無形資產與商譽 (IAS 38 / IFRS 3) 💡</h2>
+            <p class="chapter-desc">
+              無形資產之辨認性與控制、研發支出劃分（研究階段費用化 vs 開發階段資本化六大要件）、有限耐用年限攤銷 vs 非確定年限每年強制減損測試、商譽會計處理。隨時準備啟動全自動 Graph Pipeline！
+            </p>
+            <div class="tags-list">
+              <span class="tag-item">IAS 38 無形資產</span>
+              <span class="tag-item">研究與開發支出</span>
+              <span class="tag-item">專利權與特許權</span>
+              <span class="tag-item">IFRS 3 併購商譽</span>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="slide-meta">
+              <span>全自動流程待命</span>
+            </div>
+            <button class="btn-launch btn-disabled" disabled>
+              <span>敬請期待</span>
+            </button>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>中級會計學 (Intermediate Accounting) · 依據 Kieso IFRS Edition 5/e 規範編製 · Cozy Milk Tea Journal</p>
+  </footer>
+
+</body>
+</html>

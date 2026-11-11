@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 5 · 現金與應收款項 | 中級會計學 IFRS 5/e 互動簡報</title>
+  
+  <!-- Google Fonts: Noto Sans TC & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+TC:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX for Accounting Formulas -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+          onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+  <style>
+    /* ==========================================
+       風格 A：日系燕麥奶茶手帳風 (Cozy Milk Tea Journal)
+       高清晰放大字級版 · 零滾動與防擠壓安全規範
+       ========================================== */
+    :root {
+      --bg-desk: #f4ede4;         /* 燕麥奶茶底色 */
+      --bg-slide: #fffdf9;        /* 柔和手帳米白紙張 */
+      --bg-card: #f9f5f0;         /* 淺奶茶卡片 */
+      --bg-card-alt: #f3ece2;     /* 拿鐵卡片 */
+      --bg-card-pure: #ffffff;    /* 純白便簽卡 */
+      --primary: #ad7448;         /* 焦糖拿鐵棕 */
+      --primary-soft: #f4e8dc;    /* 奶泡淺褐 */
+      --primary-border: #dcc8b4;  /* 手帳細框棕 */
+      --text-main: #423023;       /* 深烘焙咖啡字體 */
+      --text-muted: #826c5b;      /* 溫和次要說明 */
+      --washi-color: #eedcc9;     /* 和紙膠帶色 */
+      --badge-bg: #edd3c4;        /* 印章柔粉褐 */
+      --accent-green: #528c61;    /* 抹茶綠（增益/正確） */
+      --accent-rose: #d96f86;     /* 玫瑰粉（虧損/錯誤） */
+      --accent-blue: #2563eb;     /* 鋼筆藍 */
+      --font-main: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-code: 'JetBrains Mono', Consolas, monospace;
+      --card-radius: 18px;
+      --shadow-soft: 0 10px 30px rgba(110, 80, 55, 0.08), 0 2px 6px rgba(110, 80, 55, 0.04);
+      --shadow-card: 0 4px 14px rgba(110, 80, 55, 0.05);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-desk);
+      color: var(--text-main);
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden; /* STRICTLY ZERO SCROLL */
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Top Progress Bar */
+    #progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: rgba(173, 116, 72, 0.15);
+      z-index: 1000;
+    }
+    #progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #c29b7f, #ad7448, #f2cb74);
+      transition: width 0.3s ease;
+    }
+
+    /* Header Nav */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 28px;
+      height: 48px;
+      background: rgba(255, 253, 249, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 2px dashed var(--primary-border);
+      z-index: 100;
+      flex-shrink: 0;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge-course {
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 50px;
+      letter-spacing: 0.05em;
+    }
+    .chapter-title {
+      font-size: 1.00rem;
+      color: var(--text-main);
+      font-weight: 800;
+    }
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-header {
+      background: var(--bg-card);
+      border: 1.5px solid var(--primary-border);
+      color: var(--text-main);
+      padding: 5px 14px;
+      border-radius: 50px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .btn-header:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    /* Main Slide Stage (Calculated viewport fit) */
+    #slide-stage {
+      flex: 1;
+      width: 100%;
+      height: calc(100vh - 96px);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 16px;
+      box-sizing: border-box;
+    }
+
+    /* The Slide Card */
+    .slide {
+      display: none;
+      width: min(1380px, calc(100vw - 32px));
+      height: calc(100vh - 104px);
+      max-height: 890px;
+      min-height: 520px;
+      flex: 0 0 auto; /* PREVENT FLEX SHRINK */
+      background: var(--bg-slide);
+      border: 2.5px solid var(--primary-border);
+      border-radius: var(--card-radius);
+      padding: 16px 28px;
+      box-shadow: var(--shadow-soft);
+      flex-direction: column;
+      overflow: hidden; /* ZERO SCROLL */
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    .slide.active {
+      display: flex;
+      animation: slideIn 0.25s ease-out forwards;
+      z-index: 10;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Washi Tape (紙膠帶裝飾) */
+    .washi-tape {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-0.8deg);
+      width: 150px;
+      height: 24px;
+      background: var(--washi-color);
+      border-left: 2px dashed rgba(66, 48, 35, 0.15);
+      border-right: 2px dashed rgba(66, 48, 35, 0.15);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      z-index: 20;
+    }
+
+    /* Sticker Stamp */
+    .sticker-stamp {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ffffff;
+      border: 1.5px dashed var(--primary);
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 0.90rem;
+      font-weight: 800;
+      color: var(--primary);
+      transform: rotate(-1.5deg);
+    }
+
+    /* Slide Header */
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1.5px dashed var(--primary-soft);
+      flex-shrink: 0;
+    }
+    .slide-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--badge-bg);
+      color: var(--primary);
+      font-size: 0.90rem;
+      font-weight: 800;
+      padding: 3px 12px;
+      border-radius: 50px;
+      letter-spacing: 0.04em;
+    }
+    .slide-h1 {
+      font-size: 1.76rem;
+      font-weight: 900;
+      color: var(--text-main);
+      line-height: 1.25;
+      margin-top: 3px;
+    }
+    .slide-subtitle {
+      font-size: 1.02rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+      font-weight: 500;
+    }
+
+    /* Content Layouts */
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      overflow: hidden; /* Strictly within viewport */
+      user-select: text;
+      min-height: 0;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    /* Cute Cards */
+    .card {
+      background: var(--bg-card);
+      border-radius: 14px;
+      padding: 12px 18px;
+      border: 1.5px solid transparent;
+      box-shadow: var(--shadow-card);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover {
+      border-color: var(--primary-border);
+    }
+    .card.alt {
+      background: var(--bg-card-alt);
+    }
+    .card.pure {
+      background: var(--bg-card-pure);
+      border: 1.5px solid var(--primary-soft);
+    }
+
+    .card-title {
+      font-size: 1.20rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .card p, .card li {
+      font-size: 1.04rem;
+      line-height: 1.50;
+      color: var(--text-main);
+    }
+    .card ul, .card ol {
+      padding-left: 20px;
+    }
+    .card li {
+      margin-bottom: 4px;
+    }
+
+    /* Dialogue Box */
+    .dialogue-box {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 9px 18px;
+      border: 1.5px solid var(--primary-border);
+      box-shadow: 0 4px 12px rgba(138, 102, 74, 0.06);
+      flex-shrink: 0;
+    }
+    .dialogue-avatar-wrapper {
+      position: relative;
+      flex-shrink: 0;
+    }
+    .dialogue-avatar {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 6px rgba(66, 48, 35, 0.12);
+      object-fit: cover;
+      display: block;
+    }
+    .dialogue-role-badge {
+      position: absolute;
+      bottom: -3px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.70rem;
+      font-weight: 800;
+      padding: 1px 7px;
+      border-radius: 8px;
+      white-space: nowrap;
+    }
+    .badge-prof { background: #fbe0e6; color: #b84366; }
+    .badge-ta { background: #e0f2fe; color: #0284c7; }
+    .badge-student { background: #fef3c7; color: #b45309; }
+    .badge-auditor { background: #dcfce7; color: #15803d; }
+
+    .dialogue-content {
+      flex: 1;
+    }
+    .dialogue-name {
+      font-size: 1.04rem;
+      font-weight: 800;
+      margin-bottom: 3px;
+      color: var(--primary);
+    }
+    .dialogue-text {
+      font-size: 1.02rem;
+      line-height: 1.50;
+      color: var(--text-main);
+    }
+
+    /* Tables */
+    .pastel-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.94rem;
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1.5px solid var(--primary-border);
+    }
+    .pastel-table th {
+      background: var(--primary-soft);
+      color: var(--text-main);
+      text-align: left;
+      padding: 6px 12px;
+      font-weight: 800;
+      border-bottom: 1.5px solid var(--primary-border);
+      font-size: 0.96rem;
+    }
+    .pastel-table td {
+      padding: 5px 12px;
+      border-bottom: 1px solid var(--primary-soft);
+      color: var(--text-main);
+    }
+
+    /* Code Box */
+    .code-box {
+      background: #ffffff;
+      border: 1.5px dashed var(--primary-border);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-family: var(--font-code);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: var(--text-main);
+    }
+
+    /* Quiz Arena */
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .quiz-btn {
+      background: #ffffff;
+      border: 1.5px solid var(--primary-border);
+      color: var(--text-main);
+      padding: 11px 18px;
+      border-radius: 12px;
+      text-align: left;
+      font-size: 1.02rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .quiz-btn:hover {
+      background: var(--primary-soft);
+      transform: translateX(3px);
+    }
+    .quiz-btn.correct {
+      background: #ecfdf5 !important;
+      border-color: #34d399 !important;
+      color: #065f46 !important;
+      font-weight: 800;
+    }
+    .quiz-btn.wrong {
+      background: #fef2f2 !important;
+      border-color: #f87171 !important;
+      color: #991b1b !important;
+    }
+    .quiz-feedback {
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 0.98rem;
+      display: none;
+      line-height: 1.50;
+    }
+
+    /* Footer Nav */
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 28px;
+      height: 48px;
+      background: rgba(255, 253, 249, 0.95);
+      border-top: 2px dashed var(--primary-border);
+      z-index: 100;
+      flex-shrink: 0;
+    }
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-btn {
+      background: var(--bg-card);
+      border: 1.5px solid var(--primary-border);
+      color: var(--text-main);
+      padding: 5px 16px;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+    .nav-btn:hover:not(:disabled) {
+      background: var(--primary);
+      color: #ffffff;
+    }
+    .nav-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .slide-counter {
+      font-family: var(--font-code);
+      font-size: 0.94rem;
+      font-weight: 800;
+      color: var(--primary);
+      padding: 4px 12px;
+      background: var(--bg-card);
+      border-radius: 50px;
+      border: 1px solid var(--primary-border);
+    }
+
+    /* Modal Dialogs */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(66, 48, 35, 0.45);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-card {
+      background: var(--bg-slide);
+      border: 2.5px solid var(--primary-border);
+      border-radius: 20px;
+      max-width: 820px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      position: relative;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      border-bottom: 2px dashed var(--primary-border);
+      padding-bottom: 10px;
+    }
+    .modal-title {
+      font-size: 1.30rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    .btn-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .overview-item {
+      background: var(--bg-card);
+      border: 1.5px solid var(--primary-border);
+      border-radius: 10px;
+      padding: 10px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    .overview-item:hover, .overview-item.active {
+      background: var(--primary);
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    /* Hero Standee Style */
+    .hero-standee-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(145deg, #ffffff, var(--bg-card-alt));
+      border: 2px dashed var(--primary-border);
+      border-radius: 16px;
+      padding: 16px;
+      height: 100%;
+      text-align: center;
+    }
+    .hero-standee-img {
+      width: 175px;
+      height: 175px;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 16px rgba(110, 80, 55, 0.18));
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Progress Bar -->
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+  </div>
+
+  <!-- Header Nav -->
+  <header>
+    <div class="brand">
+      <span class="badge-course">KIESO IFRS 5/e</span>
+      <span class="chapter-title">Chapter 5 · 現金與應收款項 (Cash and Receivables)</span>
+    </div>
+    <div class="header-controls">
+      <button class="btn-header" onclick="toggleOverview()"><span>📑</span><span>總覽 (O)</span></button>
+      <button class="btn-header" onclick="toggleNotes()"><span>💡</span><span>講者備忘錄 (N)</span></button>
+      <button class="btn-header" onclick="toggleFullscreen()"><span>⛶</span><span>全螢幕 (F)</span></button>
+    </div>
+  </header>
+
+  <!-- Slide Stage -->
+  <main id="slide-stage">
+
+    <!-- ==========================================
+         Slide 1: 封面與全章架構導引
+         ========================================== -->
+    <section class="slide active" id="slide-1" data-slide="1">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">CHAPTER 05</span>
+          <h1 class="slide-h1">現金與應收款項 (Cash and Receivables) 🪙</h1>
+          <div class="slide-subtitle">企業流動性生命線 · 信用交易衡量 · IFRS 9 金融資產除列決策</div>
+        </div>
+        <div class="sticker-stamp">📘 核心資產篇</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="align-items: stretch; height: 100%;">
+          <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 10px;">
+            <div class="card pure" style="border-left: 5px solid var(--primary); flex: 1;">
+              <div class="card-title">🌱 迎向商業信用與流動性核心</div>
+              <p>
+                「現金為王，利潤為皇」，然而在現代商業體系中，超過 90% 的大額交易皆以賒銷（商業信用）進行！
+                本章將深入剖析流動性之王——<strong>現金及約當現金</strong>的認定邊界，解碼 <strong>IFRS 15 交易價格</strong> 與 <strong>IFRS 9 預期信用損失</strong>，並跨越資產轉讓的除列決策樹與銀行存款調節表。
+              </p>
+            </div>
+
+            <div class="grid-3" style="gap: 10px;">
+              <div class="card" style="padding: 10px 14px;">
+                <div class="card-title" style="font-size: 1.05rem;">💧 流動性界線</div>
+                <p style="font-size: 0.95rem;">現金約當判定、受限制現金與補償性餘額</p>
+              </div>
+              <div class="card" style="padding: 10px 14px;">
+                <div class="card-title" style="font-size: 1.05rem;">⚖️ 應收與減損</div>
+                <p style="font-size: 0.95rem;">總額 vs 淨額法、備抵損失與帳齡分析表</p>
+              </div>
+              <div class="card" style="padding: 10px 14px;">
+                <div class="card-title" style="font-size: 1.05rem;">🔄 融資與除列</div>
+                <p style="font-size: 0.95rem;">Factoring 承購、追索權與除列決策樹</p>
+              </div>
+            </div>
+
+            <div class="dialogue-box">
+              <div class="dialogue-avatar-wrapper">
+                <img src="../../assets/img1_char02.png" alt="柯教授" class="dialogue-avatar">
+                <span class="dialogue-role-badge badge-prof">柯教授</span>
+              </div>
+              <div class="dialogue-content">
+                <div class="dialogue-name">專業引導</div>
+                <div class="dialogue-text">
+                  「損益表再漂亮，若收不回現金，企業一樣會『黑字倒閉』！讓我們從現金與應收款項開始，掌握貫穿企業營運的真金白銀！」
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-standee-card">
+            <img src="../../assets/img1_char01.png" alt="主講人" class="hero-standee-img">
+            <div style="font-size: 1.15rem; font-weight: 800; color: var(--primary); margin-bottom: 4px;">Donald E. Kieso 經典中會</div>
+            <p style="font-size: 0.96rem; color: var(--text-muted); line-height: 1.45;">
+              第 5 版 IFRS Edition 精準對接<br>
+              IAS 7 · IFRS 9 · IFRS 15
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 2: 現金與約當現金之判定與限制
+         ========================================== -->
+    <section class="slide" id="slide-2" data-slide="2">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">LO 1 · 準則邊界</span>
+          <h1 class="slide-h1">現金及約當現金之範疇與限制 💧</h1>
+          <div class="slide-subtitle">流動性判定、3 個月黃金期、受限制資金與銀行透支之 IFRS 抵銷要件</div>
+        </div>
+        <div class="sticker-stamp">IAS 7 核心</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-3" style="gap: 12px; height: 100%;">
+          <div class="card pure">
+            <div class="card-title">🪙 現金及約當現金</div>
+            <ul style="margin-top: 6px;">
+              <li><strong>現金 (Cash)</strong>：硬幣、紙幣、銀行活期存款、匯票、保付支票。</li>
+              <li><strong>約當現金 (Cash Eq.)</strong>：高流動性短期投資，隨時可轉換為定額現金。</li>
+              <li><strong>3 個月黃金準則</strong>：必須由<strong>原始取得日起算 3 個月內</strong>到期（如 90 天期國庫券、商業本票）。</li>
+              <li><strong>排除非現金</strong>：遠期支票、借員工支票 (I.O.U.)、郵票。</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card-title">🔒 受限制現金與補償餘額</div>
+            <ul style="margin-top: 6px;">
+              <li><strong>受限制現金 (Restricted Cash)</strong>：
+                <ul>
+                  <li>短期用途（如派發即期股利）：列為<strong>流動資產</strong>（分開單獨列示）。</li>
+                  <li>長期用途（如建廠基金、償債基金）：列為<strong>非流動資產</strong>。</li>
+                </ul>
+              </li>
+              <li><strong>補償性餘額 (Compensating Balances)</strong>：
+                借款合約要求維持之最低存款。若具法定限制，依對應之借款性質劃分為流動或非流動資產。
+              </li>
+            </ul>
+          </div>
+
+          <div class="card alt">
+            <div class="card-title">🏦 銀行透支 (Overdrafts)</div>
+            <ul style="margin-top: 6px;">
+              <li><strong>一般原則</strong>：列為<strong>流動負債 (Current Liabilities)</strong>，不得與無透支之存款互抵。</li>
+              <li><strong>IAS 7 例外抵銷要件</strong>：
+                <ol>
+                  <li>透支屬於<strong>隨時要求償還 (Repayable on demand)</strong>。</li>
+                  <li>屬於企業集中現金管理之核心組合（存款頻繁於正負間波動）。</li>
+                </ol>
+              </li>
+              <li>滿足要件時，現金流量表內得以淨額列示！</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img2_char01.png" alt="兔兔助教" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-ta">兔兔助教</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">速記秘訣</div>
+            <div class="dialogue-text">
+              「請特別注意！約當現金看的是『原始取得日起 3 個月』！若買入 1 年期定存，即使期末只剩 20 天到期，依然屬於其他流動金融資產，不能算約當現金喔！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 3: 應收帳款認列與交易價格
+         ========================================== -->
+    <section class="slide" id="slide-3" data-slide="3">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">LO 2 · IFRS 15 交叉點</span>
+          <h1 class="slide-h1">應收帳款之認列與變動對價 📜</h1>
+          <div class="slide-subtitle">收入五步驟交會點：商業折扣不入帳 · 銷貨退回負債與待退回資產</div>
+        </div>
+        <div class="sticker-stamp">IFRS 15 規範</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="gap: 16px; height: 100%;">
+          <div class="card pure">
+            <div class="card-title">🏷️ 認列時點與商業折扣</div>
+            <ul style="margin-top: 8px;">
+              <li><strong>認列時點</strong>：依據 IFRS 15，於<strong>履行履約義務（商品控制權移轉）</strong>時認列應收帳款。</li>
+              <li><strong>商業折扣 (Trade Discounts)</strong>：
+                <ul>
+                  <li>用於大宗採購量大折讓或促銷目錄標價調整。</li>
+                  <li><strong>核心原則</strong>：商業折扣直接於發票中扣除，<strong>不入帳，亦不另設折扣會計科目</strong>！</li>
+                  <li>應收帳款一律直接按扣除商業折扣後之實際交易價格入帳。</li>
+                </ul>
+              </li>
+              <li><strong>例</strong>：標價 $10,000，享八折商業折扣，入帳金額直接為 $8,000。</li>
+            </ul>
+          </div>
+
+          <div class="card alt">
+            <div class="card-title">📦 銷貨退回與退款負債 (Refund Liability)</div>
+            <ul style="margin-top: 8px;">
+              <li>當銷售附帶退貨權時，交易價格屬於<strong>變動對價 (Variable Consideration)</strong>。</li>
+              <li><strong>雙軌估計認列機制</strong>：
+                <ol>
+                  <li><strong>退款負債 (Refund Liability)</strong>：估計客戶將退貨之款項，沖減銷貨收入（預期需退還的對價）。</li>
+                  <li><strong>待退回產品之權利 (Estimated Return Asset)</strong>：估計能收回之商品存貨價值，沖減銷貨成本。</li>
+                </ol>
+              </li>
+              <li><strong>實質意涵</strong>：杜絕全額認列營收再於退貨期補認損失的操縱空間！</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img4_char01.png" alt="張會計師" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-auditor">張會計師</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">查核實務觀察</div>
+            <div class="dialogue-text">
+              「IFRS 15 引入退款負債與待退回資產，徹底貫徹了資產負債表觀念，將預期會退回的營收先剔除，報表使用者才能看見貨真價實的履約收入！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 4: 現金折扣雙軌對決：總額法 vs 淨額法
+         ========================================== -->
+    <section class="slide" id="slide-4" data-slide="4">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">LO 2 · 分錄演算</span>
+          <h1 class="slide-h1">現金折扣雙軌模型：總額法 vs 淨額法 ⚖️</h1>
+          <div class="slide-subtitle">Gross vs Net Method 實質比較：銷貨折扣 (收入減項) vs 顧客未享折扣 (其他收益)</div>
+        </div>
+        <div class="sticker-stamp">IFRS 15 首選</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="card pure" style="padding: 10px 14px;">
+          <div style="font-weight: 800; color: var(--primary); margin-bottom: 6px;">
+            📝 釋例背景：賒銷商品 $10,000，信用條件 2/10, n/30（10 天內付款享 2% 折扣，折後淨額 $9,800）
+          </div>
+          <table class="pastel-table">
+            <thead>
+              <tr>
+                <th style="width: 20%;">交易情境</th>
+                <th style="width: 40%;">總額法 (Gross Method)</th>
+                <th style="width: 40%;">淨額法 (Net Method, IFRS 15 推薦)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>銷貨日</strong></td>
+                <td>
+                  借：應收帳款 $10,000<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;貸：銷貨收入 $10,000
+                </td>
+                <td>
+                  借：應收帳款 $9,800<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;貸：銷貨收入 $9,800
+                </td>
+              </tr>
+              <tr>
+                <td><strong>10 天內收現<br>(享折扣)</strong></td>
+                <td>
+                  借：現金 $9,800<br>
+                  借：<strong>銷貨折扣 $200 (收入減項)</strong><br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;貸：應收帳款 $10,000
+                </td>
+                <td>
+                  借：現金 $9,800<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;貸：應收帳款 $9,800
+                </td>
+              </tr>
+              <tr>
+                <td><strong>逾期收現<br>(未享折扣)</strong></td>
+                <td>
+                  借：現金 $10,000<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;貸：應收帳款 $10,000
+                </td>
+                <td>
+                  借：現金 $10,000<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;貸：應收帳款 $9,800<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;貸：<strong>顧客未享折扣 $200 (其他收益/財務收入)</strong>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img3_char01.png" alt="小安同學" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-student">小安同學</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">盲點提問</div>
+            <div class="dialogue-text">
+              「柯教授，為什麼淨額法逾期的 $200 不計入銷貨收入，而是算『其他收益』呢？」<br>
+              <strong>柯教授</strong>：「因為這 $200 本質上是顧客因延遲付款而支付的融資利息補償，而非商品的實質對價喔！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 5: 應收帳款減損評價：備抵法與帳齡分析表
+         ========================================== -->
+    <section class="slide" id="slide-5" data-slide="5">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">LO 3 · IFRS 9 簡化架構</span>
+          <h1 class="slide-h1">應收帳款減損評價與預期信用損失 📉</h1>
+          <div class="slide-subtitle">禁止直接沖銷法 · 備抵法循環 · 帳齡分析表 (Aging Schedule) 與沖銷分錄</div>
+        </div>
+        <div class="sticker-stamp">Lifetime ECL</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="gap: 16px; height: 100%;">
+          <div class="card pure">
+            <div class="card-title">📊 帳齡分析表 (Aging Schedule)</div>
+            <p style="margin-bottom: 8px;">
+              將應收帳款按逾期天數分級，套用歷史違約率並考量前瞻性總體資訊：
+            </p>
+            <table class="pastel-table" style="font-size: 0.88rem;">
+              <thead>
+                <tr>
+                  <th>帳款帳齡區間</th>
+                  <th>應收餘額</th>
+                  <th>估計違約率</th>
+                  <th>應有備抵損失</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>未逾期 (Current)</td><td>$100,000</td><td>1.0%</td><td>$1,000</td></tr>
+                <tr><td>逾期 1 - 30 天</td><td>$40,000</td><td>4.0%</td><td>$1,600</td></tr>
+                <tr><td>逾期 31 - 60 天</td><td>$20,000</td><td>10.0%</td><td>$2,000</td></tr>
+                <tr><td>逾期 61 天以上</td><td>$10,000</td><td>35.0%</td><td>$3,500</td></tr>
+                <tr style="font-weight: 800; background: var(--primary-soft);">
+                  <td>期末應有備抵餘額</td><td>$170,000</td><td>-</td><td><strong>$8,100</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="card alt">
+            <div class="card-title">✍️ 備抵法三大核心分錄</div>
+            <div class="code-box" style="margin-top: 4px; font-size: 0.90rem;">
+              <strong>1. 期末提列預期信用損失 (補足至 $8,100)：</strong><br>
+              借：預期信用損失 (Bad Debt Expense)&nbsp;&nbsp;&nbsp;$6,300<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;貸：備抵損失 (Allowance for ECL)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$6,300<br>
+              <span style="color: var(--text-muted); font-size: 0.85rem;">（設調整前備抵貸餘 $1,800；$8,100 - $1,800 = $6,300）</span><br><br>
+              <strong>2. 實際沖銷呆帳：</strong><br>
+              借：備抵損失&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$1,500<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;貸：應收帳款&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$1,500<br>
+              <span style="color: var(--accent-rose); font-weight: 700;">★ 應收帳款淨額與損益完全不變！</span><br><br>
+              <strong>3. 已沖銷壞帳又收回 (Recovery)：</strong><br>
+              (a) 借：應收帳款 / 貸：備抵損失（恢復債權）<br>
+              (b) 借：現金 / 貸：應收帳款（正式收現）
+            </div>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img2_char02.png" alt="兔兔助教" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-ta">兔兔助教</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">超高頻考點口訣</div>
+            <div class="dialogue-text">
+              「請大聲朗誦三遍：『沖銷壞帳時，應收帳款淨額完全不變！流動比率完全不變！』因為借備抵貸應收，兩者等額沖銷，千萬不要被考題騙了！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 6: 應收票據評價：不附息票據之折價與有效利率法攤銷
+         ========================================== -->
+    <section class="slide" id="slide-6" data-slide="6">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">LO 4 · 票據計量</span>
+          <h1 class="slide-h1">應收票據評價：零息票據之折價與攤銷 ⏳</h1>
+          <div class="slide-subtitle">零息票據現值折現 · 有效利率法 (Effective-Interest Method) 攤銷表推導</div>
+        </div>
+        <div class="sticker-stamp">攤銷後成本</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="gap: 16px; height: 100%;">
+          <div class="card pure">
+            <div class="card-title">📐 零息票據之現值折現原理</div>
+            <p style="margin-bottom: 8px;">
+              票面利率為 0% 的票據並非「免費借款」，其面額中已內含融資利息！
+            </p>
+            <div class="code-box" style="margin-bottom: 10px;">
+              $$PV = \text{面額 (Face Value)} \times \frac{1}{(1 + r)^n}$$
+              $$\text{票據折價} = \text{票面面額} - \text{發行現值 } PV$$
+            </div>
+            <ul>
+              <li><strong>會計科目</strong>：「應收票據折價 (Discount on Notes Rec.)」作為應收票據之<strong>抵減科目</strong>。</li>
+              <li><strong>每期利息收入</strong> $= \text{期初票據帳面金額} \times \text{市場有效利率 } r$。</li>
+              <li>折價逐期攤銷，票據帳面價值逐期上升，到期精準等於面額！</li>
+            </ul>
+          </div>
+
+          <div class="card alt">
+            <div class="card-title">📋 釋例攤銷表（3 年期 $10,000 零息票據，市場利率 9%）</div>
+            <p style="font-size: 0.92rem; margin-bottom: 6px;">發行日現值 $= \$10,000 \times PVF_{3, 9\%} = \$10,000 \times 0.77218 = \$7,722$</p>
+            <table class="pastel-table" style="font-size: 0.88rem;">
+              <thead>
+                <tr>
+                  <th>年度</th>
+                  <th>期初帳面價值</th>
+                  <th>利息收入 (9%)</th>
+                  <th>折價攤銷額</th>
+                  <th>期末帳面價值</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>發行日</td><td>-</td><td>-</td><td>-</td><td>$7,722</td></tr>
+                <tr><td>Year 1</td><td>$7,722</td><td>$695</td><td>$695</td><td>$8,417</td></tr>
+                <tr><td>Year 2</td><td>$8,417</td><td>$758</td><td>$758</td><td>$9,175</td></tr>
+                <tr><td>Year 3</td><td>$9,175</td><td>$825</td><td>$825</td><td><strong>$10,000</strong></td>
+              </tr>
+              </tbody>
+            </table>
+            <div style="font-size: 0.88rem; color: var(--text-muted); margin-top: 6px;">
+              分錄：借：應收票據折價 $695 / 貸：利息收入 $695
+            </div>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img3_char02.png" alt="小安同學" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-student">小安同學</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">觀念領悟</div>
+            <div class="dialogue-text">
+              「原來這就是第四章時間價值的威力！零息票據帳面上看起來沒利息，實質上每期都在賺取『有效利率法利息收入』！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 7: 應收票據換取商品/勞務之公允價值衡量
+         ========================================== -->
+    <section class="slide" id="slide-7" data-slide="7">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">LO 4 · 公允價值衡量</span>
+          <h1 class="slide-h1">非現金交易票據之公允價值認定階梯 🪜</h1>
+          <div class="slide-subtitle">換取資產、商品或勞務時之估價優先順序 · 隱含利率 (Imputed Rate) 之推計</div>
+        </div>
+        <div class="sticker-stamp">IFRS 13 串接</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-3" style="gap: 12px; height: 100%;">
+          <div class="card pure">
+            <div class="card-title">🥇 第一順位：換出資產公允價值</div>
+            <p><strong>市場現金對價原則</strong>：</p>
+            <ul style="margin-top: 6px;">
+              <li>若企業出售商品、提供勞務或出讓固定資產具有<strong>明確客觀的現時現金售價</strong>。</li>
+              <li>直接以該換出標的之現金公允價值作為應收票據之現值入帳！</li>
+              <li>票面面額與該公允價值之差額即為票據折溢價。</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card-title">🥈 第二順位：票據折現現值</div>
+            <p><strong>市場有效利率折現</strong>：</p>
+            <ul style="margin-top: 6px;">
+              <li>若換出之資產或勞務缺乏活絡市場公允報價。</li>
+              <li>則參考同等信用評等借款人、相同到期期限與擔保條件之<strong>市場借貸利率</strong>。</li>
+              <li>將未來票據的所有現金流入折算為現值入帳。</li>
+            </ul>
+          </div>
+
+          <div class="card alt">
+            <div class="card-title">🥉 第三順位：推計隱含利率</div>
+            <p><strong>推計利率 (Imputed Interest Rate)</strong>：</p>
+            <ul style="margin-top: 6px;">
+              <li>當票面利率顯著低於正常市場水準（或無息）。</li>
+              <li>會計師必須綜合考量發票人信用狀況、抵押擔保與同業利率，<strong>推計合理的有效利率</strong>進行折現。</li>
+              <li>防止企業藉由低利長票虛增營收或高估資產利益！</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img4_char02.png" alt="張會計師" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-auditor">張會計師</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">查核警訊提示</div>
+            <div class="dialogue-text">
+              「查核關聯方交易時，特別要防範開立 10 年期零息票據購買廠房！若未推計市場利率折現，當期處分資產損益將被虛飾膨脹數倍！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 8: 應收帳款融資與轉讓總覽
+         ========================================== -->
+    <section class="slide" id="slide-8" data-slide="8">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">LO 5 · 融資模式全景</span>
+          <h1 class="slide-h1">應收帳款融資全景：質押借款 vs 承購 🔄</h1>
+          <div class="slide-subtitle">Secured Borrowing vs Factoring · 留置款 (Due from Factor) 之資產屬性解密</div>
+        </div>
+        <div class="sticker-stamp">融資 vs 出售</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="card pure" style="padding: 10px 14px;">
+          <table class="pastel-table">
+            <thead>
+              <tr>
+                <th style="width: 20%;">比較維度</th>
+                <th style="width: 40%;">質押借款 (Secured Borrowing)</th>
+                <th style="width: 40%;">應收帳款承購 (Factoring / Sale)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>交易實質</strong></td>
+                <td>以應收款為抵押品向金融機構貸款</td>
+                <td>將應收款之所有權與收取現金權利出售予承購商</td>
+              </tr>
+              <tr>
+                <td><strong>帳款是否除列</strong></td>
+                <td><strong>保留應收帳款</strong>，另立借款負債 (Notes Payable)</td>
+                <td><strong>除列應收帳款</strong>（若滿足除列條件）</td>
+              </tr>
+              <tr>
+                <td><strong>融資成本記錄</strong></td>
+                <td>支付借款利息與初置手續費（融資費用）</td>
+                <td>認列「出售應收帳款損失」(Loss on Sale)</td>
+              </tr>
+              <tr>
+                <td><strong>承購留置款<br>(Due from Factor)</strong></td>
+                <td>無（由借款人自行承擔客戶退貨風險）</td>
+                <td>承購商扣留 3%~5% 保證金，防範銷貨退回折讓，<strong>屬出售方之資產（應收款）</strong></td>
+              </tr>
+              <tr>
+                <td><strong>財務報表影響</strong></td>
+                <td>資產與負債同步膨脹，資產負債率提高</td>
+                <td>活化現金、縮減應收款，優化營運資金與槓桿比率</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img2_char01.png" alt="兔兔助教" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-ta">兔兔助教</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">觀念劃重點</div>
+            <div class="dialogue-text">
+              「請特別注意『應收承購款 (Due from Factor)』！它是承購商暫時扣留的退貨保證金，客戶結清後會退還給我們，所以它是企業的一項流動資產，千萬不要誤記成手續費損失喔！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 9: IFRS 9 金融資產除列決策樹
+         ========================================== -->
+    <section class="slide" id="slide-9" data-slide="9">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">LO 5 · IFRS 9 核心</span>
+          <h1 class="slide-h1">IFRS 9 金融資產除列決策樹 (Derecognition) 🌲</h1>
+          <div class="slide-subtitle">合約權利終止 $\rightarrow$ 風險報酬實質移轉 $\rightarrow$ 控制權移轉三道嚴格防線</div>
+        </div>
+        <div class="sticker-stamp">經濟實質重於形式</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-3" style="gap: 12px; height: 100%;">
+          <div class="card pure">
+            <div class="card-title">🚪 防線一：合約權利是否終止？</div>
+            <p><strong>收取現金流量權利檢驗</strong>：</p>
+            <ul style="margin-top: 6px;">
+              <li>客戶已全額還款，合約權利到期消滅？</li>
+              <li><strong>是 $\rightarrow$ 直接除列金融資產！</strong></li>
+              <li><strong>否 $\rightarrow$ 檢視是否移轉收取權或符合過手協議 (Pass-through test)</strong>，進入防線二。</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card-title">⚖️ 防線二：風險報酬是否移轉？</div>
+            <p><strong>Substantially all risks and rewards</strong>：</p>
+            <ul style="margin-top: 6px;">
+              <li><strong>移轉實質所有風險報酬</strong>（如無追索權出售） $\rightarrow$ <strong>除列資產</strong>。</li>
+              <li><strong>保留實質所有風險報酬</strong>（如附全額追索擔保融資） $\rightarrow$ <strong>禁止除列！視為擔保借款</strong>。</li>
+              <li><strong>既未移轉亦未保留所有風險</strong> $\rightarrow$ 進入防線三。</li>
+            </ul>
+          </div>
+
+          <div class="card alt">
+            <div class="card-title">🎮 防線三：是否保留控制權？</div>
+            <p><strong>Control 處分能力檢驗</strong>：</p>
+            <ul style="margin-top: 6px;">
+              <li>檢驗買方是否有實際能力單方面出售該資產給無關聯第三方？</li>
+              <li><strong>未保留控制（買方自由處分） $\rightarrow$ 除列金融資產</strong>。</li>
+              <li><strong>保留控制 $\rightarrow$ 按「持續參與 (Continuing Involvement)」程度認列資產與負債</strong>。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img1_char02.png" alt="柯教授" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-prof">柯教授</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">準則哲學總結</div>
+            <div class="dialogue-text">
+              「IFRS 9 的除列決策樹徹底粉碎了『假出售、真借款』的表外融資手段！只要企業依然全額擔保客戶壞帳，即使法律合約寫著出售，會計上依然必須視為借款！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 10: 經典釋例：無追索權 vs 附追索權出售分錄
+         ========================================== -->
+    <section class="slide" id="slide-10" data-slide="10">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">LO 5 · 經典釋例</span>
+          <h1 class="slide-h1">應收帳款出售分錄演算：Crest Textiles 案例 🧮</h1>
+          <div class="slide-subtitle">承購手續費 3% · 留置款 5% · 無追索權 vs 附有限追索權 (追索權負債)</div>
+        </div>
+        <div class="sticker-stamp">Wiley 釋例 5.16</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="gap: 16px; height: 100%;">
+          <div class="card pure">
+            <div class="card-title">🕊️ 情況 A：無追索權出售 (Without Guarantee)</div>
+            <p style="font-size: 0.92rem; margin-bottom: 6px;">
+              面額 $500,000，手續費 3% ($15,000)，留置款 5% ($25,000)，實收現金 $460,000。
+            </p>
+            <div class="code-box" style="margin-top: 6px;">
+              借：現金 (Cash)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$460,000<br>
+              借：應收承購款 (Due from Factor)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$25,000<br>
+              借：<strong>出售應收帳款損失 (Loss on Sale)</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$15,000<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;貸：應收帳款 (Accounts Receivable)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$500,000
+            </div>
+            <p style="font-size: 0.90rem; color: var(--text-muted); margin-top: 6px;">
+              壞帳風險完全由承購商承擔，出售方完全除列應收帳款。
+            </p>
+          </div>
+
+          <div class="card alt">
+            <div class="card-title">🛡️ 情況 B：附有限追索權出售 (With Guarantee)</div>
+            <p style="font-size: 0.92rem; margin-bottom: 6px;">
+              符合除列，但賣方承擔有限擔保，估計<strong>追索權公允價值為 $8,000</strong>。
+            </p>
+            <div class="code-box" style="margin-top: 6px;">
+              借：現金 (Cash)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$460,000<br>
+              借：應收承購款 (Due from Factor)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$25,000<br>
+              借：<strong>出售損失 (手續費 $15k + 追索 $8k)</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$23,000<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;貸：應收帳款&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$500,000<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;貸：<strong>追索權負債 (Recourse Liability)</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$8,000
+            </div>
+            <p style="font-size: 0.90rem; color: var(--accent-rose); font-weight: 700; margin-top: 6px;">
+              ★ 擔保責任使當期出售損失由 $15,000 擴大至 $23,000！
+            </p>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img3_char01.png" alt="小安同學" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-student">小安同學</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">秒懂計算邏輯</div>
+            <div class="dialogue-text">
+              「我懂了！附追索權時，因為承擔了壞帳擔保風險，貸記『追索權負債』$8,000，借方的出售損失就等額增加 $8,000，兩邊借貸完美平衡！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 11: 財務報表表達與週轉率分析
+         ========================================== -->
+    <section class="slide" id="slide-11" data-slide="11">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">LO 6 · 報表與分析</span>
+          <h1 class="slide-h1">應收帳款之報表表達與週轉分析 📊</h1>
+          <div class="slide-subtitle">財務狀況表列列報規範 · 應收帳款週轉率與平均收帳天數衡量營運效率</div>
+        </div>
+        <div class="sticker-stamp">流動性指標</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="gap: 16px; height: 100%;">
+          <div class="card pure">
+            <div class="card-title">📑 報表列報與附註揭露規範</div>
+            <ul style="margin-top: 8px;">
+              <li><strong>財務狀況表面額</strong>：流動資產項下單獨列示「應收帳款及票據淨額（攤銷後成本）」。</li>
+              <li><strong>附註揭露必備</strong>：
+                <ol>
+                  <li>應收帳款總額與各期備抵損失調節表。</li>
+                  <li>質押擔保或融資讓與情況。</li>
+                  <li><strong>信用風險集中度 (Concentration of Credit Risk)</strong>：若單一客戶或特定產業佔比過高，必須特別揭露。</li>
+                </ol>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card alt">
+            <div class="card-title">📈 週轉率與流動性分析指標</div>
+            <div class="code-box" style="margin-top: 4px; margin-bottom: 8px;">
+              $$\text{應收帳款週轉率} = \frac{\text{淨銷貨收入 (Net Sales)}}{\text{平均應收帳款淨額 (Average Net A/R)}}$$
+              $$\text{平均收帳天數 (Days to Collect)} = \frac{365}{\text{應收帳款週轉率}}$$
+            </div>
+            <ul>
+              <li><strong>判讀指標</strong>：平均收帳天數應與企業給予的信用條件（如 30 天）比較。</li>
+              <li><strong>警訊</strong>：天數若大幅拉長，代表催收困難、放寬信用標準或客戶陷入財務危機！</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img4_char01.png" alt="張會計師" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-auditor">張會計師</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">分析師視角</div>
+            <div class="dialogue-text">
+              「如果一家公司營收快速成長，但應收帳款週轉天數從 40 天暴增到 95 天，很可能是為了美化營收進行『通路塞貨』，審計員會列為最高查核風險！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 12: 附錄 5A：銀行存款調節表四象限調整模型
+         ========================================== -->
+    <section class="slide" id="slide-12" data-slide="12">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">附錄 5A · 實務調節</span>
+          <h1 class="slide-h1">銀行存款調節表四象限調整模型 🏛️</h1>
+          <div class="slide-subtitle">時間差 vs 記帳錯誤剖析：四象限平衡公式與公司端期末入帳鐵律</div>
+        </div>
+        <div class="sticker-stamp">必考重點</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="gap: 16px; height: 100%;">
+          <div class="card pure">
+            <div class="card-title">⚖️ 四象限調節平衡公式</div>
+            <div class="code-box" style="font-size: 0.90rem; margin-top: 4px;">
+              <strong>【銀行對帳單端 Balance per Bank】</strong><br>
+              &nbsp;&nbsp;銀行對帳單期末餘額<br>
+              &nbsp;&nbsp;＋ <strong>在途存款 (Deposits in Transit)</strong><br>
+              &nbsp;&nbsp;－ <strong>未兌現支票 (Outstanding Checks)</strong><br>
+              &nbsp;&nbsp;± 銀行端記帳錯誤<br>
+              &nbsp;&nbsp;＝ <strong>正確現金餘額 (Corrected Balance)</strong><br><br>
+              <strong>【公司帳面端 Balance per Books】</strong><br>
+              &nbsp;&nbsp;公司帳面現金餘額<br>
+              &nbsp;&nbsp;＋ <strong>銀行代收票據及利息</strong><br>
+              &nbsp;&nbsp;－ <strong>銀行服務手續費</strong><br>
+              &nbsp;&nbsp;－ <strong>存款不足退票 (NSF Check)</strong><br>
+              &nbsp;&nbsp;± 公司端記帳錯誤<br>
+              &nbsp;&nbsp;＝ <strong>正確現金餘額 (Corrected Balance)</strong>
+            </div>
+          </div>
+
+          <div class="card alt">
+            <div class="card-title">📜 公司端調整分錄黃金鐵律</div>
+            <div class="code-box" style="font-size: 0.90rem; margin-top: 4px;">
+              <span style="color: var(--accent-rose); font-weight: 800;">★ 鐵律：只有公司帳（Books）端項目需要做分錄！銀行端項目公司早已入帳，絕不做分錄！</span><br><br>
+              <strong>1. 代收票據：</strong><br>
+              借：現金 / 借：手續費費用 / 貸：應收票據、利息收入<br><br>
+              <strong>2. 存款不足退票 (NSF Check)：</strong><br>
+              借：應收帳款 / 貸：現金<span style="color: var(--text-muted);">（恢復對客戶債權）</span><br><br>
+              <strong>3. 銀行代扣手續費：</strong><br>
+              借：手續費費用 / 貸：現金<br><br>
+              <strong>4. 公司開票多記支出更正：</strong><br>
+              借：現金 / 貸：應付帳款
+            </div>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img2_char02.png" alt="兔兔助教" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-ta">兔兔助教</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">速記鐵律</div>
+            <div class="dialogue-text">
+              「請牢牢記住：『在途存款』與『未兌現支票』純粹是銀行端處理的時間差，公司帳冊早在收付當下就已經記過了，如果公司再去補分錄就會重覆記帳喔！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 13: 觀念小擂台互動測驗與本章 Recap
+         ========================================== -->
+    <section class="slide" id="slide-13" data-slide="13">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">驗收挑戰 · 擂台</span>
+          <h1 class="slide-h1">觀念小擂台與 Chapter 5 重點總結 🎯</h1>
+          <div class="slide-subtitle">隨堂單選驗收 · 全章精華大三通 · 迎向 Chapter 6 存貨評價</div>
+        </div>
+        <div class="sticker-stamp">🏆 挑戰題</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="gap: 16px; height: 100%;">
+          <div class="card pure">
+            <div class="card-title">🥊 隨堂觀念測驗</div>
+            <p style="font-size: 0.98rem; margin-bottom: 10px;">
+              <strong>題目：</strong>甲公司將面額 $100,000 應收帳款出售給承購商，承購商扣取 3% 手續費與 5% 保證金。甲公司同意<strong>全額保證</strong>該批帳款之信用壞帳風險。依據 IFRS 9 之規定，甲公司應如何處理？
+            </p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuiz(this, false, '全額保證壞帳意味著企業保留了實質上所有的信用風險，未通過除列第二道防線，不能除列應收帳款！')">
+                A. 認列出售損失 $3,000，並自資產負債表中完全除列應收帳款
+              </button>
+              <button class="quiz-btn" onclick="checkQuiz(this, true, '正確！全額保證信用壞帳表示企業保留了實質上所有風險與報酬，實質上屬於擔保借款（Failed Sale），應保留應收帳款並認列借款金融負債！')">
+                B. 視為擔保借款，保留應收帳款，認列借款負債 $92,000
+              </button>
+              <button class="quiz-btn" onclick="checkQuiz(this, false, '全額保證之應收帳款不能轉入待處分金融資產，必須按擔保借款處理。')">
+                C. 將應收帳款全額轉入待處分金融資產，不認列任何負債
+              </button>
+            </div>
+            <div id="quiz-feedback-box" class="quiz-feedback" style="margin-top: 10px;"></div>
+          </div>
+
+          <div class="card alt" style="justify-content: space-between;">
+            <div>
+              <div class="card-title">🌟 Chapter 5 精華 Recap</div>
+              <ul style="font-size: 0.98rem; margin-top: 4px;">
+                <li><strong>約當現金門檻</strong>：原始取得日起算 3 個月以內到期。</li>
+                <li><strong>現金折扣雙軌</strong>：淨額法將逾期未付視為「顧客未享折扣（其他收益）」。</li>
+                <li><strong>備抵損失循環</strong>：帳齡分析求期末應有餘額；沖銷呆帳對應收款淨額與損益零影響。</li>
+                <li><strong>除列決策樹</strong>：權利終止 $\rightarrow$ 風險報酬移轉 $\rightarrow$ 控制權移轉三道防線。</li>
+                <li><strong>調節表鐵律</strong>：僅公司帳面加減項目才需做調整分錄！</li>
+              </ul>
+            </div>
+
+            <div class="dialogue-box" style="margin-top: 8px;">
+              <div class="dialogue-avatar-wrapper">
+                <img src="../../assets/img1_char01.png" alt="柯教授" class="dialogue-avatar">
+                <span class="dialogue-role-badge badge-prof">柯教授</span>
+              </div>
+              <div class="dialogue-content">
+                <div class="dialogue-name">課程結語</div>
+                <div class="dialogue-text">
+                  「恭喜大家順利通關 Chapter 5！現金與應收款項是流動資產的雙箭頭，下一章我們將迎戰更具挑戰性的『Chapter 6 存貨評價 (Inventories)』！」
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer Nav -->
+  <footer>
+    <div style="font-size: 0.88rem; color: var(--text-muted); font-weight: 700;">
+      中級會計學 (IFRS 5/e) · Chapter 5
+    </div>
+    <div class="nav-controls">
+      <button class="nav-btn" id="btn-prev" onclick="changeSlide(-1)"><span>◀</span><span>上一頁</span></button>
+      <span class="slide-counter" id="slide-num">1 / 13</span>
+      <button class="nav-btn" id="btn-next" onclick="changeSlide(1)"><span>下一頁</span><span>▶</span></button>
+    </div>
+    <div style="font-size: 0.85rem; color: var(--text-muted);">
+      鍵盤 Space / 左右方向鍵切換
+    </div>
+  </footer>
+
+  <!-- Speaker Notes Modal Drawer (N) -->
+  <div id="notes-modal" class="modal-overlay" onclick="if(event.target===this) toggleNotes();">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">💡 講者備忘錄 (Speaker Notes)</h3>
+        <button class="btn-close" onclick="toggleNotes()">&times;</button>
+      </div>
+      <div id="notes-content" style="font-size: 1.05rem; line-height: 1.6; color: var(--text-main);"></div>
+    </div>
+  </div>
+
+  <!-- Slide Overview Modal (O) -->
+  <div id="overview-modal" class="modal-overlay" onclick="if(event.target===this) toggleOverview();">
+    <div class="modal-card" style="max-width: 900px;">
+      <div class="modal-header">
+        <h3 class="modal-title">📑 投影片總覽導航</h3>
+        <button class="btn-close" onclick="toggleOverview()">&times;</button>
+      </div>
+      <div class="overview-grid" id="overview-grid"></div>
+    </div>
+  </div>
+
+  <!-- JavaScript Interaction Engine -->
+  <script>
+    const totalSlides = 13;
+    let currentSlide = 1;
+
+    // Slide Titles & Speaker Notes
+    const slideData = [
+      {
+        title: "封面與全章架構導引",
+        notes: "引導動機：向學生展示損益表獲利很高卻因為現金斷流而倒閉的案例（黑字倒閉）。引導出商業信用賒銷（應收帳款）在現代經濟的重要性，並預告本章涵蓋 IAS 7、IFRS 15 與 IFRS 9。"
+      },
+      {
+        title: "現金及約當現金之範疇與限制",
+        notes: "重點提示：約當現金必須是由『原始取得日』起算 3 個月內到期。說明受限制現金在資產負債表如何劃分流動與非流動，並詳細闡述 IAS 7 下銀行透支隨時償還且屬於集中現金管理時可抵銷的例外規定。"
+      },
+      {
+        title: "應收帳款之認列與變動對價",
+        notes: "對接 IFRS 15：強調商業折扣合約直接扣除不入帳；解構銷貨退回的『退款負債』與『待退回產品資產』雙軌入帳模型，解釋資產負債觀如何避免粗暴虛增營業收入。"
+      },
+      {
+        title: "現金折扣雙軌模型：總額法 vs 淨額法",
+        notes: "深入對比總額法與淨額法的分錄差異。特別向學生點出淨額法下顧客逾期未享折扣的 $200 屬於『融資收益 / 其他收益』，忠實表述提供短期信用展期的經濟實質。"
+      },
+      {
+        title: "應收帳款減損評價與預期信用損失",
+        notes: "IFRS 9 簡化作法解說：一律按存續期間預期信用損失提列。解析帳齡分析表矩陣計算。強調實際沖銷壞帳時，借備抵貸應收，兩者等額對沖，對應收帳款淨額與當期損益毫無影響！"
+      },
+      {
+        title: "應收票據評價：零息票據之折價與攤銷",
+        notes: "串聯 Chapter 4 貨幣時間價值！推導零息票據發行折現現值公式與折溢價攤銷表，證明實質重於形式：即使表面 0% 票面利息，會計上每期仍必須以有效利率法認列利息收入。"
+      },
+      {
+        title: "非現金交易票據之公允價值認定階梯",
+        notes: "剖析公允價值三階梯：換出資產市價優先；其次為票據市場利率折現；若利率不合理則推計利率。提醒學生實務上常有開立長天期無息票據購買資產以虛增利潤的舞弊情境。"
+      },
+      {
+        title: "應收帳款融資全景：質押借款 vs 承購",
+        notes: "深度對照 Secured Borrowing 與 Factoring。特別提醒學生『應收承購款 (Due from Factor)』是承購商防退貨的留置款，屬於企業的流動資產，而非損失手續費。"
+      },
+      {
+        title: "IFRS 9 金融資產除列決策樹",
+        notes: "帶領學生逐層走過除列決策樹的三道防線：合約權利終止 $\rightarrow$ 風險報酬實質移轉 $\rightarrow$ 控制權移轉。強調經濟實質：只要賣方全額保證壞帳，無論法律合約如何包裝，均屬擔保借款！"
+      },
+      {
+        title: "應收帳款出售分錄演算：Crest Textiles 案例",
+        notes: "演繹 Crest Textiles 經典分錄。對比無追索權與附有限追索權的會計差異，說明追索權負債之認列如何擴大出售損失金額。"
+      },
+      {
+        title: "應收帳款之報表表達與週轉分析",
+        notes: "說明報表單獨列報淨額與附註揭露規範。指導週轉率與平均收帳天數公式，分析收帳天數顯著高於信用期限背後代表的放寬信用或呆帳風險。"
+      },
+      {
+        title: "附錄 5A：銀行存款調節表四象限調整模型",
+        notes: "剖析銀行存款調節表核心邏輯：在途存款與未兌現支票乃時間差，公司早已入帳，公司絕不作調整分錄！只有公司端加減項目需要編製期末調整分錄。"
+      },
+      {
+        title: "觀念小擂台與 Chapter 5 重點總結",
+        notes: "測驗互動引導：檢驗學生對全額保證壞帳實質為擔保借款（Failed Sale）的掌握度。引導學生回顧本章 5 大核心概念，並無縫預告 Chapter 6 存貨評價。"
+      }
+    ];
+
+    function updatePresentation() {
+      // Slides display
+      document.querySelectorAll('.slide').forEach((slide, idx) => {
+        if (idx + 1 === currentSlide) {
+          slide.classList.add('active');
+        } else {
+          slide.classList.remove('active');
+        }
+      });
+
+      // Progress bar
+      const progress = ((currentSlide - 1) / (totalSlides - 1)) * 100;
+      document.getElementById('progress-bar').style.width = progress + '%';
+
+      // Counter
+      document.getElementById('slide-num').innerText = `${currentSlide} / ${totalSlides}`;
+
+      // Buttons
+      document.getElementById('btn-prev').disabled = (currentSlide === 1);
+      document.getElementById('btn-next').disabled = (currentSlide === totalSlides);
+
+      // Notes
+      const notesBox = document.getElementById('notes-content');
+      if (notesBox && slideData[currentSlide - 1]) {
+        notesBox.innerHTML = `<strong>第 ${currentSlide} 頁 · ${slideData[currentSlide - 1].title}</strong><br><br>${slideData[currentSlide - 1].notes}`;
+      }
+
+      // Update URL Hash
+      window.location.hash = '#' + currentSlide;
+    }
+
+    function changeSlide(direction) {
+      const target = currentSlide + direction;
+      if (target >= 1 && target <= totalSlides) {
+        currentSlide = target;
+        updatePresentation();
+      }
+    }
+
+    function goToSlide(slideNum) {
+      if (slideNum >= 1 && slideNum <= totalSlides) {
+        currentSlide = slideNum;
+        updatePresentation();
+        const overviewModal = document.getElementById('overview-modal');
+        if (overviewModal.style.display === 'flex') {
+          toggleOverview();
+        }
+      }
+    }
+
+    // Modal Toggles
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+          console.warn("Fullscreen error:", err);
+        });
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    function toggleNotes() {
+      const modal = document.getElementById('notes-modal');
+      modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+    }
+
+    function toggleOverview() {
+      const modal = document.getElementById('overview-modal');
+      if (modal.style.display === 'flex') {
+        modal.style.display = 'none';
+      } else {
+        const grid = document.getElementById('overview-grid');
+        grid.innerHTML = '';
+        slideData.forEach((item, idx) => {
+          const div = document.createElement('div');
+          div.className = `overview-item ${idx + 1 === currentSlide ? 'active' : ''}`;
+          div.innerHTML = `<strong>P.${idx + 1}</strong><br>${item.title}`;
+          div.onclick = () => goToSlide(idx + 1);
+          grid.appendChild(div);
+        });
+        modal.style.display = 'flex';
+      }
+    }
+
+    // Interactive Quiz Handler
+    function checkQuiz(btn, isCorrect, explanation) {
+      const container = btn.closest('.card');
+      const buttons = container.querySelectorAll('.quiz-btn');
+      const feedbackBox = document.getElementById('quiz-feedback-box');
+      
+      buttons.forEach(b => {
+        b.disabled = true;
+        b.style.cursor = 'default';
+      });
+
+      if (isCorrect) {
+        btn.classList.add('correct');
+        feedbackBox.style.display = 'block';
+        feedbackBox.style.background = '#ecfdf5';
+        feedbackBox.style.color = '#065f46';
+        feedbackBox.style.border = '1.5px solid #34d399';
+        feedbackBox.innerHTML = `<strong>🎉 答對了！</strong><br>${explanation}`;
+      } else {
+        btn.classList.add('wrong');
+        feedbackBox.style.display = 'block';
+        feedbackBox.style.background = '#fef2f2';
+        feedbackBox.style.color = '#991b1b';
+        feedbackBox.style.border = '1.5px solid #f87171';
+        feedbackBox.innerHTML = `<strong>❌ 答錯了喔！</strong><br>${explanation}`;
+      }
+    }
+
+    // Keyboard Shortcuts
+    window.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+      switch(e.key) {
+        case 'ArrowRight':
+        case 'PageDown':
+        case ' ':
+          e.preventDefault();
+          changeSlide(1);
+          break;
+        case 'ArrowLeft':
+        case 'PageUp':
+          e.preventDefault();
+          changeSlide(-1);
+          break;
+        case 'Home':
+          e.preventDefault();
+          goToSlide(1);
+          break;
+        case 'End':
+          e.preventDefault();
+          goToSlide(totalSlides);
+          break;
+        case 'f':
+        case 'F':
+          e.preventDefault();
+          toggleFullscreen();
+          break;
+        case 'n':
+        case 'N':
+          e.preventDefault();
+          toggleNotes();
+          break;
+        case 'o':
+        case 'O':
+          e.preventDefault();
+          toggleOverview();
+          break;
+        case 'Escape':
+          const overviewModal = document.getElementById('overview-modal');
+          const notesModal = document.getElementById('notes-modal');
+          if (overviewModal && overviewModal.style.display === 'flex') toggleOverview();
+          if (notesModal && notesModal.style.display === 'flex') toggleNotes();
+          break;
+      }
+    });
+
+    // Touch Swipe Gestures
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const stage = document.getElementById('slide-stage');
+
+    stage.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, false);
+
+    stage.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, false);
+
+    function handleSwipe() {
+      const threshold = 40;
+      if (touchEndX < touchStartX - threshold) {
+        changeSlide(1);
+      }
+      if (touchEndX > touchStartX + threshold) {
+        changeSlide(-1);
+      }
+    }
+
+    // Init with Hash or Default to 1
+    window.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash.replace('#', '');
+      const initial = parseInt(hash, 10);
+      if (!isNaN(initial) && initial >= 1 && initial <= totalSlides) {
+        currentSlide = initial;
+      }
+      updatePresentation();
+    });
+  </script>
+</body>
+</html>

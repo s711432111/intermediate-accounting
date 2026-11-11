@@ -1,0 +1,1766 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 6 · 存貨之衡量與評價 | 中級會計學 IFRS 5/e 互動簡報</title>
+  
+  <!-- Google Fonts: Noto Sans TC & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+TC:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX for Accounting Formulas -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+          onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+  <style>
+    /* ==========================================
+       風格 A：日系燕麥奶茶手帳風 (Cozy Milk Tea Journal)
+       高清晰放大字級版 · 零滾動與防擠壓安全規範
+       ========================================== */
+    :root {
+      --bg-desk: #f4ede4;         /* 燕麥奶茶底色 */
+      --bg-slide: #fffdf9;        /* 柔和手帳米白紙張 */
+      --bg-card: #f9f5f0;         /* 淺奶茶卡片 */
+      --bg-card-alt: #f3ece2;     /* 拿鐵卡片 */
+      --bg-card-pure: #ffffff;    /* 純白便簽卡 */
+      --primary: #ad7448;         /* 焦糖拿鐵棕 */
+      --primary-soft: #f4e8dc;    /* 奶泡淺褐 */
+      --primary-border: #dcc8b4;  /* 手帳細框棕 */
+      --text-main: #423023;       /* 深烘焙咖啡字體 */
+      --text-muted: #826c5b;      /* 溫和次要說明 */
+      --washi-color: #eedcc9;     /* 和紙膠帶色 */
+      --badge-bg: #edd3c4;        /* 印章柔粉褐 */
+      --accent-green: #528c61;    /* 抹茶綠（增益/正確） */
+      --accent-rose: #d96f86;     /* 玫瑰粉（虧損/錯誤） */
+      --accent-blue: #2563eb;     /* 鋼筆藍 */
+      --font-main: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-code: 'JetBrains Mono', Consolas, monospace;
+      --card-radius: 18px;
+      --shadow-soft: 0 10px 30px rgba(110, 80, 55, 0.08), 0 2px 6px rgba(110, 80, 55, 0.04);
+      --shadow-card: 0 4px 14px rgba(110, 80, 55, 0.05);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-desk);
+      color: var(--text-main);
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden; /* STRICTLY ZERO SCROLL */
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Top Progress Bar */
+    #progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: rgba(173, 116, 72, 0.15);
+      z-index: 1000;
+    }
+    #progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #c29b7f, #ad7448, #f2cb74);
+      transition: width 0.3s ease;
+    }
+
+    /* Header Nav */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 28px;
+      height: 48px;
+      background: rgba(255, 253, 249, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 2px dashed var(--primary-border);
+      z-index: 100;
+      flex-shrink: 0;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge-course {
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 50px;
+      letter-spacing: 0.05em;
+    }
+    .chapter-title {
+      font-size: 1.00rem;
+      color: var(--text-main);
+      font-weight: 800;
+    }
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-header {
+      background: var(--bg-card);
+      border: 1.5px solid var(--primary-border);
+      color: var(--text-main);
+      padding: 5px 14px;
+      border-radius: 50px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .btn-header:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    /* Main Slide Stage (Calculated viewport fit) */
+    #slide-stage {
+      flex: 1;
+      width: 100%;
+      height: calc(100vh - 96px);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 16px;
+      box-sizing: border-box;
+    }
+
+    /* The Slide Card */
+    .slide {
+      display: none;
+      width: min(1380px, calc(100vw - 32px));
+      height: calc(100vh - 104px);
+      max-height: 890px;
+      min-height: 520px;
+      flex: 0 0 auto; /* PREVENT FLEX SHRINK */
+      background: var(--bg-slide);
+      border: 2.5px solid var(--primary-border);
+      border-radius: var(--card-radius);
+      padding: 16px 28px;
+      box-shadow: var(--shadow-soft);
+      flex-direction: column;
+      overflow: hidden; /* ZERO SCROLL */
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    .slide.active {
+      display: flex;
+      animation: slideIn 0.25s ease-out forwards;
+      z-index: 10;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Washi Tape (紙膠帶裝飾) */
+    .washi-tape {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-0.8deg);
+      width: 150px;
+      height: 24px;
+      background: var(--washi-color);
+      border-left: 2px dashed rgba(66, 48, 35, 0.15);
+      border-right: 2px dashed rgba(66, 48, 35, 0.15);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      z-index: 20;
+    }
+
+    /* Sticker Stamp */
+    .sticker-stamp {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ffffff;
+      border: 1.5px dashed var(--primary);
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 0.90rem;
+      font-weight: 800;
+      color: var(--primary);
+      transform: rotate(-1.5deg);
+    }
+
+    /* Slide Header */
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1.5px dashed var(--primary-soft);
+      flex-shrink: 0;
+    }
+    .slide-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--badge-bg);
+      color: var(--primary);
+      font-size: 0.90rem;
+      font-weight: 800;
+      padding: 3px 12px;
+      border-radius: 50px;
+      letter-spacing: 0.04em;
+    }
+    .slide-h1 {
+      font-size: 1.76rem;
+      font-weight: 900;
+      color: var(--text-main);
+      line-height: 1.25;
+      margin-top: 3px;
+    }
+    .slide-subtitle {
+      font-size: 1.02rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+      font-weight: 500;
+    }
+
+    /* Content Layouts */
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      overflow: hidden; /* Strictly within viewport */
+      user-select: text;
+      min-height: 0;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    /* Cute Cards */
+    .card {
+      background: var(--bg-card);
+      border-radius: 14px;
+      padding: 12px 18px;
+      border: 1.5px solid transparent;
+      box-shadow: var(--shadow-card);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover {
+      border-color: var(--primary-border);
+    }
+    .card.alt {
+      background: var(--bg-card-alt);
+    }
+    .card.pure {
+      background: var(--bg-card-pure);
+      border: 1.5px solid var(--primary-soft);
+    }
+
+    .card-title {
+      font-size: 1.20rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .card p, .card li {
+      font-size: 1.04rem;
+      line-height: 1.50;
+      color: var(--text-main);
+    }
+    .card ul, .card ol {
+      padding-left: 20px;
+    }
+    .card li {
+      margin-bottom: 4px;
+    }
+
+    /* Dialogue Box */
+    .dialogue-box {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 9px 18px;
+      border: 1.5px solid var(--primary-border);
+      box-shadow: 0 4px 12px rgba(138, 102, 74, 0.06);
+      flex-shrink: 0;
+    }
+    .dialogue-avatar-wrapper {
+      position: relative;
+      flex-shrink: 0;
+    }
+    .dialogue-avatar {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 6px rgba(66, 48, 35, 0.12);
+      object-fit: cover;
+      display: block;
+    }
+    .dialogue-role-badge {
+      position: absolute;
+      bottom: -3px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.70rem;
+      font-weight: 800;
+      padding: 1px 7px;
+      border-radius: 8px;
+      white-space: nowrap;
+    }
+    .badge-prof { background: #fbe0e6; color: #b84366; }
+    .badge-ta { background: #e0f2fe; color: #0284c7; }
+    .badge-student { background: #fef3c7; color: #b45309; }
+    .badge-auditor { background: #dcfce7; color: #15803d; }
+
+    .dialogue-content {
+      flex: 1;
+    }
+    .dialogue-name {
+      font-size: 1.04rem;
+      font-weight: 800;
+      margin-bottom: 3px;
+      color: var(--primary);
+    }
+    .dialogue-text {
+      font-size: 1.02rem;
+      line-height: 1.50;
+      color: var(--text-main);
+    }
+
+    /* Tables */
+    .pastel-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.94rem;
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1.5px solid var(--primary-border);
+    }
+    .pastel-table th {
+      background: var(--primary-soft);
+      color: var(--text-main);
+      text-align: left;
+      padding: 6px 12px;
+      font-weight: 800;
+      border-bottom: 1.5px solid var(--primary-border);
+      font-size: 0.96rem;
+    }
+    .pastel-table td {
+      padding: 5px 12px;
+      border-bottom: 1px solid var(--primary-soft);
+      color: var(--text-main);
+    }
+
+    /* Code Box */
+    .code-box {
+      background: #ffffff;
+      border: 1.5px dashed var(--primary-border);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-family: var(--font-code);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: var(--text-main);
+    }
+
+    /* Quiz Arena */
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .quiz-btn {
+      background: #ffffff;
+      border: 1.5px solid var(--primary-border);
+      color: var(--text-main);
+      padding: 11px 18px;
+      border-radius: 12px;
+      text-align: left;
+      font-size: 1.02rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .quiz-btn:hover {
+      background: var(--primary-soft);
+      transform: translateX(3px);
+    }
+    .quiz-btn.correct {
+      background: #ecfdf5 !important;
+      border-color: #34d399 !important;
+      color: #065f46 !important;
+      font-weight: 800;
+    }
+    .quiz-btn.wrong {
+      background: #fef2f2 !important;
+      border-color: #f87171 !important;
+      color: #991b1b !important;
+    }
+    .quiz-feedback {
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 0.98rem;
+      display: none;
+      line-height: 1.50;
+    }
+
+    /* Footer Nav */
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 28px;
+      height: 48px;
+      background: rgba(255, 253, 249, 0.95);
+      border-top: 2px dashed var(--primary-border);
+      z-index: 100;
+      flex-shrink: 0;
+    }
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-btn {
+      background: var(--bg-card);
+      border: 1.5px solid var(--primary-border);
+      color: var(--text-main);
+      padding: 5px 16px;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+    .nav-btn:hover:not(:disabled) {
+      background: var(--primary);
+      color: #ffffff;
+    }
+    .nav-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .slide-counter {
+      font-family: var(--font-code);
+      font-size: 0.94rem;
+      font-weight: 800;
+      color: var(--primary);
+      padding: 4px 12px;
+      background: var(--bg-card);
+      border-radius: 50px;
+      border: 1px solid var(--primary-border);
+    }
+
+    /* Modal Dialogs */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(66, 48, 35, 0.45);
+      backdrop-filter: blur(4px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-card {
+      background: var(--bg-slide);
+      border: 2.5px solid var(--primary-border);
+      border-radius: 20px;
+      max-width: 820px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      position: relative;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      border-bottom: 2px dashed var(--primary-border);
+      padding-bottom: 10px;
+    }
+    .modal-title {
+      font-size: 1.30rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    .btn-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-muted);
+    }
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+    }
+    .overview-item {
+      background: var(--bg-card);
+      border: 1.5px solid var(--primary-border);
+      border-radius: 10px;
+      padding: 10px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    .overview-item:hover, .overview-item.active {
+      background: var(--primary);
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    /* Hero Standee Style */
+    .hero-standee-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(145deg, #ffffff, var(--bg-card-alt));
+      border: 2px dashed var(--primary-border);
+      border-radius: 16px;
+      padding: 16px;
+      height: 100%;
+      text-align: center;
+    }
+    .hero-standee-img {
+      width: 175px;
+      height: 175px;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 16px rgba(110, 80, 55, 0.18));
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Progress Bar -->
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+  </div>
+
+  <!-- Header Nav -->
+  <header>
+    <div class="brand">
+      <span class="badge-course">KIESO IFRS 5/e</span>
+      <span class="chapter-title">Chapter 6 · 存貨之衡量與評價 (Inventories)</span>
+    </div>
+    <div class="header-controls">
+      <button class="btn-header" onclick="toggleOverview()"><span>📑</span><span>總覽 (O)</span></button>
+      <button class="btn-header" onclick="toggleNotes()"><span>💡</span><span>講者備忘錄 (N)</span></button>
+      <button class="btn-header" onclick="toggleFullscreen()"><span>⛶</span><span>全螢幕 (F)</span></button>
+    </div>
+  </header>
+
+  <!-- Slide Stage -->
+  <main id="slide-stage">
+
+    <!-- ==========================================
+         Slide 1: 封面與全章架構導引
+         ========================================== -->
+    <section class="slide active" id="slide-1" data-slide="1">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">CHAPTER 06</span>
+          <h1 class="slide-h1">存貨之衡量與評價 (Inventories) 📦</h1>
+          <div class="slide-subtitle">企業營運核心引擎 · IAS 2 成本流轉假設 · 淨變現價值 (NRV) 價值重估</div>
+        </div>
+        <div class="sticker-stamp">📘 實體資產篇</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="align-items: stretch; height: 100%;">
+          <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 10px;">
+            <div class="card pure" style="border-left: 5px solid var(--primary); flex: 1;">
+              <div class="card-title">🌱 迎向商品流動的核心樞紐</div>
+              <p>
+                「存貨是企業連接兩大報表的靈魂紐帶」，期末存貨的每一分錢高低，直接左右損益表上的銷貨成本、毛利與所得稅，並決定資產負債表的營運資金！
+                本章將深入剖析<strong>永續與定期盤存制</strong>的本質，解碼 <strong>FIFO、平均成本法與 LIFO 禁制</strong>，並跨越 IAS 2 核心<strong>成本與淨變現價值孰低法 (LCNRV)</strong> 與估算技術。
+              </p>
+            </div>
+
+            <div class="grid-3" style="gap: 10px;">
+              <div class="card" style="padding: 10px 14px;">
+                <div class="card-title" style="font-size: 1.05rem;">⚖️ 雙重盤存制</div>
+                <p style="font-size: 0.95rem;">永續制即時分錄 vs 定期制期末倒扣</p>
+              </div>
+              <div class="card" style="padding: 10px 14px;">
+                <div class="card-title" style="font-size: 1.05rem;">📈 成本流轉假設</div>
+                <p style="font-size: 0.95rem;">FIFO、加權/移動平均、通膨稅務天秤</p>
+              </div>
+              <div class="card" style="padding: 10px 14px;">
+                <div class="card-title" style="font-size: 1.05rem;">🏷️ LCNRV 評價</div>
+                <p style="font-size: 0.95rem;">逐項比較、回升上限、毛利與零售法</p>
+              </div>
+            </div>
+
+            <div class="dialogue-box">
+              <div class="dialogue-avatar-wrapper">
+                <img src="../../assets/img1_char01.png" alt="柯教授" class="dialogue-avatar">
+                <span class="dialogue-role-badge badge-prof">柯教授</span>
+              </div>
+              <div class="dialogue-content">
+                <div class="dialogue-name">專業引導</div>
+                <div class="dialogue-text">
+                  「存貨是商業營運最活躍的血脈，也是盈餘管理最常被操弄的槓桿！讓我們以嚴謹的準則架構，徹底拆解存貨的成本與價值密碼！」
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-standee-card">
+            <img src="../../assets/img1_char02.png" alt="主講人" class="hero-standee-img">
+            <div style="font-size: 1.15rem; font-weight: 800; color: var(--primary); margin-bottom: 4px;">Donald E. Kieso 經典中會</div>
+            <p style="font-size: 0.96rem; color: var(--text-muted); line-height: 1.45;">
+              第 5 版 IFRS Edition 精準對接<br>
+              IAS 2 · IAS 37 · IAS 41
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 2: 存貨分類與雙重盤存制度
+         ========================================== -->
+    <section class="slide" id="slide-2" data-slide="2">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">LO 1 · 體系建構</span>
+          <h1 class="slide-h1">存貨分類與雙重盤存制度 🔄</h1>
+          <div class="slide-subtitle">買賣業 vs 製造業成本流轉 · 永續盤存制 (Perpetual) vs 定期盤存制 (Periodic)</div>
+        </div>
+        <div class="sticker-stamp">成本流轉模型</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="gap: 16px; height: 100%;">
+          <div class="card pure">
+            <div class="card-title">🏭 存貨型態與成本流轉 (Illustration 6.2)</div>
+            <ul style="margin-top: 8px;">
+              <li><strong>買賣業 (Merchandising)</strong>：單一「商品存貨 (Merchandise Inventory)」，進貨成本直接進入可供銷售狀態。</li>
+              <li><strong>製造業 (Manufacturing)</strong>：三大成本帳戶流轉：
+                <ol style="margin-top: 4px;">
+                  <li><strong>原料 (Raw Materials)</strong>：待投入製造之物料。</li>
+                  <li><strong>在製品 (Work in Process)</strong>：原料＋直接人工＋製造費用。</li>
+                  <li><strong>製成品 (Finished Goods)</strong>：完工待售產品，出售後轉為銷貨成本。</li>
+                </ol>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card alt">
+            <div class="card-title">⚖️ 兩大盤存制度實質對照 (Illustration 6.3)</div>
+            <ul style="margin-top: 8px;">
+              <li><strong>永續盤存制 (Perpetual System)</strong>：
+                <ul>
+                  <li>進貨直接借記「存貨」；運費借記「存貨」。</li>
+                  <li>銷貨做<strong>雙分錄</strong>（同步借：銷貨成本，貸：存貨）。</li>
+                  <li>隨時掌握即時結存，實地盤點主要用於查核盤盈盤虧。</li>
+                </ul>
+              </li>
+              <li><strong>定期盤存制 (Periodic System)</strong>：
+                <ul>
+                  <li>進貨借記暫時科目「進貨」；平時銷貨不記成本。</li>
+                  <li>期末透過實地盤點「倒扣推估」：
+                    $$\text{COGS} = \text{期初存貨} + \text{進貨} - \text{期末實地盤點存貨}$$</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img2_char01.png" alt="兔兔助教" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-ta">兔兔助教</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">速記秘訣</div>
+            <div class="dialogue-text">
+              「口訣牢記：定期盤存制平時是個『糊塗帳』，賣掉多少完全不記，直到年底實地盤點，剩下多少才倒扣算銷貨成本喔！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 3: 存貨歸屬認定與成本決定
+         ========================================== -->
+    <section class="slide" id="slide-3" data-slide="3">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">LO 2 · 歸屬與計量</span>
+          <h1 class="slide-h1">存貨實體歸屬與成本資本化 🚢</h1>
+          <div class="slide-subtitle">起運點 vs 目的地交貨 · 寄銷品認定 · 產品成本 (Product) vs 期間成本 (Period)</div>
+        </div>
+        <div class="sticker-stamp">控制權轉移</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-3" style="gap: 12px; height: 100%;">
+          <div class="card pure">
+            <div class="card-title">📦 在途存貨交貨條件</div>
+            <ul style="margin-top: 6px;">
+              <li><strong>起運點交貨 (FOB Shipping Point)</strong>：
+                <ul>
+                  <li>承運人起運時所有權與控制權移轉。</li>
+                  <li>在途貨物屬於<strong>買方存貨</strong>（買方負擔運費）。</li>
+                </ul>
+              </li>
+              <li><strong>目的地交貨 (FOB Destination)</strong>：
+                <ul>
+                  <li>抵達買方處所時所有權才移轉。</li>
+                  <li>在途貨物屬於<strong>賣方存貨</strong>（賣方負擔運費）。</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card-title">🏬 寄銷品 (Consignment)</div>
+            <ul style="margin-top: 6px;">
+              <li><strong>所有權核心原則</strong>：寄銷商品所有權始終屬於<strong>委託人 (Consignor)</strong>！</li>
+              <li><strong>受託人 (Consignee)</strong> 僅代為展示保管與銷售，<strong>絕對不可計入自身資產負債表</strong>。</li>
+              <li>委託人在期末盤點時，必須將寄銷在外之商品全額納入自身期末存貨！</li>
+            </ul>
+          </div>
+
+          <div class="card alt">
+            <div class="card-title">🏷️ 產品成本 vs 期間成本</div>
+            <ul style="margin-top: 6px;">
+              <li><strong>產品成本 (資本化入存貨)</strong>：
+                進價、進口關稅、進貨運費 (Freight-in)、在途保險、加工改裝等達可供銷售前之一切必要支出。</li>
+              <li><strong>期間成本 (當期費用化)</strong>：
+                銷售費用、廣告費、進貨後之倉儲保管費、一般管理費。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img3_char01.png" alt="小安同學" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-student">小安同學</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">盲點提問</div>
+            <div class="dialogue-text">
+              「老師！如果 12 月 31 日寄銷在別人店裡的商品，實地盤點倉庫時明明不在現場，我們資產負債表也要算進存貨嗎？」<br>
+              <strong>柯教授</strong>：「當然要！會計看的是『法定所有權與控制權』，哪怕放在地球另一端，只要屬於我們，就是我們的存貨！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 4: 進貨現金折扣：總額法 vs 淨額法
+         ========================================== -->
+    <section class="slide" id="slide-4" data-slide="4">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">LO 2 · 分錄對照</span>
+          <h1 class="slide-h1">進貨現金折扣：總額法 vs 淨額法 🧾</h1>
+          <div class="slide-subtitle">Gross vs Net Method · 未享進貨折扣 (Purchase Discounts Lost) 融資費用本質</div>
+        </div>
+        <div class="sticker-stamp">IAS 2 首選</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="card pure" style="padding: 10px 14px;">
+          <div style="font-weight: 800; color: var(--primary); margin-bottom: 6px;">
+            📝 釋例背景：進貨成本 $10,000，信用條件 2/10, n/30（IAS 2 要求現金折扣為存貨成本之減項）
+          </div>
+          <table class="pastel-table">
+            <thead>
+              <tr>
+                <th style="width: 20%;">交易情境</th>
+                <th style="width: 40%;">總額法 (Gross Method)</th>
+                <th style="width: 40%;">淨額法 (Net Method, IAS 2 推薦)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>進貨日</strong></td>
+                <td>
+                  借：存貨 $10,000<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;貸：應付帳款 $10,000
+                </td>
+                <td>
+                  借：存貨 $9,800<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;貸：應付帳款 $9,800
+                </td>
+              </tr>
+              <tr>
+                <td><strong>10 天內付款<br>(享折扣)</strong></td>
+                <td>
+                  借：應付帳款 $10,000<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;貸：現金 $9,800<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;貸：<strong>存貨 (進貨折扣) $200</strong>
+                </td>
+                <td>
+                  借：應付帳款 $9,800<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;貸：現金 $9,800
+                </td>
+              </tr>
+              <tr>
+                <td><strong>逾期付款<br>(未享折扣)</strong></td>
+                <td>
+                  借：應付帳款 $10,000<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;貸：現金 $10,000
+                </td>
+                <td>
+                  借：應付帳款 $9,800<br>
+                  借：<strong>未享進貨折扣 $200 (財務費用)</strong><br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;貸：現金 $10,000
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img4_char01.png" alt="張會計師" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-auditor">張會計師</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">查核與管理實質</div>
+            <div class="dialogue-text">
+              「2/10, n/30 放棄折扣相當於年化借款利率高達 36.7%！淨額法將這筆罰息獨立列為『財務費用』，能清楚曝光管理階層的資金調度怠惰！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 5: 成本流轉假設：FIFO vs 平均成本法
+         ========================================== -->
+    <section class="slide" id="slide-5" data-slide="5">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">LO 3 · 流轉模型</span>
+          <h1 class="slide-h1">成本流轉假設：先進先出法 vs 平均成本法 📊</h1>
+          <div class="slide-subtitle">FIFO (先入先出) · 加權平均法 (定期) vs 移動平均法 (永續)</div>
+        </div>
+        <div class="sticker-stamp">IAS 2 核准方法</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="gap: 16px; height: 100%;">
+          <div class="card pure">
+            <div class="card-title">🥇 先進先出法 (First-In, First-Out, FIFO)</div>
+            <ul style="margin-top: 8px;">
+              <li><strong>核心假設</strong>：最先購入之存貨最先售出或耗用。</li>
+              <li><strong>資產負債表優勢</strong>：期末存貨由最新近購入的批次組成，<strong>最能逼近現行重置成本</strong>！</li>
+              <li><strong>重要黃金定理</strong>：
+                不論採用「永續盤存制」或「定期盤存制」，FIFO 計算出的期末存貨與銷貨成本<strong>完全相同</strong>！
+              </li>
+              <li><strong>缺點</strong>：在通膨下以早期低成本配合當前高營收，造成銷貨成本偏低、毛利虛增。</li>
+            </ul>
+          </div>
+
+          <div class="card alt">
+            <div class="card-title">⚖️ 平均成本法 (Average-Cost Method)</div>
+            <ul style="margin-top: 8px;">
+              <li><strong>定期盤存制：加權平均法 (Weighted-Average)</strong>：
+                全期可供銷售總成本 $\div$ 可供銷售總數量 $=$ 單一加權平均單價。</li>
+              <li><strong>永續盤存制：移動平均法 (Moving-Average)</strong>：
+                每次新進貨時立即重新計算加權平均單價，銷貨時依最新單價結轉。</li>
+              <li><strong>優勢</strong>：有效平滑原物料價格的短期劇烈波動，防止管理層刻意挑選批次操縱損益。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img2_char02.png" alt="兔兔助教" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-ta">兔兔助教</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">解題必背秘笈</div>
+            <div class="dialogue-text">
+              「請大聲背誦：『FIFO 在永續制和定期制答案絕對完全一樣！』但加權平均與移動平均會因為進貨時點不同而算出不同答案喔！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 6: 物價上漲下之經濟後果對照
+         ========================================== -->
+    <section class="slide" id="slide-6" data-slide="6">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">LO 3 · 經濟效應</span>
+          <h1 class="slide-h1">物價上漲下各成本法經濟效果天秤 ⚖️</h1>
+          <div class="slide-subtitle">FIFO vs 加權平均 vs LIFO (IFRS 禁用) 損益、稅負與期末現金流對決</div>
+        </div>
+        <div class="sticker-stamp">通膨經濟學</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="card pure" style="padding: 10px 14px;">
+          <table class="pastel-table">
+            <thead>
+              <tr>
+                <th>比較指標</th>
+                <th>先進先出法 (FIFO)</th>
+                <th>平均成本法 (Average-Cost)</th>
+                <th>後進先出法 (LIFO, IFRS 禁用)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>銷貨成本 (COGS)</strong></td>
+                <td>最低（早期便宜成本）</td>
+                <td>居中</td>
+                <td>最高（最新昂貴成本）</td>
+              </tr>
+              <tr>
+                <td><strong>毛利與稅前淨利</strong></td>
+                <td><strong>最高 (虛增紙上利潤)</strong></td>
+                <td>居中</td>
+                <td>最低</td>
+              </tr>
+              <tr>
+                <td><strong>所得稅費用 (Taxes)</strong></td>
+                <td><strong>最高 (繳最多稅)</strong></td>
+                <td>居中</td>
+                <td>最低 (具節稅利益)</td>
+              </tr>
+              <tr>
+                <td><strong>期末現金餘額 (Cash)</strong></td>
+                <td><strong>最低 (現金流出最多)</strong></td>
+                <td>居中</td>
+                <td><strong>最高 (節省現金稅負)</strong></td>
+              </tr>
+              <tr>
+                <td><strong>資產負債表攸關性</strong></td>
+                <td>最優 (貼近現行市價)</td>
+                <td>良好</td>
+                <td>極差 (堆積歷史過時成本)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img3_char02.png" alt="小安同學" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-student">小安同學</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">驚人發現</div>
+            <div class="dialogue-text">
+              「天啊！FIFO 損益表看起來賺最多錢，但期末口袋裡的現金居然最少！」<br>
+              <strong>柯教授</strong>：「這就是『紙上富貴』的代價！因此 IFRS 為了維持資產負債表真實性全面擁抱 FIFO，但企業必須警惕稅負對現金流的侵蝕！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 7: 存貨錯誤之跨期連鎖效應與自動抵銷
+         ========================================== -->
+    <section class="slide" id="slide-7" data-slide="7">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">LO 4 · 錯誤分析</span>
+          <h1 class="slide-h1">存貨錯誤之跨期連鎖效應與自動抵銷 ⛓️</h1>
+          <div class="slide-subtitle">期末存貨誤計 · 進貨漏記 · 兩期自動平衡 (Counterbalancing) 機制</div>
+        </div>
+        <div class="sticker-stamp">查核核心考點</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="gap: 16px; height: 100%;">
+          <div class="card pure">
+            <div class="card-title">🔍 期末存貨低估之連鎖反應 (Illustration 6.13)</div>
+            <div class="code-box" style="margin-top: 4px; margin-bottom: 8px;">
+              $$\text{銷貨成本} = \text{期初存貨} + \text{進貨} - \text{期末存貨}$$
+            </div>
+            <ul>
+              <li><strong>第 1 年 (錯誤發生年)</strong>：
+                期末存貨低估 $\rightarrow$ 銷貨成本高估 $\rightarrow$ <strong>淨利低估</strong>、保留盈餘低估、營運資金低估。</li>
+              <li><strong>第 2 年 (轉為期初存貨)</strong>：
+                期初存貨低估 $\rightarrow$ 銷貨成本低估 $\rightarrow$ <strong>淨利高估</strong>。</li>
+              <li><strong>兩年合計自動平衡 (Counterbalanced)</strong>：
+                第 2 年末保留盈餘完全恢復正確！但<strong>兩年的損益表全數失真</strong>！</li>
+            </ul>
+          </div>
+
+          <div class="card alt">
+            <div class="card-title">📑 進貨與存貨同時漏記 (Illustration 6.15)</div>
+            <ul style="margin-top: 8px;">
+              <li><strong>情境</strong>：12/31 起運點在途存貨漏記進貨，實地盤點亦漏計期末存貨。</li>
+              <li><strong>銷貨成本與淨利</strong>：進貨低估與期末存貨低估相互抵銷 $\rightarrow$ <strong>銷貨成本與淨利完全不受影響！</strong></li>
+              <li><strong>資產負債表重創</strong>：存貨（流動資產）與應付帳款（流動負債）等額少計 $\rightarrow$ <strong>流動比率被嚴重虛增扭曲！</strong></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img2_char01.png" alt="兔兔助教" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-ta">兔兔助教</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">觀念警報</div>
+            <div class="dialogue-text">
+              「請切記：『兩年自動抵銷』絕不代表不用管它！報表使用者看到的是連續兩年錯誤的淨利趨勢，審計員必須強制要求編製前期損益重編更正！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 8: IAS 2 核心計量：成本與淨變現價值孰低法
+         ========================================== -->
+    <section class="slide" id="slide-8" data-slide="8">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">LO 5 · IAS 2 核心</span>
+          <h1 class="slide-h1">成本與淨變現價值孰低法 (LCNRV) 🏷️</h1>
+          <div class="slide-subtitle">拋棄歷史成本原則 · 淨變現價值 (NRV) 算式 · 逐項比較法 (Item-by-Item) 釋例</div>
+        </div>
+        <div class="sticker-stamp">穩健原則核心</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="gap: 16px; height: 100%;">
+          <div class="card pure">
+            <div class="card-title">📐 淨變現價值 (NRV) 核心定義</div>
+            <p style="margin-bottom: 8px;">
+              當存貨效用跌破原始成本時，會計上必須放棄歷史成本，以 LCNRV 計量：
+            </p>
+            <div class="code-box" style="margin-bottom: 10px;">
+              $$\text{NRV} = \text{估計正常售價} - \text{估計完工尚需成本} - \text{估計銷售及運送費用}$$
+            </div>
+            <ul>
+              <li><strong>逐項比較法 (Item-by-Item Basis)</strong>：原則上針對每一種存貨逐一取 $\min(\text{Cost}, \text{NRV})$。</li>
+              <li><strong>穩健特性</strong>：跌價立刻認列損失，增值絕不預先確認！</li>
+            </ul>
+          </div>
+
+          <div class="card alt">
+            <div class="card-title">🥬 Jinn-Feng Foods 逐項比較 (Illustration 6.18)</div>
+            <table class="pastel-table" style="font-size: 0.88rem;">
+              <thead>
+                <tr>
+                  <th>品項</th>
+                  <th>成本 (Cost)</th>
+                  <th>淨變現價值 (NRV)</th>
+                  <th>LCNRV 最終價值</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>菠菜 (Spinach)</td><td>$80,000</td><td>$120,000</td><td>$80,000 (取成本)</td></tr>
+                <tr><td>胡蘿蔔 (Carrots)</td><td>$100,000</td><td>$110,000</td><td>$100,000 (取成本)</td></tr>
+                <tr><td>豆子 (Cut beans)</td><td>$50,000</td><td>$40,000</td><td><strong>$40,000 (跌價 $10k)</strong></td></tr>
+                <tr><td>豌豆 (Peas)</td><td>$90,000</td><td>$72,000</td><td><strong>$72,000 (跌價 $18k)</strong></td></tr>
+                <tr><td>雜菜 (Mixed veg)</td><td>$95,000</td><td>$92,000</td><td><strong>$92,000 (跌價 $3k)</strong></td></tr>
+                <tr style="font-weight: 800; background: var(--primary-soft);">
+                  <td>總計金額</td><td>$415,000</td><td>$434,000</td><td><strong>$384,000</strong></td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="font-size: 0.85rem; color: var(--accent-rose); font-weight: 700; margin-top: 4px;">
+              ★ 逐項比較得出期末存貨 $384,000，認列跌價損失 $31,000！
+            </div>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img4_char02.png" alt="張會計師" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-auditor">張會計師</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">準則對比提醒</div>
+            <div class="dialogue-text">
+              「請注意！若偷懶採總額比較，$415,000 < $434,000 會誤判為不必提列跌價！但 IAS 2 嚴格要求採逐項比較，揭發豆子與豌豆的實質減損！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 9: 備抵跌價損失與跌價回升利益上限
+         ========================================== -->
+    <section class="slide" id="slide-9" data-slide="9">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">LO 5 · 調整與回升</span>
+          <h1 class="slide-h1">存貨跌價損失提列與回升限制 📈</h1>
+          <div class="slide-subtitle">備抵存貨跌價科目 · 跌價回升利益 (Recovery) · 歷史成本天花板限制</div>
+        </div>
+        <div class="sticker-stamp">法定回升上限</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="gap: 16px; height: 100%;">
+          <div class="card pure">
+            <div class="card-title">✍️ 跌價與回升之經典會計分錄</div>
+            <div class="code-box" style="margin-top: 4px; font-size: 0.90rem;">
+              <strong>1. 期末提列跌價損失：</strong><br>
+              借：銷貨成本 / 存貨跌價損失&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$12,000<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;貸：備抵存貨跌價 (Allowance to NRV)&nbsp;&nbsp;$12,000<br><br>
+              <strong>2. 次年 NRV 回升（回升利益）：</strong><br>
+              借：備抵存貨跌價&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$5,000<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;貸：存貨跌價回升利益 (Recovery)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$5,000<br><br>
+              <span style="color: var(--accent-rose); font-weight: 800;">★ 黃金天花板 (Reversal Ceiling)：<br>
+              回升金額嚴格以「原先認列之累計跌價」為限！迴轉後之帳面金額絕對不可超越歷史成本！</span>
+            </div>
+          </div>
+
+          <div class="card alt">
+            <div class="card-title">📊 Vuko Company 跨年度調整 (Illustration 6.23)</div>
+            <table class="pastel-table" style="font-size: 0.88rem;">
+              <thead>
+                <tr>
+                  <th>年度</th>
+                  <th>存貨成本</th>
+                  <th>期末 NRV</th>
+                  <th>應有備抵餘額</th>
+                  <th>當期損益影響</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>2026</td><td>$188,000</td><td>$176,000</td><td>$12,000</td><td><strong>減少淨利 $12k (跌價)</strong></td></tr>
+                <tr><td>2027</td><td>$194,000</td><td>$187,000</td><td>$7,000</td><td><strong>增加淨利 $5k (回升)</strong></td></tr>
+                <tr><td>2028</td><td>$173,000</td><td>$174,000</td><td>$0</td><td><strong>增加淨利 $7k (全沖回)</strong></td></tr>
+                <tr><td>2029</td><td>$182,000</td><td>$180,000</td><td>$2,000</td><td><strong>減少淨利 $2k (跌價)</strong></td></tr>
+              </tbody>
+            </table>
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 6px;">
+              2028 年 NRV 超過成本 $1,000，但備抵最多只能沖減至 $0，不得認列超額增值利益！
+            </div>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img2_char02.png" alt="兔兔助教" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-ta">兔兔助教</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">超高頻考點口訣</div>
+            <div class="dialogue-text">
+              「請牢記『歷史成本天花板』！市價哪怕漲上火星，存貨最多也只能把過去提列的備抵跌價全部沖回，絕不能借存貨平白認列未實現利益喔！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 10: 特殊評價議題：農業資產與虧損採購承諾
+         ========================================== -->
+    <section class="slide" id="slide-10" data-slide="10">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">LO 6 · 特殊準則</span>
+          <h1 class="slide-h1">公允價值衡量例外與虧損採購合約 🌾</h1>
+          <div class="slide-subtitle">生物資產與採收農產品 (IAS 41) · 不可取消採購承諾 (IAS 37)</div>
+        </div>
+        <div class="sticker-stamp">特殊存貨會計</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="gap: 16px; height: 100%;">
+          <div class="card pure">
+            <div class="card-title">🐮 農業與大宗商品公允價值例外</div>
+            <ul style="margin-top: 8px;">
+              <li><strong>生物資產 (Biological Assets, IAS 41)</strong>：
+                活體動植物（如綿羊、乳牛、果樹），初認及期末均以<strong>公允價值減出售成本 (FV less costs to sell)</strong> 衡量，變動直接計入當期損益。</li>
+              <li><strong>採收農產品 (Agricultural Produce)</strong>：
+                採收點以公允價值減出售成本衡量，<strong>採收後的該金額直接轉為存貨成本</strong>。</li>
+              <li><strong>大宗商品交易商 (Broker-Traders)</strong>：
+                農產品與貴金屬經紀商，存貨按公允價值減出售成本計量，變動計入損益。</li>
+            </ul>
+          </div>
+
+          <div class="card alt">
+            <div class="card-title">📜 虧損性不可取消採購承諾 (IAS 37)</div>
+            <ul style="margin-top: 8px;">
+              <li><strong>經濟實質</strong>：簽訂不可取消合約承諾購買商品，但市場價格劇烈崩跌至合約價以下。</li>
+              <li><strong>虧損合約 (Onerous Contract)</strong>：
+                必須於<strong>市價下跌當期</strong>提前認列損失並設立負債準備！
+                <div class="code-box" style="margin-top: 6px;">
+                  借：採購合約評價損失 (Unrealized Loss)<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;貸：採購合約估計負債 (Estimated Liability)
+                </div>
+              </li>
+              <li>實際交貨付款時，將估計負債沖銷，存貨按當期現行市價入帳！</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img4_char01.png" alt="張會計師" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-auditor">張會計師</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">查核實務觀察</div>
+            <div class="dialogue-text">
+              「許多製造業在原物料暴跌時，面臨不可取消的長約採購虧損。依 IAS 37 必須立刻提列負債準備，絕不允許隱匿到次年交貨才認列！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 11: 存貨估算法一：毛利率法與加價率雙向轉換
+         ========================================== -->
+    <section class="slide" id="slide-11" data-slide="11">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">LO 7 · 估算技術</span>
+          <h1 class="slide-h1">毛利率法與加價率雙向轉換模型 📐</h1>
+          <div class="slide-subtitle">災損估算與期中報導 · 銷貨毛利率 (GP on Sales) vs 成本加價率 (Markup on Cost)</div>
+        </div>
+        <div class="sticker-stamp">經典計算模型</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="gap: 16px; height: 100%;">
+          <div class="card pure">
+            <div class="card-title">🧮 毛利率法 (Gross Profit Method) 步驟</div>
+            <p style="margin-bottom: 8px;">
+              用於火災水災存貨理賠估算、期中報表編製與查核勾稽：
+            </p>
+            <div class="code-box" style="margin-bottom: 8px;">
+              $$\text{可供銷售成本} = \text{期初存貨} + \text{進貨淨額}$$
+              $$\text{估計銷貨成本} = \text{銷貨淨額} \times (1 - \text{銷貨毛利率})$$
+              $$\text{估計期末存貨} = \text{可供銷售成本} - \text{估計銷貨成本}$$
+            </div>
+            <p style="font-size: 0.92rem; color: var(--text-muted);">
+              限制：僅供估計，IFRS 年度財務報表仍必須以實地盤點為準。
+            </p>
+          </div>
+
+          <div class="card alt">
+            <div class="card-title">🔄 兩大加價率雙向換算矩陣 (Illustration 6.29)</div>
+            <div class="code-box" style="margin-top: 4px; margin-bottom: 8px;">
+              $$\text{銷貨毛利率 (GP on Sales)} = \frac{\text{成本加價率}}{1 + \text{成本加價率}}$$
+              $$\text{成本加價率 (Markup on Cost)} = \frac{\text{銷貨毛利率}}{1 - \text{銷貨毛利率}}$$
+            </div>
+            <ul style="font-size: 0.94rem;">
+              <li>成本加成 25% $\Longrightarrow$ 銷貨毛利率 $= \frac{0.25}{1.25} = \mathbf{20\%}$</li>
+              <li>成本加成 33⅓% $\Longrightarrow$ 銷貨毛利率 $= \frac{0.333}{1.333} = \mathbf{25\%}$</li>
+              <li>成本加成 50% $\Longrightarrow$ 銷貨毛利率 $= \frac{0.50}{1.50} = \mathbf{33⅓\%}$</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img3_char01.png" alt="小安同學" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-student">小安同學</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">秒懂換算基準</div>
+            <div class="dialogue-text">
+              「我終於分清楚了！『加成 25%』是以成本為 100%，售價就是 125%，所以毛利率是 25/125 = 20%！只要畫出成本售價圖就絕對不會帶錯公式！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 12: 存貨估算法二：傳統零售價法
+         ========================================== -->
+    <section class="slide" id="slide-12" data-slide="12">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">LO 8 · 零售業模型</span>
+          <h1 class="slide-h1">零售價法與傳統法 (LCNRV) 模型 🏬</h1>
+          <div class="slide-subtitle">加價與減價之取消 · 傳統法成本率 (Cost-to-Retail Ratio) 刻意排除減價之哲學</div>
+        </div>
+        <div class="sticker-stamp">逼近 LCNRV</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="gap: 16px; height: 100%;">
+          <div class="card pure">
+            <div class="card-title">🏷️ 零售價法基本術語定義</div>
+            <ul style="margin-top: 8px;">
+              <li><strong>加價 (Markup)</strong>：在原始零售價之上額外調高售價。</li>
+              <li><strong>加價取消 (Markup Cancellation)</strong>：調回原始加價部分，不可超過原加價額。</li>
+              <li><strong>減價 (Markdown)</strong>：低於原始零售價之折價促銷。</li>
+              <li><strong>減價取消 (Markdown Cancellation)</strong>：促銷結束調回售價，不可超過原減價額。</li>
+            </ul>
+          </div>
+
+          <div class="card alt">
+            <div class="card-title">🎯 傳統零售價法 (Conventional Method / LCNRV)</div>
+            <p style="margin-bottom: 6px;">計算成本率時，<strong>分母計入淨加價，但「絕不扣除淨減價」</strong>：</p>
+            <div class="code-box" style="margin-bottom: 8px;">
+              $$\text{成本率} = \frac{\text{可供銷售總成本}}{\text{期初零售價} + \text{進貨零售價} + \text{淨加價 (Net Markups)}}$$
+            </div>
+            <ul>
+              <li><strong>數學設計哲學</strong>：分母不扣減價使得分母變大，算出的<strong>成本率偏低</strong>！</li>
+              <li>以較低成本率折算期末存貨，自然得出穩健保守的 <strong>LCNRV 估算值</strong>！</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img4_char02.png" alt="張會計師" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-auditor">張會計師</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">會計巧思解密</div>
+            <div class="dialogue-text">
+              「傳統零售價法在分母故意忽略減價，就是在數學上預設這批存貨已經發生了市場跌價，從而自動落入穩健的『成本與淨變現價值孰低』！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 13: 觀念小擂台互動測驗與本章 Recap
+         ========================================== -->
+    <section class="slide" id="slide-13" data-slide="13">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">驗收挑戰 · 擂台</span>
+          <h1 class="slide-h1">觀念小擂台與 Chapter 6 重點總結 🎯</h1>
+          <div class="slide-subtitle">隨堂單選驗收 · 全章精華大三通 · 迎向 Chapter 7 不動產廠房及設備</div>
+        </div>
+        <div class="sticker-stamp">🏆 挑戰題</div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="gap: 16px; height: 100%;">
+          <div class="card pure">
+            <div class="card-title">🥊 隨堂觀念測驗</div>
+            <p style="font-size: 0.98rem; margin-bottom: 10px;">
+              <strong>題目：</strong>甲公司 2026 年底存貨成本為 $100,000，淨變現價值 (NRV) 為 $85,000，已提列備抵存貨跌價 $15,000。2027 年底市場景氣強勁復甦，該批存貨 NRV 暴漲至 $112,000。請問甲公司在 2027 年底應認列多少「存貨跌價回升利益」？
+            </p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuiz(this, false, '錯誤！存貨跌價回升嚴格以原先認列之跌價損失 $15,000 為上限，絕對不可確認未實現增值利益！')">
+                A. 認列回升利益 $27,000，期末存貨帳面金額列為 $112,000
+              </button>
+              <button class="quiz-btn" onclick="checkQuiz(this, true, '正確！依據 IAS 2，存貨跌價回升金額嚴格以原先提列之累計損失 $15,000 為上限！存貨帳面金額最多回到歷史成本 $100,000！')">
+                B. 認列回升利益 $15,000，期末存貨帳面金額列為 $100,000
+              </button>
+              <button class="quiz-btn" onclick="checkQuiz(this, false, '錯誤！NRV 回升時必須將原先提列之備抵存貨跌價予以迴轉，不可置之不理。')">
+                C. 因市價已高於成本，無需做任何調整，期末存貨列為 $85,000
+              </button>
+            </div>
+            <div id="quiz-feedback-box" class="quiz-feedback" style="margin-top: 10px;"></div>
+          </div>
+
+          <div class="card alt" style="justify-content: space-between;">
+            <div>
+              <div class="card-title">🌟 Chapter 6 精華 Recap</div>
+              <ul style="font-size: 0.98rem; margin-top: 4px;">
+                <li><strong>雙重盤存制</strong>：永續制平時雙分錄；定期制期末倒扣計算 COGS。</li>
+                <li><strong>成本流轉假設</strong>：FIFO 期末存貨最接近市價；通膨下平均成本法現金餘額高於 FIFO。</li>
+                <li><strong>LCNRV 核心</strong>：逐項比較取低者；回升利益嚴格以原始歷史成本為天花板。</li>
+                <li><strong>估算雙雄</strong>：毛利率法加價率轉換；傳統零售價法排除減價以逼近 LCNRV。</li>
+              </ul>
+            </div>
+
+            <div class="dialogue-box" style="margin-top: 8px;">
+              <div class="dialogue-avatar-wrapper">
+                <img src="../../assets/img1_char01.png" alt="柯教授" class="dialogue-avatar">
+                <span class="dialogue-role-badge badge-prof">柯教授</span>
+              </div>
+              <div class="dialogue-content">
+                <div class="dialogue-name">課程結語</div>
+                <div class="dialogue-text">
+                  「恭喜大家攻克中會最核心的流動資產 Chapter 6 存貨！下一章我們將邁向企業重裝資本的巨塔——Chapter 7 不動產、廠房及設備 (IAS 16)！」
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer Nav -->
+  <footer>
+    <div style="font-size: 0.88rem; color: var(--text-muted); font-weight: 700;">
+      中級會計學 (IFRS 5/e) · Chapter 6
+    </div>
+    <div class="nav-controls">
+      <button class="nav-btn" id="btn-prev" onclick="changeSlide(-1)"><span>◀</span><span>上一頁</span></button>
+      <span class="slide-counter" id="slide-num">1 / 13</span>
+      <button class="nav-btn" id="btn-next" onclick="changeSlide(1)"><span>下一頁</span><span>▶</span></button>
+    </div>
+    <div style="font-size: 0.85rem; color: var(--text-muted);">
+      鍵盤 Space / 左右方向鍵切換
+    </div>
+  </footer>
+
+  <!-- Speaker Notes Modal Drawer (N) -->
+  <div id="notes-modal" class="modal-overlay" onclick="if(event.target===this) toggleNotes();">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">💡 講者備忘錄 (Speaker Notes)</h3>
+        <button class="btn-close" onclick="toggleNotes()">&times;</button>
+      </div>
+      <div id="notes-content" style="font-size: 1.05rem; line-height: 1.6; color: var(--text-main);"></div>
+    </div>
+  </div>
+
+  <!-- Slide Overview Modal (O) -->
+  <div id="overview-modal" class="modal-overlay" onclick="if(event.target===this) toggleOverview();">
+    <div class="modal-card" style="max-width: 900px;">
+      <div class="modal-header">
+        <h3 class="modal-title">📑 投影片總覽導航</h3>
+        <button class="btn-close" onclick="toggleOverview()">&times;</button>
+      </div>
+      <div class="overview-grid" id="overview-grid"></div>
+    </div>
+  </div>
+
+  <!-- JavaScript Interaction Engine -->
+  <script>
+    const totalSlides = 13;
+    let currentSlide = 1;
+
+    // Slide Titles & Speaker Notes
+    const slideData = [
+      {
+        title: "封面與全章架構導引",
+        notes: "引導動機：存貨是資產負債表與損益表的樞紐。存貨數字的分配直接決定了本期的淨利與期末營運資金。預告本章涵蓋 IAS 2 成本流轉假設、LCNRV 與估算法。"
+      },
+      {
+        title: "存貨分類與雙重盤存制度",
+        notes: "解析買賣業與製造業三種存貨流轉。對比永續盤存制（隨時記錄成本）與定期盤存制（平時不記、期末倒扣計算 COGS）的記帳哲學與實務運作。"
+      },
+      {
+        title: "存貨實體歸屬與成本資本化",
+        notes: "檢驗控制權原則：起運點交貨在途商品歸買方；目的地交貨在途商品歸賣方。強調寄銷品所有權始終屬於委託人，受託人絕不可列入自身資產負債表。"
+      },
+      {
+        title: "進貨現金折扣：總額法 vs 淨額法",
+        notes: "IAS 2 要求現金折扣為存貨成本之減項。深度分析淨額法將未享折扣列為財務費用的管理意義（相當於 36.7% 的借款利率警訊）。"
+      },
+      {
+        title: "成本流轉假設：先進先出法 vs 平均成本法",
+        notes: "深入剖析 FIFO 先進先出法使期末存貨貼近現行市價的特性，並向學生證明為何 FIFO 在永續制與定期制下的計算結果完全一致。"
+      },
+      {
+        title: "物價上漲下各成本法經濟效果天秤",
+        notes: "解析通膨環境下的反直覺現象：FIFO 雖然毛利與稅前淨利最高，但因繳納最多所得稅，期末現金反而最少！說明 IFRS 禁用 LIFO 的三大準則理由。"
+      },
+      {
+        title: "存貨錯誤之跨期連鎖效應與自動抵銷",
+        notes: "推導存貨錯誤的兩年自動平衡機制：期末存貨低估導致第一年淨利低估、第二年淨利高估，累計保留盈餘在第二年末恢復正確，但兩年損益表全數失真。"
+      },
+      {
+        title: "成本與淨變現價值孰低法 (LCNRV)",
+        notes: "解析 IAS 2 拋棄歷史成本的時機與 NRV 公式。演繹 Jinn-Feng Foods 逐項比較釋例，說明逐項比較能最及時、最穩健地揭露個別存貨跌價風險。"
+      },
+      {
+        title: "存貨跌價損失提列與回升限制",
+        notes: "重要考點：當市價回升時，迴轉利益嚴格以原先提列之累計跌價損失為上限！存貨帳面價值絕對不可高於原始歷史成本，禁止確認未實現增值。"
+      },
+      {
+        title: "公允價值衡量例外與虧損採購合約",
+        notes: "串聯 IAS 41 生物資產與採收農產品按公允價值減出售成本衡量之例外；剖析 IAS 37 虧損合約在不可取消採購承諾市價大跌時提前提列負債準備之分錄。"
+      },
+      {
+        title: "毛利率法與加價率雙向轉換模型",
+        notes: "推導毛利率法三大步驟，並指導學生掌握銷貨毛利率與成本加價率的雙向互換公式（例如成本加成 25% 對應毛利率 20%）。"
+      },
+      {
+        title: "零售價法與傳統法 (LCNRV) 模型",
+        notes: "剖析傳統零售價法在分母刻意不扣除『淨減價』的精妙數學設計，證明其如何人為壓低成本率，使期末存貨自然逼近穩健的 LCNRV 評價。"
+      },
+      {
+        title: "觀念小擂台與 Chapter 6 重點總結",
+        notes: "隨堂測驗互動：檢驗學生對跌價回升上限不超過歷史成本的掌握度。帶領全體角色群總結本章 5 大精華，無縫預告 Chapter 7 不動產廠房及設備。"
+      }
+    ];
+
+    function updatePresentation() {
+      // Slides display
+      document.querySelectorAll('.slide').forEach((slide, idx) => {
+        if (idx + 1 === currentSlide) {
+          slide.classList.add('active');
+        } else {
+          slide.classList.remove('active');
+        }
+      });
+
+      // Progress bar
+      const progress = ((currentSlide - 1) / (totalSlides - 1)) * 100;
+      document.getElementById('progress-bar').style.width = progress + '%';
+
+      // Counter
+      document.getElementById('slide-num').innerText = `${currentSlide} / ${totalSlides}`;
+
+      // Buttons
+      document.getElementById('btn-prev').disabled = (currentSlide === 1);
+      document.getElementById('btn-next').disabled = (currentSlide === totalSlides);
+
+      // Notes
+      const notesBox = document.getElementById('notes-content');
+      if (notesBox && slideData[currentSlide - 1]) {
+        notesBox.innerHTML = `<strong>第 ${currentSlide} 頁 · ${slideData[currentSlide - 1].title}</strong><br><br>${slideData[currentSlide - 1].notes}`;
+      }
+
+      // Update URL Hash
+      window.location.hash = '#' + currentSlide;
+    }
+
+    function changeSlide(direction) {
+      const target = currentSlide + direction;
+      if (target >= 1 && target <= totalSlides) {
+        currentSlide = target;
+        updatePresentation();
+      }
+    }
+
+    function goToSlide(slideNum) {
+      if (slideNum >= 1 && slideNum <= totalSlides) {
+        currentSlide = slideNum;
+        updatePresentation();
+        const overviewModal = document.getElementById('overview-modal');
+        if (overviewModal.style.display === 'flex') {
+          toggleOverview();
+        }
+      }
+    }
+
+    // Modal Toggles
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+          console.warn("Fullscreen error:", err);
+        });
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    function toggleNotes() {
+      const modal = document.getElementById('notes-modal');
+      modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+    }
+
+    function toggleOverview() {
+      const modal = document.getElementById('overview-modal');
+      if (modal.style.display === 'flex') {
+        modal.style.display = 'none';
+      } else {
+        const grid = document.getElementById('overview-grid');
+        grid.innerHTML = '';
+        slideData.forEach((item, idx) => {
+          const div = document.createElement('div');
+          div.className = `overview-item ${idx + 1 === currentSlide ? 'active' : ''}`;
+          div.innerHTML = `<strong>P.${idx + 1}</strong><br>${item.title}`;
+          div.onclick = () => goToSlide(idx + 1);
+          grid.appendChild(div);
+        });
+        modal.style.display = 'flex';
+      }
+    }
+
+    // Interactive Quiz Handler
+    function checkQuiz(btn, isCorrect, explanation) {
+      const container = btn.closest('.card');
+      const buttons = container.querySelectorAll('.quiz-btn');
+      const feedbackBox = document.getElementById('quiz-feedback-box');
+      
+      buttons.forEach(b => {
+        b.disabled = true;
+        b.style.cursor = 'default';
+      });
+
+      if (isCorrect) {
+        btn.classList.add('correct');
+        feedbackBox.style.display = 'block';
+        feedbackBox.style.background = '#ecfdf5';
+        feedbackBox.style.color = '#065f46';
+        feedbackBox.style.border = '1.5px solid #34d399';
+        feedbackBox.innerHTML = `<strong>🎉 答對了！</strong><br>${explanation}`;
+      } else {
+        btn.classList.add('wrong');
+        feedbackBox.style.display = 'block';
+        feedbackBox.style.background = '#fef2f2';
+        feedbackBox.style.color = '#991b1b';
+        feedbackBox.style.border = '1.5px solid #f87171';
+        feedbackBox.innerHTML = `<strong>❌ 答錯了喔！</strong><br>${explanation}`;
+      }
+    }
+
+    // Keyboard Shortcuts
+    window.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+      switch(e.key) {
+        case 'ArrowRight':
+        case 'PageDown':
+        case ' ':
+          e.preventDefault();
+          changeSlide(1);
+          break;
+        case 'ArrowLeft':
+        case 'PageUp':
+          e.preventDefault();
+          changeSlide(-1);
+          break;
+        case 'Home':
+          e.preventDefault();
+          goToSlide(1);
+          break;
+        case 'End':
+          e.preventDefault();
+          goToSlide(totalSlides);
+          break;
+        case 'f':
+        case 'F':
+          e.preventDefault();
+          toggleFullscreen();
+          break;
+        case 'n':
+        case 'N':
+          e.preventDefault();
+          toggleNotes();
+          break;
+        case 'o':
+        case 'O':
+          e.preventDefault();
+          toggleOverview();
+          break;
+        case 'Escape':
+          const overviewModal = document.getElementById('overview-modal');
+          const notesModal = document.getElementById('notes-modal');
+          if (overviewModal && overviewModal.style.display === 'flex') toggleOverview();
+          if (notesModal && notesModal.style.display === 'flex') toggleNotes();
+          break;
+      }
+    });
+
+    // Touch Swipe Gestures
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const stage = document.getElementById('slide-stage');
+
+    stage.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, false);
+
+    stage.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, false);
+
+    function handleSwipe() {
+      const threshold = 40;
+      if (touchEndX < touchStartX - threshold) {
+        changeSlide(1);
+      }
+      if (touchEndX > touchStartX + threshold) {
+        changeSlide(-1);
+      }
+    }
+
+    // Init with Hash or Default to 1
+    window.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash.replace('#', '');
+      const initial = parseInt(hash, 10);
+      if (!isNaN(initial) && initial >= 1 && initial <= totalSlides) {
+        currentSlide = initial;
+      }
+      updatePresentation();
+    });
+  </script>
+</body>
+</html>

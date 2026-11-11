@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 4 · 會計與貨幣時間價值 | 中級會計學 IFRS 5/e 互動簡報</title>
+  
+  <!-- Google Fonts: Noto Sans TC & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+TC:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX for Accounting Formulas -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+          onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+  <style>
+    /* ==========================================
+       風格 A：日系燕麥奶茶手帳風 (Cozy Milk Tea Journal)
+       高清晰放大字級版 · 零滾動與防擠壓安全規範
+       ========================================== */
+    :root {
+      --bg-desk: #f4ede4;         /* 燕麥奶茶底色 */
+      --bg-slide: #fffdf9;        /* 柔和手帳米白紙張 */
+      --bg-card: #f9f5f0;         /* 淺奶茶卡片 */
+      --bg-card-alt: #f3ece2;     /* 拿鐵卡片 */
+      --bg-card-pure: #ffffff;    /* 純白便簽卡 */
+      --primary: #ad7448;         /* 焦糖拿鐵棕 */
+      --primary-soft: #f4e8dc;    /* 奶泡淺褐 */
+      --primary-border: #dcc8b4;  /* 手帳細框棕 */
+      --text-main: #423023;       /* 深烘焙咖啡字體 */
+      --text-muted: #826c5b;      /* 溫和次要說明 */
+      --washi-color: #eedcc9;     /* 和紙膠帶色 */
+      --badge-bg: #edd3c4;        /* 印章柔粉褐 */
+      --accent-green: #528c61;    /* 抹茶綠（增益/正確） */
+      --accent-rose: #d96f86;     /* 玫瑰粉（虧損/錯誤） */
+      --accent-blue: #2563eb;     /* 鋼筆藍 */
+      --font-main: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-code: 'JetBrains Mono', Consolas, monospace;
+      --card-radius: 18px;
+      --shadow-soft: 0 10px 30px rgba(110, 80, 55, 0.08), 0 2px 6px rgba(110, 80, 55, 0.04);
+      --shadow-card: 0 4px 14px rgba(110, 80, 55, 0.05);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--bg-desk);
+      color: var(--text-main);
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden; /* STRICTLY ZERO SCROLL */
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Top Progress Bar */
+    #progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: rgba(173, 116, 72, 0.15);
+      z-index: 1000;
+    }
+    #progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #c29b7f, #ad7448, #f2cb74);
+      transition: width 0.3s ease;
+    }
+
+    /* Header Nav */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 28px;
+      height: 48px;
+      background: rgba(255, 253, 249, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 2px dashed var(--primary-border);
+      z-index: 100;
+      flex-shrink: 0;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge-course {
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 50px;
+      letter-spacing: 0.05em;
+    }
+    .chapter-title {
+      font-size: 1.00rem;
+      color: var(--text-main);
+      font-weight: 800;
+    }
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-header {
+      background: var(--bg-card);
+      border: 1.5px solid var(--primary-border);
+      color: var(--text-main);
+      padding: 5px 14px;
+      border-radius: 50px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .btn-header:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    /* Main Slide Stage (Calculated viewport fit) */
+    #slide-stage {
+      flex: 1;
+      width: 100%;
+      height: calc(100vh - 96px);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 16px;
+      box-sizing: border-box;
+    }
+
+    /* The Slide Card */
+    .slide {
+      display: none;
+      width: min(1380px, calc(100vw - 32px));
+      height: calc(100vh - 104px);
+      max-height: 890px;
+      min-height: 520px;
+      flex: 0 0 auto; /* PREVENT FLEX SHRINK */
+      background: var(--bg-slide);
+      border: 2.5px solid var(--primary-border);
+      border-radius: var(--card-radius);
+      padding: 16px 28px;
+      box-shadow: var(--shadow-soft);
+      flex-direction: column;
+      overflow: hidden; /* ZERO SCROLL */
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    .slide.active {
+      display: flex;
+      animation: slideIn 0.25s ease-out forwards;
+      z-index: 10;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Washi Tape (紙膠帶裝飾) */
+    .washi-tape {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-0.8deg);
+      width: 150px;
+      height: 24px;
+      background: var(--washi-color);
+      border-left: 2px dashed rgba(66, 48, 35, 0.15);
+      border-right: 2px dashed rgba(66, 48, 35, 0.15);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      z-index: 20;
+    }
+
+    /* Sticker Stamp */
+    .sticker-stamp {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ffffff;
+      border: 1.5px dashed var(--primary);
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 0.90rem;
+      font-weight: 800;
+      color: var(--primary);
+      transform: rotate(-1.5deg);
+    }
+
+    /* Slide Header */
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1.5px dashed var(--primary-soft);
+      flex-shrink: 0;
+    }
+    .slide-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--badge-bg);
+      color: var(--primary);
+      font-size: 0.90rem;
+      font-weight: 800;
+      padding: 3px 12px;
+      border-radius: 50px;
+      letter-spacing: 0.04em;
+    }
+    .slide-h1 {
+      font-size: 1.76rem;
+      font-weight: 900;
+      color: var(--text-main);
+      line-height: 1.25;
+      margin-top: 3px;
+    }
+    .slide-subtitle {
+      font-size: 1.02rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+      font-weight: 500;
+    }
+
+    /* Content Layouts */
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      overflow: hidden; /* Strictly within viewport */
+      user-select: text;
+      min-height: 0;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    /* Cute Cards */
+    .card {
+      background: var(--bg-card);
+      border-radius: 14px;
+      padding: 12px 18px;
+      border: 1.5px solid transparent;
+      box-shadow: var(--shadow-card);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover {
+      border-color: var(--primary-border);
+    }
+    .card.alt {
+      background: var(--bg-card-alt);
+    }
+    .card.pure {
+      background: var(--bg-card-pure);
+      border: 1.5px solid var(--primary-soft);
+    }
+
+    .card-title {
+      font-size: 1.20rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .card p, .card li {
+      font-size: 1.04rem;
+      line-height: 1.50;
+      color: var(--text-main);
+    }
+    .card ul, .card ol {
+      padding-left: 20px;
+    }
+    .card li {
+      margin-bottom: 4px;
+    }
+
+    /* Dialogue Box */
+    .dialogue-box {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 9px 18px;
+      border: 1.5px solid var(--primary-border);
+      box-shadow: 0 4px 12px rgba(138, 102, 74, 0.06);
+      flex-shrink: 0;
+    }
+    .dialogue-avatar-wrapper {
+      position: relative;
+      flex-shrink: 0;
+    }
+    .dialogue-avatar {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 6px rgba(66, 48, 35, 0.12);
+      object-fit: cover;
+      display: block;
+    }
+    .dialogue-role-badge {
+      position: absolute;
+      bottom: -3px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.70rem;
+      font-weight: 800;
+      padding: 1px 7px;
+      border-radius: 8px;
+      white-space: nowrap;
+    }
+    .badge-prof { background: #fbe0e6; color: #b84366; }
+    .badge-ta { background: #e0f2fe; color: #0284c7; }
+    .badge-student { background: #fef3c7; color: #b45309; }
+    .badge-auditor { background: #dcfce7; color: #15803d; }
+
+    .dialogue-content {
+      flex: 1;
+    }
+    .dialogue-name {
+      font-size: 1.04rem;
+      font-weight: 800;
+      margin-bottom: 3px;
+      color: var(--primary);
+    }
+    .dialogue-text {
+      font-size: 1.02rem;
+      line-height: 1.50;
+      color: var(--text-main);
+    }
+
+    /* Tables */
+    .pastel-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.94rem;
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1.5px solid var(--primary-border);
+    }
+    .pastel-table th {
+      background: var(--primary-soft);
+      color: var(--text-main);
+      text-align: left;
+      padding: 6px 12px;
+      font-weight: 800;
+      border-bottom: 1.5px solid var(--primary-border);
+      font-size: 0.96rem;
+    }
+    .pastel-table td {
+      padding: 5px 12px;
+      border-bottom: 1px solid var(--primary-soft);
+      color: var(--text-main);
+    }
+
+    /* Code Box */
+    .code-box {
+      background: #ffffff;
+      border: 1.5px dashed var(--primary-border);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-family: var(--font-code);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: var(--text-main);
+    }
+
+    /* Quiz Arena */
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .quiz-btn {
+      background: #ffffff;
+      border: 1.5px solid var(--primary-border);
+      color: var(--text-main);
+      padding: 11px 18px;
+      border-radius: 12px;
+      text-align: left;
+      font-size: 1.02rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .quiz-btn:hover {
+      background: var(--primary-soft);
+      transform: translateX(3px);
+    }
+    .quiz-btn.correct {
+      background: #ecfdf5 !important;
+      border-color: #34d399 !important;
+      color: #065f46 !important;
+      font-weight: 800;
+    }
+    .quiz-btn.wrong {
+      background: #fef2f2 !important;
+      border-color: #f87171 !important;
+      color: #991b1b !important;
+    }
+    .quiz-feedback {
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 0.98rem;
+      display: none;
+      line-height: 1.50;
+    }
+
+    /* Footer Nav */
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 28px;
+      height: 48px;
+      background: rgba(255, 253, 249, 0.95);
+      border-top: 2px dashed var(--primary-border);
+      z-index: 100;
+      flex-shrink: 0;
+    }
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-btn {
+      background: var(--bg-card);
+      border: 1.5px solid var(--primary-border);
+      color: var(--text-main);
+      padding: 5px 16px;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+    .nav-btn:hover:not(:disabled) {
+      background: var(--primary);
+      color: #ffffff;
+    }
+    .nav-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+    .slide-indicator {
+      font-family: var(--font-code);
+      font-size: 0.94rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    /* Notes Modal */
+    #notes-modal {
+      display: none;
+      position: fixed;
+      bottom: 56px;
+      right: 24px;
+      width: 400px;
+      max-height: 380px;
+      background: rgba(255, 253, 249, 0.98);
+      border: 2px solid var(--primary);
+      border-radius: 14px;
+      box-shadow: 0 16px 36px rgba(66, 48, 35, 0.2);
+      padding: 14px 18px;
+      z-index: 500;
+      overflow-y: auto;
+      user-select: text;
+    }
+    #notes-modal h3 {
+      font-size: 0.96rem;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* Overview Modal */
+    #overview-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(247, 240, 230, 0.96);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      padding: 30px;
+      overflow-y: auto;
+    }
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .overview-card {
+      background: #ffffff;
+      border: 1.5px solid var(--primary-border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .overview-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .overview-num {
+      font-size: 0.76rem;
+      color: var(--primary);
+      font-weight: 800;
+    }
+    .overview-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      margin-top: 4px;
+      color: var(--text-main);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Progress Bar -->
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="brand">
+      <span class="badge-course">中會 IFRS 5/e</span>
+      <span class="chapter-title">Chapter 4 · 會計與貨幣時間價值 ⏳</span>
+    </div>
+    <div class="header-controls">
+      <button class="btn-header" onclick="toggleOverview()">
+        <span>🗂️ 總覽 (O)</span>
+      </button>
+      <button class="btn-header" onclick="toggleNotes()">
+        <span>📝 講稿 (N)</span>
+      </button>
+      <button class="btn-header" onclick="toggleFullscreen()">
+        <span>⛶ 全螢幕 (F)</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Slide Stage -->
+  <main id="slide-stage">
+
+    <!-- ==========================================
+         Slide 1: 封面 (Hero Cover & Standee Dock)
+         ========================================== -->
+    <section class="slide active" data-slide="1" data-notes="歡迎來到第四章：會計與貨幣時間價值。本章是中級會計學最關鍵的量化底層引擎，後續所有複雜準則如租賃、公司債、退休金與減損，皆以本章為數學基礎。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Wiley IFRS 5/e · Chapter 4</span>
+          <h1 class="slide-h1">會計與貨幣時間價值 (Accounting & TVM) ⏳</h1>
+          <div class="slide-subtitle">中級會計學核心計量引擎 · 跨越時空的價值折現與利息魔術</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>📐 財務計量底層</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="align-items: stretch;">
+          <!-- Left Intro Card -->
+          <div class="card pure" style="justify-content: center; padding: 20px 24px;">
+            <div class="card-title">📖 本章導讀地圖 (Roadmap)</div>
+            <p style="margin-bottom: 8px;">
+              <strong>貨幣時間價值 (Time Value of Money)</strong> 是現代財務報導的基石。不同時點的資金無法直接加總比較，唯有透過「折現 (Discounting)」與「複利 (Compounding)」，才能在相同基準上衡量真實經濟實質。
+            </p>
+            <ul>
+              <li><strong>三大核心變數</strong>：本金 ($p$)、每期利率 ($i$)、複利期數 ($n$)。</li>
+              <li><strong>五大經典利率表</strong>：單筆現值/終值、普通年金、到期年金。</li>
+              <li><strong>四大高階實務課題</strong>：遞延年金、公司債評價、有效利率法攤銷、IFRS 13 期望現金流量法。</li>
+            </ul>
+          </div>
+
+          <!-- Right Professor Standee Card -->
+          <div class="card alt" style="display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:18px 24px;">
+            <img src="../../assets/img1_char01.png" alt="柯教授" style="height:190px; object-fit:contain; filter:drop-shadow(0 6px 12px rgba(66,48,35,0.15)); margin-bottom:8px;">
+            <div style="font-weight:900; font-size:1.15rem; color:var(--text-main);">
+              主講：柯教授的會計思維導航 🧭
+            </div>
+            <div style="font-size:0.95rem; color:var(--text-muted); margin-top:4px; line-height:1.5;">
+              「會計不是死記分錄，而是對經濟實質的精準量化！學會時間價值，中會後半段所有難題都將迎刃而解！」
+            </div>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img2_char01.png" alt="助教" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-ta">學習助教</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">兔兔助教的學習指引 🐰</div>
+            <div class="dialogue-text">
+              「全體同學請準備好工程計算機或利率因子表！本章公式看似繁複，但只要掌握『現金流發生時點』與『複利期數轉換』，就能輕鬆拿滿分！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 2: 貨幣時間價值的本質與會計八大應用
+         ========================================== -->
+    <section class="slide" data-slide="2" data-notes="解釋貨幣時間價值的本質在於同基準比較。列舉八大會計準則的應用場景，建立全書串聯的宏觀視野。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 1 · 理論核心</span>
+          <h1 class="slide-h1">為什麼今天的一元比未來更有價值？ (Why TVM Matters) 💰</h1>
+          <div class="slide-subtitle">同基準比較 (Compare Apples to Apples) 與 IFRS 準則之八大實務版圖</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>🍎 同基準衡量</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Left: Concept -->
+          <div class="card">
+            <div class="card-title">💡 時間價值的經濟本質</div>
+            <p style="margin-bottom:6px;">
+              <strong>時間即金錢 (Relationship between Time & Money)</strong>：今天拿到的一塊錢，可以立即投資獲取利息收益；未來的錢則承擔了等待的機會成本與不確定性。
+            </p>
+            <ul>
+              <li><strong>購買力風險</strong>：通貨膨脹導致未來貨幣購買力縮水。</li>
+              <li><strong>信用風險</strong>：未來約定款項存在對方違約倒閉的風險。</li>
+              <li><strong>同基準比較</strong>：衡量借貸與投資決策時，必須將跨期資金折算至同一時點（蘋果對蘋果）。</li>
+            </ul>
+          </div>
+
+          <!-- Right: 8 Accounting Applications -->
+          <div class="card pure">
+            <div class="card-title">📑 IFRS 準則中之八大核心應用場景</div>
+            <ul style="font-size:0.96rem; line-height:1.52;">
+              <li><strong>應收/應付票據 (Notes)</strong>：不帶息或低利票據按市場利率折現。</li>
+              <li><strong>租賃 (Leases, IFRS 16)</strong>：使用權資產與租賃負債之折現。</li>
+              <li><strong>退職後福利 (Pensions, IAS 19)</strong>：確定福利義務 (DBO) 現值。</li>
+              <li><strong>非流動資產減損 (IAS 36)</strong>：使用價值未來現金流量折現。</li>
+              <li><strong>股份基礎給付 (IFRS 2)</strong>：員工認股權公允價值估計模型。</li>
+              <li><strong>企業合併 (IFRS 3)</strong>：或有對價之現值衡量。</li>
+              <li><strong>金融工具揭露 (IFRS 13)</strong>：無活絡市場工具之公允價值估價。</li>
+              <li><strong>環境除役負債 (IAS 37)</strong>：拆卸、復原及環境整治準備折現。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img4_char02.png" alt="會計師" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-auditor">執業會計師</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">張會計師的查核觀點 💼</div>
+            <div class="dialogue-text">
+              「如果查核企業財報時，看到一筆 10 年後才需支付的 1,000 萬元除役負債未經折現直接入帳，負債就會被嚴重高估！IFRS 準則嚴格規定涉及重大融資組成時，必須以現值如實表達！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 3: 利息三大變數與單利 vs 複利效應
+         ========================================== -->
+    <section class="slide" data-slide="3" data-notes="介紹利息三變數，深入比較單利與複利的計算機制與三年累積差額。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 1 · 計算基石</span>
+          <h1 class="slide-h1">利息的本質：單利與複利的財富分水嶺 (Simple vs. Compound) 📈</h1>
+          <div class="slide-subtitle">Kieso Illustration 4.1：借款 $10,000 三年 9% 的真實利息差距演繹</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>🔄 利滾利魔法</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Simple Interest Card -->
+          <div class="card pure" style="border-top:4px solid #ad7448;">
+            <div class="card-title">🌿 單利模式 (Simple Interest)</div>
+            <p style="margin-bottom:6px;"><strong>僅依原始本金計息</strong>，利息不併入本金：</p>
+            <div class="code-box" style="margin-bottom:8px;">
+              $$\text{Interest} = p \times i \times n$$
+            </div>
+            <ul>
+              <li><strong>Barstow Electric 案例</strong>：借款 $\$10,000$、年息 $8\%$、借 3 年。</li>
+              <li>1 年利息：$\$10,000 \times 8\% \times 1 = \mathbf{\$800}$</li>
+              <li>3 年總利息：$\$10,000 \times 8\% \times 3 = \mathbf{\$2,400}$</li>
+              <li>3 個月利息：$\$10,000 \times 8\% \times \frac{3}{12} = \mathbf{\$200}$</li>
+            </ul>
+          </div>
+
+          <!-- Compound Interest Card -->
+          <div class="card alt" style="border-top:4px solid #528c61;">
+            <div class="card-title" style="color:#528c61;">🌲 複利模式 (Compound Interest)</div>
+            <p style="margin-bottom:6px;"><strong>對本金與前期未付利息重複計息</strong>（商業金融標準）：</p>
+            <div class="code-box" style="margin-bottom:8px;">
+              $$\text{Accumulated Balance} = p \times (1 + i)^n$$
+            </div>
+            <table class="pastel-table">
+              <thead>
+                <tr>
+                  <th>年度</th>
+                  <th>單利本利和 (9%)</th>
+                  <th>複利本利和 (9%)</th>
+                  <th>複利差額</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>第 1 年</td>
+                  <td>$10,900.00</td>
+                  <td>$10,900.00</td>
+                  <td>$0.00</td>
+                </tr>
+                <tr>
+                  <td>第 2 年</td>
+                  <td>$11,800.00</td>
+                  <td>$11,881.00</td>
+                  <td>+$81.00</td>
+                </tr>
+                <tr style="background:var(--primary-soft); font-weight:800;">
+                  <td>第 3 年</td>
+                  <td>$12,700.00</td>
+                  <td>$12,950.29</td>
+                  <td style="color:#d96f86;">+$250.29</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img3_char01.png" alt="學生" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-student">提問學生</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">小安同學的直覺發現 💡</div>
+            <div class="dialogue-text">
+              「原來只存 10,000 元借 3 年，複利就比單利多賺了 <strong>$250.29</strong>！而且越往後幾年，差距就像滾雪球一樣噴發成長！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 4: 複利頻率與實質年收益率
+         ========================================== -->
+    <section class="slide" data-slide="4" data-notes="詳細推導名目利率與複利頻率的關係。說明計息次數越多，實質收益率越高。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 1 · 計息機制</span>
+          <h1 class="slide-h1">複利頻率效應：名目利率 vs 實質年收益率 (Frequency & Yield) ⏱️</h1>
+          <div class="slide-subtitle">Kieso Illustration 4.5~4.6：一年內計息越頻繁，真實收益率越高！</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>⚡ 頻率加速器</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Conversion Rules -->
+          <div class="card pure">
+            <div class="card-title">📐 期數與利率的換算黃金律</div>
+            <div class="code-box" style="margin-bottom:8px;">
+              每期計息利率 $i = \frac{\text{名目年利率}}{\text{一年計息次數 } m}$<br>
+              總計息期數 $n = \text{借款年數} \times \text{一年計息次數 } m$
+            </div>
+            <ul>
+              <li><strong>範例：年利率 12%，借款 5 年</strong>：</li>
+              <li>按年複利 ($m=1$)：$i = 12\% / 1 = 12\%$，期數 $n = 5$ 期。</li>
+              <li>按半年複利 ($m=2$)：$i = 12\% / 2 = 6\%$，期數 $n = 10$ 期。</li>
+              <li>按季複利 ($m=4$)：$i = 12\% / 4 = 3\%$，期數 $n = 20$ 期。</li>
+              <li>按月複利 ($m=12$)：$i = 12\% / 12 = 1\%$，期數 $n = 60$ 期。</li>
+            </ul>
+          </div>
+
+          <!-- Yield Table -->
+          <div class="card alt">
+            <div class="card-title" style="color:#528c61;">📊 9% 年利率在不同複利頻率下的實質年收益</div>
+            <table class="pastel-table">
+              <thead>
+                <tr>
+                  <th>複利頻率</th>
+                  <th>實質收益率 (Effective Yield)</th>
+                  <th>$10,000 一年利息</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>按年複利 (Annually)</td>
+                  <td>9.00%</td>
+                  <td>$900</td>
+                </tr>
+                <tr>
+                  <td>按半年複利 (Semiannually)</td>
+                  <td>9.20%</td>
+                  <td>$920</td>
+                </tr>
+                <tr>
+                  <td>按季複利 (Quarterly)</td>
+                  <td>9.31%</td>
+                  <td>$931</td>
+                </tr>
+                <tr>
+                  <td>按月複利 (Monthly)</td>
+                  <td>9.38%</td>
+                  <td>$938</td>
+                </tr>
+                <tr style="background:#eaf3ed; font-weight:800; color:#15803d;">
+                  <td>按日複利 (Daily)</td>
+                  <td>9.42%</td>
+                  <td>$942</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img2_char02.png" alt="助教" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-ta">學習助教</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">兔兔助教提醒：考卷上的期數陷阱 🐰</div>
+            <div class="dialogue-text">
+              「請全體同學注意：如果題目寫『5 年期公司債、半年付息一次』，查表時絕對不能用 5 期，必須查 <strong>$n = 10$ 期</strong>，利率也要<strong>除以 2</strong>！很多初學者都在這裡痛失分數喔！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 5: 單筆款項之終值與現值模型
+         ========================================== -->
+    <section class="slide" data-slide="5" data-notes="介紹單筆款項問題，解釋 Table 4.1 與 Table 4.2 互為倒數的對稱關係。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 2 · 核心公式</span>
+          <h1 class="slide-h1">單筆款項問題：複利終值與現值模型 (Single-Sum) 🧮</h1>
+          <div class="slide-subtitle">Table 4.1 與 Table 4.2 利率因子的鏡像對稱關係</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>🔍 互為倒數</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Future Value -->
+          <div class="card pure">
+            <div class="card-title">🔮 複利終值 (Future Value, FV)</div>
+            <p style="margin-bottom:6px;"><strong>現在投入本金，求未來滾成的本利和</strong>：</p>
+            <div class="code-box" style="margin-bottom:8px; text-align:center;">
+              $$FV = PV \times (1 + i)^n = PV \times FVF_{n,i}$$
+            </div>
+            <ul>
+              <li>$FVF_{n,i}$：$n$ 期、每期利率 $i$ 的複利終值因子 (Table 4.1)。</li>
+              <li>因子特性：只要利率 $i > 0$，終值因子必定 **$> 1.0$**。</li>
+              <li><em>例：現在存入 $\$1,000$，5% 複利 3 年後本利和為 $\$1,000 \times 1.15763 = \$1,157.63$。</em></li>
+            </ul>
+          </div>
+
+          <!-- Present Value -->
+          <div class="card alt">
+            <div class="card-title" style="color:#528c61;">⏳ 複利現值 (Present Value, PV)</div>
+            <p style="margin-bottom:6px;"><strong>未來欲獲得金額，求今天應投入本金（折現）</strong>：</p>
+            <div class="code-box" style="margin-bottom:8px; text-align:center;">
+              $$PV = FV \times \frac{1}{(1 + i)^n} = FV \times PVF_{n,i}$$
+            </div>
+            <ul>
+              <li>$PVF_{n,i}$：$n$ 期、每期利率 $i$ 的複利現值因子 (Table 4.2)。</li>
+              <li>因子特性：只要利率 $i > 0$，現值因子必定 **$< 1.0$**。</li>
+              <li><em>因數關係：$PVF_{n,i} = \frac{1}{FVF_{n,i}}$，兩者嚴格互為倒數！</em></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img1_char02.png" alt="教授" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-prof">授課教授</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">柯教授核心提點 👨‍🏫</div>
+            <div class="dialogue-text">
+              「折現並不是什麼神祕黑魔法，它就是終值計算的『逆運算』！掌握了倒數關係，即便手上只有終值表，倒數一下就是現值表！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 6: 未知數求解：反求期數與利率
+         ========================================== -->
+    <section class="slide" data-slide="6" data-notes="示範 Kieso Illustration 4.12 與 4.14，如何利用現值或終值比率查表逆推未知期數與利率。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 2 · 逆向推導</span>
+          <h1 class="slide-h1">未知數逆向推導：反求期數與市場實質利率 (Solving for Unknowns) 🕵️</h1>
+          <div class="slide-subtitle">Kieso Illustration 4.12 & 4.14 實戰查表反推技法</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>🎯 代數查表法</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Unknown Periods -->
+          <div class="card pure">
+            <div class="card-title">⏱️ 案例一：反求未知期數 ($n$)</div>
+            <p style="margin-bottom:6px;">
+              <strong>題目情境</strong>：投資 $\$47,811$，年利率 $10\%$，預期累積至 $\$70,000$ 需時幾年？
+            </p>
+            <div class="code-box" style="margin-bottom:8px;">
+              【現值途徑】 $PVF_{n,10\%} = \frac{\$47,811}{\$70,000} = \mathbf{0.68301}$<br>
+              【查表驗證】 查 Table 4.2 之 10% 縱欄，0.68301 對應 <strong>$n = 4$ 年</strong>！
+            </div>
+            <p style="font-size:0.94rem; color:var(--text-muted);">
+              若採終值途徑：$FVF_{n,10\%} = 70,000 / 47,811 = 1.46410$，查 Table 4.1 同樣得到 4 年！
+            </p>
+          </div>
+
+          <!-- Unknown Interest Rate -->
+          <div class="card alt">
+            <div class="card-title" style="color:#528c61;">💹 案例二：反求實質利率 ($i$)</div>
+            <p style="margin-bottom:6px;">
+              <strong>題目情境</strong>：現在存入 €$800,000$，5 年後滾成 €$1,070,584$，年利率為何？
+            </p>
+            <div class="code-box" style="margin-bottom:8px;">
+              【終值途徑】 $FVF_{5,i} = \frac{€1,070,584}{€800,000} = \mathbf{1.33823}$<br>
+              【查表驗證】 查 Table 4.1 之第 5 期橫列，1.33823 對應 <strong>$i = 6\%$</strong>！
+            </div>
+            <p style="font-size:0.94rem; color:var(--text-muted);">
+              若採現值途徑：$PVF_{5,i} = 800,000 / 1,070,584 = 0.74726$，查 Table 4.2 第 5 列亦精確為 6%！
+            </p>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img3_char02.png" alt="學生" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-student">提問學生</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">小安同學的提問 🙋</div>
+            <div class="dialogue-text">
+              「如果算出來的因子剛好落在兩個整數百分比之間（例如 6.3%），考試時該怎麼辦呢？」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 7: 年金之定義與三大核心要件
+         ========================================== -->
+    <section class="slide" data-slide="7" data-notes="界定年金的三大要件，並嚴格區分普通年金與到期年金的收付時點。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 3 · 年金架構</span>
+          <h1 class="slide-h1">何謂「年金」？三大要素與收付時點劃分 (Nature of Annuities) 📅</h1>
+          <div class="slide-subtitle">Periodic Rents、等間隔期間與定期複利的完美結合</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>⚖️ 定期定額</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- 3 Requirements -->
+          <div class="card pure">
+            <div class="card-title">📌 年金必備三大要件 (Requirements)</div>
+            <ul>
+              <li><strong>等額性 (Equal Rents, $R$)</strong>：各期收付之款項金額必須完全一致（如每月皆為 $10,000）。</li>
+              <li><strong>等距性 (Same-Length Intervals)</strong>：各款項之間的間隔期間長度相同（如整齊的每季或每年）。</li>
+              <li><strong>定期複利 (Compounding per Interval)</strong>：每一期間內複利計息一次。</li>
+            </ul>
+          </div>
+
+          <!-- 2 Types -->
+          <div class="card alt">
+            <div class="card-title" style="color:#528c61;">⚡ 兩大經典年金型態比較</div>
+            <ul>
+              <li><strong>普通年金 (Ordinary Annuity)</strong>：
+                款項於<strong>「每期期末」</strong>發生（如房貸月付、債券每半年付息）。第一筆款項在第一期末才支付，故第一期無利息累積。
+              </li>
+              <li><strong>到期年金 (Annuity Due)</strong>：
+                款項於<strong>「每期期初」</strong>發生（如租屋押租金、人壽保險費年繳）。第一筆款項在簽約日 $t=0$ 即支付，每筆皆多滾一期利息！
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img1_char03.png" alt="教授" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-prof">授課教授</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">柯教授的實例解說 👨‍🏫</div>
+            <div class="dialogue-text">
+              「請全體同學牢記生活中的經典比喻：<strong>租房子『先付租金才入住』，是到期年金</strong>；<strong>餐廳吃飯『吃完才結帳』或上班『做滿一個月才領薪水』，是普通年金</strong>！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 8: 普通年金 vs 到期年金：終值與現值全景比較
+         ========================================== -->
+    <section class="slide" data-slide="8" data-notes="詳細比較普通年金與到期年金在終值與現值上的轉換公式，點出乘上 (1+i) 的核心規律。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 3 · 核心推導</span>
+          <h1 class="slide-h1">普通年金 vs 到期年金：終值與現值全景圖 (OA vs. AD) 🔄</h1>
+          <div class="slide-subtitle">Kieso Illustration 4.19 & 4.30：早一期進出帶來的複利增益</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>🏆 乘上 (1+i)</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- FV Comparison -->
+          <div class="card pure">
+            <div class="card-title">📈 終值比較 (Future Value)</div>
+            <div class="code-box" style="margin-bottom:8px;">
+              $$FV_{OA} = R \times \frac{(1+i)^n - 1}{i} = R \times FVF\text{-}OA_{n,i}$$
+              $$\mathbf{FV_{AD} = FV_{OA} \times (1 + i)}$$
+            </div>
+            <ul>
+              <li><strong>機制差異</strong>：普通年金最後一筆款項於到期日投入，利息為 0；到期年金每筆款項皆多滾 1 期利息！</li>
+              <li><em>Kieso 釋例：5 期 12%，$FVF\text{-}OA = 6.35285$，而 $FVF\text{-}AD = 7.11519$。</em></li>
+            </ul>
+          </div>
+
+          <!-- PV Comparison -->
+          <div class="card alt">
+            <div class="card-title" style="color:#528c61;">⏳ 現值比較 (Present Value)</div>
+            <div class="code-box" style="margin-bottom:8px;">
+              $$PV_{OA} = R \times \frac{1 - (1+i)^{-n}}{i} = R \times PVF\text{-}OA_{n,i}$$
+              $$\mathbf{PV_{AD} = PV_{OA} \times (1 + i)}$$
+            </div>
+            <ul>
+              <li><strong>機制差異</strong>：到期年金第 1 筆款項發生於 $t=0$，不需折現（折現值為 1.0）；其餘款項比普通年金少折現 1 期！</li>
+              <li><strong>查表速算法</strong>：$PVF\text{-}AD_{n,i} = PVF\text{-}OA_{n-1,i} + 1.0$。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img2_char01.png" alt="助教" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-ta">學習助教</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">兔兔助教的速記口訣 🐰</div>
+            <div class="dialogue-text">
+              「請大家背起來：<strong>『到期年金比普通年金每一筆都早進出一期，所以不管是求終值還是求現值，統統直接乘上 $(1 + i)$！』</strong> 考卷上就算沒有附到期年金表，也能一秒秒殺！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 9: 進階年金專題：遞延年金之現值兩大解法
+         ========================================== -->
+    <section class="slide" data-slide="9" data-notes="介紹遞延年金的概念與現值的兩種經典解法：兩段式折現法與差額法。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 4 · 進階專題</span>
+          <h1 class="slide-h1">進階年金：遞延年金之現值推導 (Deferred Annuities) ⏳</h1>
+          <div class="slide-subtitle">款項在 $k$ 期後才開始發生時，如何精準折現回到 $t=0$？</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>💡 兩段式折現</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Method 1 -->
+          <div class="card pure">
+            <div class="card-title">1. 兩段式折現法 (Two-Step Discounting)</div>
+            <p style="margin-bottom:6px;"><strong>最直觀、不易犯錯的標準解題法</strong>：</p>
+            <div class="code-box" style="margin-bottom:8px;">
+              步驟 1：先算出年金開始時點（第 $k$ 期末）之現值<br>
+              &nbsp;&nbsp;$PV_k = R \times PVF\text{-}OA_{n,i}$<br>
+              步驟 2：再將 $PV_k$ 當作單筆款項，折現 $k$ 期回 $t=0$<br>
+              &nbsp;&nbsp;$$\mathbf{PV_0 = PV_k \times PVF_{k,i} = R \times PVF\text{-}OA_{n,i} \times PVF_{k,i}}$$
+            </div>
+          </div>
+
+          <!-- Method 2 -->
+          <div class="card alt">
+            <div class="card-title" style="color:#528c61;">2. 差額扣除法 (Difference Method)</div>
+            <p style="margin-bottom:6px;"><strong>運用年金連續性快速查表相減</strong>：</p>
+            <div class="code-box" style="margin-bottom:8px;">
+              步驟 1：假定全部 $(k + n)$ 期均有付款，求全部現值<br>
+              &nbsp;&nbsp;$PV_{\text{total}} = R \times PVF\text{-}OA_{k+n,i}$<br>
+              步驟 2：扣除前 $k$ 期並未實際收付款項之虛擬年金現值<br>
+              &nbsp;&nbsp;$$\mathbf{PV_0 = R \times \left( PVF\text{-}OA_{k+n,i} - PVF\text{-}OA_{k,i} \right)}$$
+            </div>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img4_char03.png" alt="會計師" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-auditor">執業會計師</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">張會計師實務點評 💼</div>
+            <div class="dialogue-text">
+              「實務上很多重大設備採購或青年創業貸款，合約約定『前兩年免還本息，第三年起分五年每年還款』，這就是標準的遞延年金！兩段式折現法在 Excel 建模時邏輯最清晰！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 10: 長期公司債之評價模型
+         ========================================== -->
+    <section class="slide" data-slide="10" data-notes="詳細剖析長期公司債的雙現金流結構：票面利息年金與到期面額單筆現值。說明平價、折價與溢價三種情境。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 4 · 負債評價</span>
+          <h1 class="slide-h1">長期公司債評價模型 (Valuation of Long-Term Bonds) 📜</h1>
+          <div class="slide-subtitle">雙現金流結構：票面利息年金現值 + 到期面額單筆現值</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>🏷️ 雙現金流評價</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Valuation Formula -->
+          <div class="card pure">
+            <div class="card-title">💰 公司債發行定價核心模型</div>
+            <div class="code-box" style="margin-bottom:8px;">
+              $$\text{發行價格} = \text{票面利息現值 (年金)} + \text{到期本金現值 (單筆)}$$
+              $$\mathbf{\text{Price} = (F \times r) \times PVF\text{-}OA_{n,i} + F \times PVF_{n,i}}$$
+            </div>
+            <ul>
+              <li>$F$：公司債面額 (Maturity / Face Amount)。</li>
+              <li>$r$：每期票面利率 (Stated / Coupon Rate)。</li>
+              <li>$i$：每期市場有效利率 (Market / Effective Interest Rate)。</li>
+            </ul>
+          </div>
+
+          <!-- 3 Scenarios -->
+          <div class="card alt">
+            <div class="card-title" style="color:#528c61;">⚖️ 發行價格之三種狀態判別</div>
+            <ul>
+              <li><strong>平價發行 (At Par)</strong>：
+                票面利率 $=$ 市場利率 $\Longrightarrow$ 發行價格 $=$ 面額。
+              </li>
+              <li><strong>折價發行 (At a Discount)</strong>：
+                票面利率 $<$ 市場利率 $\Longrightarrow$ 發行價格 $<$ 面額（補償投資人較低的票面收益）。
+              </li>
+              <li><strong>溢價發行 (At a Premium)</strong>：
+                票面利率 $>$ 市場利率 $\Longrightarrow$ 發行價格 $>$ 面額（向投資人收取高於市場利率之溢價）。
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img1_char04.png" alt="教授" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-prof">授課教授</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">柯教授的市場經濟學 👨‍🏫</div>
+            <div class="dialogue-text">
+              「請記住：債券印製出來後，票面利率就永遠凍結在合約上；但市場有效利率卻每分每秒都在波動！債券價格的波動，正是為了讓不同合約的債券在市場上擁有相同競爭力！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 11: 經典釋例：有效利率法之折溢價攤銷表
+         ========================================== -->
+    <section class="slide" data-slide="11" data-notes="走過 Alltech Corporation Illustration 4.39-4.40 釋例，示範有效利率法的計算邏輯與會計分錄。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 4 · 實務記帳技術</span>
+          <h1 class="slide-h1">經典釋例：Alltech 公司債折價攤銷演繹 (Effective-Interest) 📊</h1>
+          <div class="slide-subtitle">Kieso Illustration 4.39~4.40：讓帳面價值逐步回歸面額的標準工藝</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>📋 手帳攤銷表</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="grid-template-columns: 1.32fr 1fr; gap: 16px; align-items: stretch;">
+          <!-- Left Table Card -->
+          <div class="card pure" style="padding:12px 16px; justify-content:center;">
+            <div style="font-weight:800; font-size:1.02rem; color:var(--primary); margin-bottom:8px; display:flex; justify-content:space-between;">
+              <span>📋 Alltech Corporation 發行數據</span>
+              <span style="font-size:0.84rem; color:var(--text-muted);">面額：$100,000</span>
+            </div>
+            <table class="pastel-table">
+              <tbody>
+                <tr>
+                  <td>到期面額 (Face Value)</td>
+                  <td style="text-align:right; font-weight:800;">$100,000.00</td>
+                </tr>
+                <tr>
+                  <td>到期本金現值 (PV of Principal)</td>
+                  <td style="text-align:right; color:#528c61;">$74,726.00</td>
+                </tr>
+                <tr>
+                  <td>定期利息現值 (PV of Interest)</td>
+                  <td style="text-align:right; color:#528c61;">$21,061.80</td>
+                </tr>
+                <tr style="background:var(--primary-soft); font-weight:800;">
+                  <td>公司債發行價格 (Proceeds)</td>
+                  <td style="text-align:right; color:var(--primary); font-size:1.02rem;">$95,787.80</td>
+                </tr>
+                <tr style="background:#fef2f2; font-weight:800;">
+                  <td>應付公司債折價 (Bond Discount)</td>
+                  <td style="text-align:right; color:#d96f86;">$4,212.20</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="code-box" style="margin-top:8px; font-size:0.90rem;">
+              【發行分錄】 借：現金 95,787.80 / 應付公司債折價 4,212.20<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;貸：應付公司債 100,000.00
+            </div>
+          </div>
+
+          <!-- Right Rule Card -->
+          <div style="display:flex; flex-direction:column; justify-content:space-between; gap:12px;">
+            <div class="dialogue-box">
+              <div class="dialogue-avatar-wrapper">
+                <img src="../../assets/img4_char01.png" alt="會計師" class="dialogue-avatar">
+                <span class="dialogue-role-badge badge-auditor">執業會計師</span>
+              </div>
+              <div class="dialogue-content">
+                <div class="dialogue-name">張會計師核心點評 💼</div>
+                <div class="dialogue-text">
+                  「IFRS 9 強制規範折價必須按<strong>有效利率法</strong>逐期攤銷。每期利息費用等於『期初帳面價值 $\times$ 有效利率』，攤銷額會逐期增加，到期日帳面值精確歸位 $100,000！」
+                </div>
+              </div>
+            </div>
+
+            <div class="card alt" style="padding:14px 18px; flex:1; justify-content:center;">
+              <div class="card-title" style="margin-bottom:6px; font-size:1.06rem;">📝 有效利率法核心算式</div>
+              <ul style="font-size:0.94rem; line-height:1.55;">
+                <li><strong>利息費用</strong>：期初帳面價值 $\times$ 市場有效利率</li>
+                <li><strong>付現利息</strong>：公司債面額 $\times$ 票面利率</li>
+                <li><strong>當期攤銷額</strong>：$|\text{利息費用} - \text{付現利息}|$</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 12: IFRS 13 期望現金流量法與利率三要素
+         ========================================== -->
+    <section class="slide" data-slide="12" data-notes="介紹 IFRS 13 的期望現金流量法與利率三大核心要素（純粹利率、通膨預期、信用風險）。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 5 · 準則高階視野</span>
+          <h1 class="slide-h1">現值衡量新視野：IFRS 13 期望現金流量法 (Expected Cash Flow) 🌐</h1>
+          <div class="slide-subtitle">多重情境機率加權與利率三大核心組成的拆解</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>🎲 機率加權模型</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Traditional vs Expected -->
+          <div class="card pure">
+            <div class="card-title">🔍 傳統法 vs 期望現金流量法</div>
+            <ul>
+              <li><strong>傳統折現法 (Traditional Approach)</strong>：
+                選定「單一最可能」的現金流量估計值，並在折現率中塞入各種未量化的風險溢價。
+              </li>
+              <li><strong>IFRS 13 期望現金流量法 (Expected Approach)</strong>：
+                列舉多種可能情境之現金流，<strong>以機率加權算出期望現金流量</strong>，並以<strong>無風險利率 (Risk-Free Rate)</strong> 進行折現！
+              </li>
+            </ul>
+          </div>
+
+          <!-- 3 Components -->
+          <div class="card alt">
+            <div class="card-title" style="color:#528c61;">🧱 利率的三大核心組成要素</div>
+            <ol style="font-size:0.96rem; line-height:1.55;">
+              <li><strong>純粹利率 (Pure Rate of Interest, 2%–4%)</strong>：在零風險、零通膨下，純粹推遲消費的報酬。</li>
+              <li><strong>預期通膨率 (Expected Inflation Rate, 0%–?)</strong>：補償未來貨幣購買力下降。</li>
+              <li><strong>信用風險溢價 (Credit Risk Rate, 0%–5%)</strong>：補償特定債務人不履約的風險。</li>
+            </ol>
+            <div style="margin-top:6px; font-size:0.90rem; color:var(--text-muted); font-weight:700;">
+              💡 無風險報酬率 (Risk-Free Rate) = 純粹利率 + 預期通膨率
+            </div>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img1_char05.png" alt="教授" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-prof">授課教授</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">柯教授的準則前瞻 👨‍🏫</div>
+            <div class="dialogue-text">
+              「現代會計不再假裝未來只有一種確定結果！IFRS 13 的期望現金流量法將『不確定性』直接在現金流量的機率分佈中體現，這是當代公允價值衡量最精緻的飛躍！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 13: 觀念擂台測驗與本章學習地圖
+         ========================================== -->
+    <section class="slide" data-slide="13" data-notes="課堂小擂台互動測驗，檢驗普通年金與到期年金折現概念，並做全章五大考點 Recap。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Interactive Quiz · 課堂即時檢測</span>
+          <h1 class="slide-h1">第四章學習總檢驗：觀念小擂台 & 核心知識地圖 🏆</h1>
+          <div class="slide-subtitle">測試你對普通年金與到期年金折現關係的掌握度</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>🎯 互動挑戰</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="align-items: stretch;">
+          <!-- Left: Quiz Card -->
+          <div class="card pure">
+            <div class="card-title">🎯 課堂挑戰題</div>
+            <p style="font-weight:700; margin-bottom:8px;">
+              某公司發行 5 年期公司債，面額 $100,000，原約定每年「期末」付息 $8,000。若合約條款修改為每年「期初」先付息 $8,000，在市場有效利率不變下，該公司債的發行價格將會？
+            </p>
+            <div class="quiz-options">
+              <button class="quiz-btn" onclick="checkQuiz(this, false, '期初付款等於到期年金，每一筆利息都提早一年收取，其現值必定較高，不可能不變喔！')">
+                A. 完全不變，因為 5 年內總付現利息均為 $40,000
+              </button>
+              <button class="quiz-btn" onclick="checkQuiz(this, true, '賓果！太優秀了！期初付款屬於到期年金，利息現值等於普通年金乘上 (1 + i)，因此利息現值大幅提高，使公司債發行價格上升！')">
+                B. 上升，因為到期年金利息現值等於普通年金現值乘上 (1 + i)
+              </button>
+              <button class="quiz-btn" onclick="checkQuiz(this, false, '注意喔！從投資人角度看，提早拿到現金的折現價值更高，投資人願意付出更高的價格購買該債券！')">
+                C. 下降，因為公司每期提早付出現金造成資金成本增加
+              </button>
+            </div>
+            <div id="quiz-feedback-box" class="quiz-feedback"></div>
+          </div>
+
+          <!-- Right: Recap Card -->
+          <div class="card alt" style="display:flex; flex-direction:column; justify-content:space-between; padding:18px 24px;">
+            <div>
+              <div class="card-title">🌟 第四章必考精華 Recap</div>
+              <ul style="font-size:0.98rem; line-height:1.55;">
+                <li><strong>時間價值本質</strong>：同基準比較 (Apples to Apples)，現值與終值互為倒數。</li>
+                <li><strong>複利頻率</strong>：$i = \text{年利率} / m$，$n = \text{年數} \times m$；計息越頻繁，實質收益率越高。</li>
+                <li><strong>年金換算秘訣</strong>：到期年金不論現值或終值，均等於普通年金乘上 $(1 + i)$！</li>
+                <li><strong>遞延年金現值</strong>：兩段式折現法（先折現年金至 $k$ 期末，再折現單筆回 $t=0$）。</li>
+                <li><strong>有效利率法</strong>：利息費用等於帳面價值 $\times$ 有效利率，使折溢價回歸面額。</li>
+              </ul>
+            </div>
+            <div style="text-align:center; margin-top:8px;">
+              <button class="nav-btn" style="display:inline-flex;" onclick="goToSlide(1)">
+                <span>🔄 重新回顧第一張投影片</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img1_char06.png" alt="Cheers" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-prof">授課教授</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">柯教授的結業祝福 🥂</div>
+            <div class="dialogue-text">
+              「恭喜全體同學完全征服了第四章！你們已經掌握了中級會計學最強大的時間價值計算引擎，接下來無論面對任何複雜的金融工具或合約負債，都能迎刃而解！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer Nav -->
+  <footer>
+    <div class="nav-controls">
+      <button class="nav-btn" id="btn-prev" onclick="changeSlide(-1)">
+        <span>◀ 上一張</span>
+      </button>
+      <button class="nav-btn" id="btn-next" onclick="changeSlide(1)">
+        <span>下一張 ▶</span>
+      </button>
+    </div>
+    <div class="slide-indicator" id="slide-indicator">
+      SLIDE 1 / 13
+    </div>
+    <div style="font-size:0.86rem; color:var(--text-muted); display:flex; gap:12px;">
+      <span>⌨️ 導航：方向鍵 / Space / Click</span>
+    </div>
+  </footer>
+
+  <!-- Speaker Notes Modal Drawer -->
+  <aside id="notes-modal">
+    <h3>
+      <span>🎙️ 講者演講備忘錄 (Speaker Notes)</span>
+      <button onclick="toggleNotes()" style="background:none; border:none; cursor:pointer; font-size:1rem;">✖</button>
+    </h3>
+    <div id="notes-content" style="font-size:0.94rem; line-height:1.55; color:var(--text-main); margin-top:8px;">
+      講稿內容加載中...
+    </div>
+  </aside>
+
+  <!-- Overview Modal -->
+  <div id="overview-modal" onclick="if(event.target === this) toggleOverview()">
+    <div style="max-width:1200px; margin:0 auto 16px; display:flex; justify-content:space-between; align-items:center;">
+      <h2 style="font-size:1.4rem; color:var(--text-main);">📑 投影片總覽導航 (Overview)</h2>
+      <button class="btn-header" onclick="toggleOverview()">✕ 關閉</button>
+    </div>
+    <div class="overview-grid" id="overview-grid">
+      <!-- Generated dynamically by JS -->
+    </div>
+  </div>
+
+  <!-- JavaScript Presentation Engine -->
+  <script>
+    let currentSlide = 1;
+    const totalSlides = 13;
+    const slides = document.querySelectorAll('.slide');
+    const progressBar = document.getElementById('progress-bar');
+    const slideIndicator = document.getElementById('slide-indicator');
+    const btnPrev = document.getElementById('btn-prev');
+    const btnNext = document.getElementById('btn-next');
+    const notesModal = document.getElementById('notes-modal');
+    const notesContent = document.getElementById('notes-content');
+    const overviewModal = document.getElementById('overview-modal');
+    const overviewGrid = document.getElementById('overview-grid');
+
+    // Build overview cards
+    slides.forEach((slide, idx) => {
+      const slideNum = idx + 1;
+      const titleEl = slide.querySelector('.slide-h1');
+      const titleText = titleEl ? titleEl.innerText : `Slide ${slideNum}`;
+      const card = document.createElement('div');
+      card.className = 'overview-card';
+      card.innerHTML = `
+        <div class="overview-num">SLIDE ${slideNum}</div>
+        <div class="overview-title">${titleText}</div>
+      `;
+      card.onclick = () => {
+        goToSlide(slideNum);
+        toggleOverview();
+      };
+      overviewGrid.appendChild(card);
+    });
+
+    function updatePresentation() {
+      slides.forEach((s, idx) => {
+        if (idx + 1 === currentSlide) {
+          s.classList.add('active');
+        } else {
+          s.classList.remove('active');
+        }
+      });
+
+      // Update footer indicator & buttons
+      slideIndicator.innerText = `SLIDE ${currentSlide} / ${totalSlides}`;
+      btnPrev.disabled = (currentSlide === 1);
+      btnNext.disabled = (currentSlide === totalSlides);
+
+      // Update progress bar
+      const pct = ((currentSlide - 1) / (totalSlides - 1)) * 100;
+      progressBar.style.width = `${pct}%`;
+
+      // Update notes
+      const activeSlideEl = document.querySelector(`.slide[data-slide="${currentSlide}"]`);
+      if (activeSlideEl && activeSlideEl.dataset.notes) {
+        notesContent.innerText = activeSlideEl.dataset.notes;
+      } else {
+        notesContent.innerText = "本頁無特殊演講備忘錄。";
+      }
+
+      // Re-trigger KaTeX if needed
+      if (window.renderMathInElement && activeSlideEl) {
+        renderMathInElement(activeSlideEl, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ]
+        });
+      }
+
+      // Sync URL hash
+      window.location.hash = `#${currentSlide}`;
+    }
+
+    function changeSlide(direction) {
+      const target = currentSlide + direction;
+      if (target >= 1 && target <= totalSlides) {
+        currentSlide = target;
+        updatePresentation();
+      }
+    }
+
+    function goToSlide(num) {
+      if (num >= 1 && num <= totalSlides) {
+        currentSlide = num;
+        updatePresentation();
+      }
+    }
+
+    // Toggle Notes
+    function toggleNotes() {
+      notesModal.style.display = (notesModal.style.display === 'block') ? 'none' : 'block';
+    }
+
+    // Toggle Overview
+    function toggleOverview() {
+      overviewModal.style.display = (overviewModal.style.display === 'block') ? 'none' : 'block';
+    }
+
+    // Toggle Fullscreen
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+          alert(`無法啟動全螢幕模式: ${err.message}`);
+        });
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    // Interactive Quiz Handler
+    function checkQuiz(btn, isCorrect, explanation) {
+      const container = btn.closest('.card');
+      const buttons = container.querySelectorAll('.quiz-btn');
+      const feedbackBox = document.getElementById('quiz-feedback-box');
+      
+      buttons.forEach(b => {
+        b.disabled = true;
+        b.style.cursor = 'default';
+      });
+
+      if (isCorrect) {
+        btn.classList.add('correct');
+        feedbackBox.style.display = 'block';
+        feedbackBox.style.background = '#ecfdf5';
+        feedbackBox.style.color = '#065f46';
+        feedbackBox.style.border = '1.5px solid #34d399';
+        feedbackBox.innerHTML = `<strong>🎉 答對了！</strong><br>${explanation}`;
+      } else {
+        btn.classList.add('wrong');
+        feedbackBox.style.display = 'block';
+        feedbackBox.style.background = '#fef2f2';
+        feedbackBox.style.color = '#991b1b';
+        feedbackBox.style.border = '1.5px solid #f87171';
+        feedbackBox.innerHTML = `<strong>❌ 答錯了喔！</strong><br>${explanation}`;
+      }
+    }
+
+    // Keyboard Shortcuts
+    window.addEventListener('keydown', (e) => {
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+      switch(e.key) {
+        case 'ArrowRight':
+        case 'PageDown':
+        case ' ':
+          e.preventDefault();
+          changeSlide(1);
+          break;
+        case 'ArrowLeft':
+        case 'PageUp':
+          e.preventDefault();
+          changeSlide(-1);
+          break;
+        case 'Home':
+          e.preventDefault();
+          goToSlide(1);
+          break;
+        case 'End':
+          e.preventDefault();
+          goToSlide(totalSlides);
+          break;
+        case 'f':
+        case 'F':
+          e.preventDefault();
+          toggleFullscreen();
+          break;
+        case 'n':
+        case 'N':
+          e.preventDefault();
+          toggleNotes();
+          break;
+        case 'o':
+        case 'O':
+          e.preventDefault();
+          toggleOverview();
+          break;
+        case 'Escape':
+          if (overviewModal.style.display === 'block') toggleOverview();
+          if (notesModal.style.display === 'block') toggleNotes();
+          break;
+      }
+    });
+
+    // Touch Swipe Gestures
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const stage = document.getElementById('slide-stage');
+
+    stage.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, false);
+
+    stage.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, false);
+
+    function handleSwipe() {
+      const threshold = 40;
+      if (touchEndX < touchStartX - threshold) {
+        changeSlide(1);
+      }
+      if (touchEndX > touchStartX + threshold) {
+        changeSlide(-1);
+      }
+    }
+
+    // Init with Hash or Default to 1
+    window.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash.replace('#', '');
+      const initial = parseInt(hash, 10);
+      if (!isNaN(initial) && initial >= 1 && initial <= totalSlides) {
+        currentSlide = initial;
+      }
+      updatePresentation();
+    });
+  </script>
+</body>
+</html>

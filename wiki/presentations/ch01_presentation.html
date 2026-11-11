@@ -1,0 +1,1761 @@
+<!DOCTYPE html>
+<html lang="zh-TW" data-theme="milktea">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 1: 財務報導之環境與觀念架構 | 中級會計學手帳風簡報</title>
+  
+  <!-- KaTeX for LaTeX Math -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+          onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+  
+  <!-- Google Fonts: 圓潤柔和的日系手帳繁中字體 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* =========================================================
+       風格 A：日系燕麥奶茶手帳風 (Cozy Milk Tea Journal Theme)
+       ========================================================= */
+    :root {
+      --bg-page: #f7f0e6;
+      --bg-slide: #fffdf9;
+      --bg-card: #f4e8d8;
+      --bg-card-alt: #ebd8c2;
+      --bg-card-pure: #ffffff;
+      --text-main: #3e2d20;
+      --text-muted: #7e6957;
+      --primary: #ad7448;
+      --primary-soft: #f5e5d5;
+      --primary-border: #d8c0aa;
+      --accent-caramel: #c88349;
+      --accent-green: #528c61;
+      --accent-green-soft: #e2efe5;
+      --accent-pink: #d96f86;
+      --accent-pink-soft: #fde8ed;
+      --washi-color: rgba(237, 206, 142, 0.85);
+      --card-radius: 18px;
+      --shadow-soft: 0 10px 28px rgba(138, 102, 74, 0.1);
+      --shadow-card: 0 4px 12px rgba(138, 102, 74, 0.06);
+      --badge-bg: #eddccb;
+      --font-main: 'M PLUS Rounded 1c', 'Noto Sans TC', system-ui, sans-serif;
+      --font-code: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      background: var(--bg-page);
+      color: var(--text-main);
+      font-family: var(--font-main);
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden; /* STRICTLY ZERO SCROLL */
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Top Progress Bar */
+    #progress-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: rgba(173, 116, 72, 0.15);
+      z-index: 1000;
+    }
+    #progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #c29b7f, #ad7448, #f2cb74);
+      transition: width 0.3s ease;
+    }
+
+    /* Header Nav (Compact: ~46px) */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 28px;
+      height: 48px;
+      background: rgba(255, 253, 249, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 2px dashed var(--primary-border);
+      z-index: 100;
+      flex-shrink: 0;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge-course {
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 50px;
+      letter-spacing: 0.05em;
+    }
+    .chapter-title {
+      font-size: 1.00rem;
+      color: var(--text-main);
+      font-weight: 800;
+    }
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .btn-header {
+      background: var(--bg-card);
+      border: 1.5px solid var(--primary-border);
+      color: var(--text-main);
+      padding: 5px 14px;
+      border-radius: 50px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .btn-header:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    /* Main Slide Stage (Calculated viewport fit) */
+    #slide-stage {
+      flex: 1;
+      width: 100%;
+      height: calc(100vh - 96px); /* 100vh minus header(48px) and footer(48px) */
+      position: relative;
+      overflow: hidden; /* STRICTLY ZERO SCROLL */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 16px;
+      box-sizing: border-box;
+    }
+
+    /* The Slide Card */
+    .slide {
+      display: none;
+      width: min(1380px, calc(100vw - 32px));
+      height: calc(100vh - 104px);
+      max-height: 890px;
+      min-height: 520px;
+      flex: 0 0 auto; /* PREVENT FLEX SHRINK INTO TINY COLUMN */
+      background: var(--bg-slide);
+      border: 2.5px solid var(--primary-border);
+      border-radius: var(--card-radius);
+      padding: 16px 28px;
+      box-shadow: var(--shadow-soft);
+      flex-direction: column;
+      overflow: hidden; /* ZERO SCROLL */
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    .slide.active {
+      display: flex;
+      animation: slideIn 0.25s ease-out forwards;
+      z-index: 10;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Washi Tape (紙膠帶裝飾，完全不遮字) */
+    .washi-tape {
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-0.8deg);
+      width: 150px;
+      height: 24px;
+      background: var(--washi-color);
+      border-left: 2px dashed rgba(66, 48, 35, 0.15);
+      border-right: 2px dashed rgba(66, 48, 35, 0.15);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+      z-index: 20;
+    }
+
+    /* Sticker Stamp */
+    .sticker-stamp {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ffffff;
+      border: 1.5px dashed var(--primary);
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 0.90rem;
+      font-weight: 800;
+      color: var(--primary);
+      transform: rotate(-1.5deg);
+    }
+
+    /* Slide Header (Compact & Balanced) */
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1.5px dashed var(--primary-soft);
+      flex-shrink: 0;
+    }
+    .slide-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--badge-bg);
+      color: var(--primary);
+      font-size: 0.90rem;
+      font-weight: 800;
+      padding: 3px 12px;
+      border-radius: 50px;
+      letter-spacing: 0.04em;
+    }
+    .slide-h1 {
+      font-size: 1.76rem;
+      font-weight: 900;
+      color: var(--text-main);
+      line-height: 1.25;
+      margin-top: 3px;
+    }
+    .slide-subtitle {
+      font-size: 1.02rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+      font-weight: 500;
+    }
+
+    /* Content Layouts */
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      overflow: hidden; /* Strictly within viewport */
+      user-select: text;
+      min-height: 0;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    /* Cute Cards (Comfortably readable) */
+    .card {
+      background: var(--bg-card);
+      border-radius: 14px;
+      padding: 12px 18px;
+      border: 1.5px solid transparent;
+      box-shadow: var(--shadow-card);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+    .card:hover {
+      border-color: var(--primary-border);
+    }
+    .card.alt {
+      background: var(--bg-card-alt);
+    }
+    .card.pure {
+      background: var(--bg-card-pure);
+      border: 1.5px solid var(--primary-soft);
+    }
+
+    .card-title {
+      font-size: 1.20rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .card p, .card li {
+      font-size: 1.04rem;
+      line-height: 1.50;
+      color: var(--text-main);
+    }
+    .card ul, .card ol {
+      padding-left: 20px;
+    }
+    .card li {
+      margin-bottom: 4px;
+    }
+
+    /* Dialogue Box (Slightly enlarged text & avatar) */
+    .dialogue-box {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 9px 18px;
+      border: 1.5px solid var(--primary-border);
+      box-shadow: 0 4px 12px rgba(138, 102, 74, 0.06);
+      flex-shrink: 0;
+    }
+    .dialogue-avatar-wrapper {
+      position: relative;
+      flex-shrink: 0;
+    }
+    .dialogue-avatar {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 6px rgba(66, 48, 35, 0.12);
+      object-fit: cover;
+      display: block;
+    }
+    .dialogue-role-badge {
+      position: absolute;
+      bottom: -3px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.70rem;
+      font-weight: 800;
+      padding: 1px 7px;
+      border-radius: 8px;
+      white-space: nowrap;
+    }
+    .badge-prof { background: #fbe0e6; color: #b84366; }
+    .badge-ta { background: #e0f2fe; color: #0284c7; }
+    .badge-student { background: #fef3c7; color: #b45309; }
+    .badge-auditor { background: #dcfce7; color: #15803d; }
+
+    .dialogue-content {
+      flex: 1;
+    }
+    .dialogue-name {
+      font-size: 1.04rem;
+      font-weight: 800;
+      margin-bottom: 3px;
+      color: var(--primary);
+    }
+    .dialogue-text {
+      font-size: 1.02rem;
+      line-height: 1.50;
+      color: var(--text-main);
+    }
+
+    /* Tables */
+    .pastel-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.94rem;
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1.5px solid var(--primary-border);
+    }
+    .pastel-table th {
+      background: var(--primary-soft);
+      color: var(--text-main);
+      text-align: left;
+      padding: 6px 12px;
+      font-weight: 800;
+      border-bottom: 1.5px solid var(--primary-border);
+      font-size: 0.96rem;
+    }
+    .pastel-table td {
+      padding: 5px 12px;
+      border-bottom: 1px solid var(--primary-soft);
+      color: var(--text-main);
+    }
+
+    /* Code Box */
+    .code-box {
+      background: #ffffff;
+      border: 1.5px dashed var(--primary-border);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-family: var(--font-code);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: var(--text-main);
+    }
+
+    /* Tabs */
+    .tab-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 8px;
+      flex-shrink: 0;
+    }
+    .tab-btn {
+      background: var(--bg-card);
+      border: 1.5px solid var(--primary-border);
+      color: var(--text-main);
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .tab-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+    .tab-panel {
+      display: none;
+    }
+    .tab-panel.active {
+      display: block;
+    }
+
+    /* Quiz */
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .quiz-btn {
+      background: #ffffff;
+      border: 1.5px solid var(--primary-border);
+      color: var(--text-main);
+      padding: 11px 18px;
+      border-radius: 12px;
+      text-align: left;
+      font-size: 1.02rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .quiz-btn:hover {
+      background: var(--primary-soft);
+      transform: translateX(3px);
+    }
+    .quiz-btn.correct {
+      background: #ecfdf5 !important;
+      border-color: #34d399 !important;
+      color: #065f46 !important;
+      font-weight: 800;
+    }
+    .quiz-btn.wrong {
+      background: #fef2f2 !important;
+      border-color: #f87171 !important;
+      color: #991b1b !important;
+    }
+    .quiz-feedback {
+      margin-top: 8px;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 0.98rem;
+      display: none;
+      line-height: 1.50;
+    }
+
+    /* Footer (Compact: ~46px) */
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 28px;
+      height: 48px;
+      background: rgba(255, 253, 249, 0.95);
+      border-top: 2px dashed var(--primary-border);
+      z-index: 100;
+      flex-shrink: 0;
+    }
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-btn {
+      background: var(--bg-card);
+      border: 1.5px solid var(--primary-border);
+      color: var(--text-main);
+      padding: 5px 16px;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+    }
+    .nav-btn:hover:not(:disabled) {
+      background: var(--primary);
+      color: #ffffff;
+    }
+    .nav-btn:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+    .slide-indicator {
+      font-family: var(--font-code);
+      font-size: 0.94rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    /* Modal dialogs */
+    #notes-modal {
+      display: none;
+      position: fixed;
+      bottom: 60px;
+      right: 28px;
+      width: 380px;
+      max-height: 380px;
+      background: rgba(255, 253, 249, 0.98);
+      border: 2px solid var(--primary);
+      border-radius: 14px;
+      box-shadow: 0 16px 36px rgba(66, 48, 35, 0.2);
+      padding: 16px;
+      z-index: 500;
+      overflow-y: auto;
+      user-select: text;
+    }
+    #notes-modal h3 {
+      font-size: 0.95rem;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    #overview-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(247, 240, 230, 0.96);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      padding: 30px;
+      overflow-y: auto;
+    }
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .overview-card {
+      background: #ffffff;
+      border: 1.5px solid var(--primary-border);
+      border-radius: 12px;
+      padding: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .overview-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .overview-num {
+      font-size: 0.74rem;
+      color: var(--primary);
+      font-weight: 800;
+    }
+    .overview-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Progress Bar -->
+  <div id="progress-container">
+    <div id="progress-bar"></div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="brand">
+      <span class="badge-course">中會 IFRS 5/e</span>
+      <span class="chapter-title">Chapter 1 · 財務報導之環境與觀念架構 🧸</span>
+    </div>
+    <div class="header-controls">
+      <button class="btn-header" onclick="toggleOverview()" title="投影片總覽導航 [O]">
+        <span>🗂️ 總覽 (O)</span>
+      </button>
+      <button class="btn-header" onclick="toggleNotes()" title="演講講稿提示 [N]">
+        <span>📝 講稿 (N)</span>
+      </button>
+      <button class="btn-header" onclick="toggleFullscreen()" title="全螢幕切換 [F]">
+        <span>⛶ 全螢幕 (F)</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Slide Stage -->
+  <main id="slide-stage">
+
+    <!-- ==========================================
+         Slide 1: 課程封面 (立繪整合在右側專屬展示卡，完全不擋字)
+         ========================================== -->
+    <section class="slide active" data-slide="1" data-notes="歡迎大家進入中級會計學。第一章是整門中會的『世界觀與憲法』。搞懂觀念架構，後續的分錄推導就會變得無比順暢！">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">📖 Kieso, Weygandt, Warfield · 5th Edition</span>
+          <h1 class="slide-h1">財務報導之環境與觀念架構 🌸</h1>
+          <div class="slide-subtitle">The Environment and Conceptual Framework for Financial Reporting</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>✨ 第一次學中會就上手</span>
+        </div>
+      </div>
+
+      <div class="slide-body" style="justify-content: center;">
+        <div class="grid-2" style="align-items: center;">
+          <div>
+            <div class="card pure" style="margin-bottom: 10px;">
+              <div class="card-title">☕ 為什麼第一章是中會的靈魂？</div>
+              <p>中會真正的底層密碼是<strong>「財務報導觀念架構（Conceptual Framework）」</strong>：</p>
+              <ul style="margin-top: 6px;">
+                <li><strong>資本市場的信任基石</strong>：用全球通用的會計語言引導資本流動。</li>
+                <li><strong>決策有用性的雙核心</strong>：攸關性（Relevance）與忠實表述（Faithful Representation）。</li>
+                <li><strong>未來各章準則之本源</strong>：公允價值、收入認列五步驟、租賃負債的理論根源。</li>
+              </ul>
+            </div>
+
+            <!-- Dialogue -->
+            <div class="dialogue-box">
+              <div class="dialogue-avatar-wrapper">
+                <img src="../../assets/img1_char01.png" alt="主講教授" class="dialogue-avatar">
+                <span class="dialogue-role-badge badge-prof">主講教授</span>
+              </div>
+              <div class="dialogue-content">
+                <div class="dialogue-name">柯教授的溫暖開場 🧸</div>
+                <div class="dialogue-text">
+                  「嗨各位同學！別把會計當作冰冷的分錄，每條準則背後都是為了解決現實中的資訊不對稱。今天就跟著我一起輕鬆拆解吧！」
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Integrated Standee Card (No floating, perfectly contained) -->
+          <div style="display:flex; justify-content:center;">
+            <div class="card alt" style="align-items:center; text-align:center; padding:16px 24px; max-width:340px;">
+              <img src="../../assets/img1_char02.png" alt="Hero Standee" style="width:145px; margin-bottom:8px;">
+              <div style="font-size:1rem; font-weight:800; color:var(--text-main);">
+                「先喝杯拿鐵，我們出發囉！」
+              </div>
+              <div style="font-size:0.8rem; color:var(--text-muted); margin-top:2px;">
+                全章 13 頁暖心手帳式重點導讀
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 2: 全球金融市場與資本配置
+         ========================================== -->
+    <section class="slide" data-slide="2" data-notes="說明有限的資本如何透過可靠的會計資訊流向最具生產力的企業。如果資訊不透明，投資人不敢進場，市場就會失靈。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 1 · 全球金融市場環境</span>
+          <h1 class="slide-h1">會計資訊與資本配置流程 (Capital Allocation) 🌐</h1>
+          <div class="slide-subtitle">有限資源如何透過財務報導有效流向最具生產力的企業？</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>💼 資本市場運作</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">📌 會計的三大核心特徵</div>
+            <ul>
+              <li><strong>辨認 (Identification)</strong>：辨認各項經濟事項與交易實質。</li>
+              <li><strong>衡量 (Measurement)</strong>：以貨幣單位進行客觀或現時價值量化。</li>
+              <li><strong>溝通 (Communication)</strong>：編製通用目的財務報表並揭露關鍵附註。</li>
+            </ul>
+            <div style="margin-top:10px; padding:10px 14px; background:#ffffff; border-radius:10px; border:1px dashed var(--primary-border);">
+              <strong style="color:var(--primary); font-size:0.98rem;">資本配置三環節：</strong>
+              <div style="font-size:0.95rem; margin-top:4px;">
+                企業財務報導 $\longrightarrow$ 投資人與債權人決策 $\longrightarrow$ 資本配置（資金流向優良企業）
+              </div>
+            </div>
+          </div>
+
+          <div class="card alt">
+            <div class="card-title">🌍 為什麼全世界需要單一套 IFRS 準則？</div>
+            <ul>
+              <li><strong>跨國企業募資需求</strong>：海外發行存託憑證（ADR/GDR）與跨國籌資。</li>
+              <li><strong>消除資訊摩擦與折價</strong>：海外投資人不用再花大錢重新解讀不同報表。</li>
+              <li><strong>維持真正可比性 (Comparability)</strong>：在同一標準下客觀評估各國企業的真實獲利。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="dialogue-box">
+            <div class="dialogue-avatar-wrapper">
+              <img src="../../assets/img3_char01.png" alt="學生" class="dialogue-avatar">
+              <span class="dialogue-role-badge badge-student">提問學生</span>
+            </div>
+            <div class="dialogue-content">
+              <div class="dialogue-name">小安同學提問</div>
+              <div class="dialogue-text">
+                「老師，每個國家的文化跟法律都不一樣，為什麼非得追求全世界用同一套 IFRS 呢？」
+              </div>
+            </div>
+          </div>
+
+          <div class="dialogue-box">
+            <div class="dialogue-avatar-wrapper">
+              <img src="../../assets/img4_char01.png" alt="審計員" class="dialogue-avatar">
+              <span class="dialogue-role-badge badge-auditor">執業會計師</span>
+            </div>
+            <div class="dialogue-content">
+              <div class="dialogue-name">張會計師專業拆解 🌿</div>
+              <div class="dialogue-text">
+                「因為資本是流動的！當台灣企業向全球基金募資時，採用 IFRS 能讓全世界分析師一秒看懂，省去巨額的溝通成本與折價風險！」
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 3: IASB 組織架構與正當程序
+         ========================================== -->
+    <section class="slide" data-slide="3" data-notes="介紹 IFRS 的誕生過程與四層組織體系。強調 Due Process 六步驟的透明與公眾諮詢，確保準則公信力。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 1 · 準則制定組織</span>
+          <h1 class="slide-h1">國際會計準則理事會 (IASB) 與正當程序 🏛️</h1>
+          <div class="slide-subtitle">IFRS 是如何誕生的？四層組織架構與 Due Process 六步驟</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>⚖️ 準則立法程序</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">🏢 IFRS 治理架構四大核心分工</div>
+            <ul>
+              <li><strong>監測委員會 (Monitoring Board)</strong>：監督與任命受託人，維護公共利益。</li>
+              <li><strong>IFRS 基金會 (22位受託人)</strong>：籌募資金、任命理事並審核運作效率。</li>
+              <li><strong>IASB 理事會 (14位全職理事)</strong>：獨立負責制定與頒布 IFRS 準則。</li>
+              <li><strong>解釋委員會 (IFRIC - 14位委員)</strong>：處理實務急迫之準則疑義與發布解釋。</li>
+              <li><em>註：IOSCO（國際證管組織）全力支持 IFRS，但不自行訂定會計準則。</em></li>
+            </ul>
+          </div>
+
+          <div class="card pure">
+            <div class="card-title">📜 正當程序 (Due Process) 六大步驟</div>
+            <ol style="padding-left:18px; line-height:1.45; font-size:0.85rem;">
+              <li><strong>議題選定</strong>：評估後納入 IASB 制定議程。</li>
+              <li><strong>研究與初步觀點</strong>：發布討論文件（Discussion Paper）。</li>
+              <li><strong>公開公聽會 (Public Hearings)</strong>：廣納全球產官學界建言。</li>
+              <li><strong>發布徵求意見稿 (Exposure Draft, ED)</strong>：向全球公開徵求意見。</li>
+              <li><strong>審議反饋並修訂</strong>：評估各方反饋並修改條文。</li>
+              <li><strong>正式發布 IFRS 準則</strong>：經理事會表決通過正式施行。</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img2_char01.png" alt="助教" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-ta">學習助教</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">兔兔助教的考點秘笈：IFRS 適用層級 🐰</div>
+            <div class="dialogue-text">
+              「請大家記住階層順序：第 1 順位是<strong>正式發布之 IFRS / IAS 與 IFRIC 解釋</strong>；若無具體準則，第 2 順位參考<strong>觀念架構 (Conceptual Framework)</strong>；第 3 順位才是具類似架構之其他準則（如 U.S. GAAP）。」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 4: 觀念架構全景金字塔
+         ========================================== -->
+    <section class="slide" data-slide="4" data-notes="解釋三層次倒金字塔。強調觀念架構不是準則本身，與具體準則衝突時以具體準則為準。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 2 · 財務報導觀念架構</span>
+          <h1 class="slide-h1">觀念架構三大層次全景 (Three-Level Structure) 📐</h1>
+          <div class="slide-subtitle">從「為何報導」到「如何實踐」的倒金字塔導航系統</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>🏛️ 觀念憲法</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-3">
+          <!-- Level 1 -->
+          <div class="card" style="border-top: 4px solid #ad7448;">
+            <div class="card-title" style="color:#ad7448;">🥇 第一層：目標</div>
+            <p style="font-weight:700; margin-bottom:4px; font-size:1.02rem;">決策有用性 (Decision-Usefulness)</p>
+            <p style="font-size:0.96rem; line-height:1.55;">
+              提供有關報導個體之財務資訊，該等資訊對<strong>現有及潛在投資人、貸與人與其他債權人</strong>作成資源配置決策時是有用的。
+            </p>
+          </div>
+
+          <!-- Level 2 -->
+          <div class="card alt" style="border-top: 4px solid #528c61;">
+            <div class="card-title" style="color:#528c61;">🥈 第二層：橋樑</div>
+            <p style="font-weight:700; margin-bottom:4px; font-size:1.02rem;">品質特性與五大要素</p>
+            <p style="font-size:0.96rem; line-height:1.55;">
+              • <strong>基本品質</strong>：攸關性、忠實表述。<br>
+              • <strong>強化品質</strong>：可比、可驗證、時效、可了解。<br>
+              • <strong>五大要素</strong>：資產、負債、權益、收益、費損。
+            </p>
+          </div>
+
+          <!-- Level 3 -->
+          <div class="card pure" style="border-top: 4px solid #c88349;">
+            <div class="card-title" style="color:#c88349;">🥉 第三層：實務</div>
+            <p style="font-weight:700; margin-bottom:4px; font-size:1.02rem;">認列與衡量概念</p>
+            <p style="font-size:0.96rem; line-height:1.55;">
+              • <strong>五大假設</strong>（個體、繼續經營、貨幣、期間、權責）。<br>
+              • <strong>四大原則</strong>（衡量、收入認列、費用配合、充分揭露）。<br>
+              • <strong>限制</strong>：成本效益限制。
+            </p>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img1_char03.png" alt="教授" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-prof">主講教授</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">柯教授特別提醒：觀念架構是一號「準則」嗎？</div>
+            <div class="dialogue-text">
+              「請記住：<strong>觀念架構本身並不是一號 IFRS 準則！</strong> 它沒有推翻任何特定的準則。如果某一號準則（例如 IFRS 16 租賃）與觀念架構有抵觸，實務處理<strong>一律以特定準則為優先</strong>！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 5: 基本品質——攸關性 vs 忠實表述
+         ========================================== -->
+    <section class="slide" data-slide="5" data-notes="詳細剖析基本品質。沒有攸關性與忠實表述，資訊就無用。解釋審慎性Prudence如何納入中立性中。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 2 · 第二層核心</span>
+          <h1 class="slide-h1">資訊品質特性：兩大基本品質 (Fundamental Qualities) 🎯</h1>
+          <div class="slide-subtitle">決策有用性的門檻：缺乏其一，資訊便失去實質價值</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>⚖️ 關鍵門檻</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <!-- Relevance -->
+          <div class="card pure">
+            <div class="card-title">🎯 攸關性 (Relevance)</div>
+            <p style="margin-bottom:6px;">會計資訊必須具備<strong>「影響使用者決策之能力」</strong>。</p>
+            <ul>
+              <li><strong>預測價值 (Predictive Value)</strong>：能作為預測未來現金流與經營結果之輸入值。</li>
+              <li><strong>確認價值 (Confirmatory Value)</strong>：能對過去之預期提供反饋，予以確認或修正。</li>
+              <li><strong>重大性 (Materiality)</strong>：若遺漏或誤述預期將影響使用者決策。屬企業特定特性。</li>
+            </ul>
+          </div>
+
+          <!-- Faithful Representation -->
+          <div class="card pure">
+            <div class="card-title" style="color:#528c61;">🛡️ 忠實表述 (Faithful Representation)</div>
+            <p style="margin-bottom:6px;">報表數值與敘述必須<strong>「與其所意圖反映之經濟現象相符」</strong>。</p>
+            <ul>
+              <li><strong>完整性 (Completeness)</strong>：包含使用者理解該現象所需之全部資訊與附註。</li>
+              <li><strong>中立性 (Neutrality)</strong>：無偏頗。在不確定情況下以<strong>審慎性 (Prudence)</strong> 判斷。</li>
+              <li><strong>免於錯誤 (Free from Error)</strong>：描述無誤，估計程序之選擇與套用過程無瑕疵。</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="dialogue-box">
+            <div class="dialogue-avatar-wrapper">
+              <img src="../../assets/img3_char02.png" alt="學生" class="dialogue-avatar">
+              <span class="dialogue-role-badge badge-student">提問學生</span>
+            </div>
+            <div class="dialogue-content">
+              <div class="dialogue-name">小安同學提問</div>
+              <div class="dialogue-text">
+                「老師，如果一筆土地 50 年前以 100 萬購入，歷史憑證 100% 精確且可驗證，這是完美的資訊嗎？」
+              </div>
+            </div>
+          </div>
+
+          <div class="dialogue-box">
+            <div class="dialogue-avatar-wrapper">
+              <img src="../../assets/img1_char04.png" alt="教授" class="dialogue-avatar">
+              <span class="dialogue-role-badge badge-prof">主講教授</span>
+            </div>
+            <div class="dialogue-content">
+              <div class="dialogue-name">柯教授解答 ☕</div>
+              <div class="dialogue-text">
+                「50年前的歷史成本雖具高度忠實表述，但對今天的投資人評估資產實質價值已無預測價值（失去攸關性）。這也是公允價值興起的原因！」
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 6: 四大強化品質 (4-column Compact Layout, ZERO Overlap)
+         ========================================== -->
+    <section class="slide" data-slide="6" data-notes="強化品質是錦上添花，不能把沒有攸關性的假帳透過可比性變成好資訊。一致性是手段，可比性是目標。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 2 · 第二層核心</span>
+          <h1 class="slide-h1">資訊品質特性：四大強化品質 (Enhancing Qualities) 🌟</h1>
+          <div class="slide-subtitle">輔助基本品質，進一步提升財務資訊的決策有用度</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>💎 錦上添花</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <!-- 4 Columns side-by-side: completely fits horizontally and takes low vertical height -->
+        <div class="grid-4">
+          <div class="card">
+            <div class="card-title">1. 可比性</div>
+            <p>能讓使用者辨認與了解兩項經濟現象之異同（橫向跨公司、縱向跨年度比較）。</p>
+            <p style="margin-top:6px; font-size:0.92rem; color:var(--text-muted);">
+              🔑 <strong>一致性</strong>是達成可比性的手段（不同事物不得作相同處理）。
+            </p>
+          </div>
+
+          <div class="card alt">
+            <div class="card-title">2. 可驗證性</div>
+            <p>不同且知識充足之獨立觀察者，能達成共識認可該表述屬忠實表述。</p>
+            <p style="margin-top:6px; font-size:0.92rem; color:var(--text-muted);">
+              🔍 <strong>直接驗證</strong>（盤點現金） vs <strong>間接驗證</strong>（檢驗折現模型輸入值）。
+            </p>
+          </div>
+
+          <div class="card alt">
+            <div class="card-title">3. 時效性</div>
+            <p>在資訊失去影響決策之能力之前，及時提供給決策者。</p>
+            <p style="margin-top:6px; font-size:0.92rem; color:var(--text-muted);">
+              ⏱️ 過時資訊失去攸關性；但分析長期趨勢時舊資料仍有反饋價值。
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="card-title">4. 可了解性</div>
+            <p>將資訊以清晰且簡潔之方式分類、特徵化與列示。</p>
+            <p style="margin-top:6px; font-size:0.92rem; color:var(--text-muted);">
+              👤 <strong>假定</strong>：使用者具備合理之商業會計知識並願努力研讀。
+            </p>
+          </div>
+        </div>
+
+        <!-- Integrated Dialogue Box: Character avatar is neatly docked inside left, zero text blocking -->
+        <div class="dialogue-box" style="margin-top: 4px;">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img2_char03.png" alt="助教" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-ta">學習助教</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">兔兔助教提醒：強化品質能挽救垃圾資訊嗎？ 🐰</div>
+            <div class="dialogue-text">
+              「請大家記住：<strong>基本品質是門檻，強化品質是加分！</strong> 如果一條資訊本身虛偽造假（缺乏忠實表述），就算它編得再有可比性、送達再即時，它依然是一筆垃圾資訊，強化品質絕不能讓它起死回生！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 7: 基本假設與四大原則
+         ========================================== -->
+    <section class="slide" data-slide="7" data-notes="解釋五大基本假設與四大原則。繼續經營假設是歷史成本與折舊的基石，若面臨倒閉必須改採清算價值。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 2 · 第三層基礎</span>
+          <h1 class="slide-h1">會計五大基本假設與四大原則 📜</h1>
+          <div class="slide-subtitle">規範企業會計認列、衡量與報導的實踐基石</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>📐 實務基石</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">📐 五大基本假設 (Basic Assumptions)</div>
+            <ul>
+              <li><strong>企業個體 (Economic Entity)</strong>：企業活動與業主及其他商業單位嚴格區分。</li>
+              <li><strong>繼續經營 (Going Concern)</strong>：假定企業將存續足夠長的時間以實現承諾（折舊分攤的理論基石）。</li>
+              <li><strong>貨幣單位 (Monetary Unit)</strong>：貨幣是共通量度，假設幣值具相對穩定性。</li>
+              <li><strong>會計期間 (Periodicity)</strong>：人為切分營運週期（月、季、年）以即時回報。</li>
+              <li><strong>權責發生基礎 (Accrual Basis)</strong>：交易於發生時認列，而非在收付現金時。</li>
+            </ul>
+          </div>
+
+          <div class="card pure">
+            <div class="card-title">📜 四大基本原則 (Basic Principles)</div>
+            <ul>
+              <li><strong>衡量原則 (Measurement)</strong>：歷史成本 vs 現時價值（公允價值/使用價值/現時成本）。</li>
+              <li><strong>收入認列原則 (Revenue Recognition)</strong>：履行義務時認列（IFRS 15 五步驟）。</li>
+              <li><strong>費用認列原則 (Expense Recognition)</strong>：配合原則（產品成本隨收入轉列；期間成本當期認列）。</li>
+              <li><strong>充分揭露原則 (Full Disclosure)</strong>：本表、附註與補充資訊完整揭露。</li>
+              <li><em>限制：<strong>成本效益限制 (Cost Constraint)</strong>，效益需大於提供成本。</em></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img4_char03.png" alt="審計員" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-auditor">執業會計師</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">張會計師的實務提醒 💼</div>
+            <div class="dialogue-text">
+              「如果查核發現客戶面臨嚴重財務危機即將倒閉，『繼續經營假設』便不再成立！此時資產不得再按歷史成本攤銷，必須全數改採<strong>『清算價值（Liquidation / Net Realizable Value）』</strong>評價！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 8: 公允價值層級 (IFRS 13)
+         ========================================== -->
+    <section class="slide" data-slide="8" data-notes="詳細切換 Level 1, 2, 3。強調 Level 3 是審計重點，且容易發生盈餘操縱。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 2 · 第三層核心衡量</span>
+          <h1 class="slide-h1">公允價值衡量與輸入值層級 (Fair Value Hierarchy) 💎</h1>
+          <div class="slide-subtitle">IFRS 13 訂定之三級評價輸入值優先順序</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>📊 IFRS 13 規範</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="tab-bar">
+          <button class="tab-btn active" onclick="switchTab('lvl1')">Level 1：活絡市場報價（最客觀）</button>
+          <button class="tab-btn" onclick="switchTab('lvl2')">Level 2：可觀察輸入值</button>
+          <button class="tab-btn" onclick="switchTab('lvl3')">Level 3：不可觀察輸入值（最主觀）</button>
+        </div>
+
+        <div id="tab-lvl1" class="tab-panel active card pure" style="border-left: 5px solid #528c61;">
+          <h3 style="color:#528c61; font-size:0.95rem; margin-bottom:4px;">等級一 (Level 1 Inputs)：相同資產之活絡市場公開報價</h3>
+          <p><strong>特徵</strong>：衡量日在活絡市場中，相同（Identical）資產或負債之未經調整公開報價。</p>
+          <p><strong>代表案例</strong>：集中交易市場之股票收盤價（如台積電股票）、倫敦金屬交易所銅期貨現貨價。</p>
+          <p><strong>品質評價</strong>：主觀性最低，客觀驗證性最高。企業不得隨意進行大額流動性折價調整。</p>
+        </div>
+
+        <div id="tab-lvl2" class="tab-panel card pure" style="border-left: 5px solid #ad7448;">
+          <h3 style="color:#ad7448; font-size:0.95rem; margin-bottom:4px;">等級二 (Level 2 Inputs)：其他直接或間接可觀察輸入值</h3>
+          <p><strong>特徵</strong>：除 Level 1 報價外，該資產或負債直接或間接可觀察之市場數據。</p>
+          <p><strong>代表案例</strong>：活絡市場中相似（Similar）資產之報價、非活絡市場之相同資產報價、公債殖利率曲線、利差模型。</p>
+          <p><strong>品質評價</strong>：具備市場基礎，但需配合實體特性進行客觀調整。</p>
+        </div>
+
+        <div id="tab-lvl3" class="tab-panel card pure" style="border-left: 5px solid #d96f86;">
+          <h3 style="color:#d96f86; font-size:0.95rem; margin-bottom:4px;">等級三 (Level 3 Inputs)：不可觀察輸入值 (Unobservable Inputs)</h3>
+          <p><strong>特徵</strong>：市場缺乏交易活動，企業必須依賴自身之最佳資訊、內部預測與假設建立評價模型。</p>
+          <p><strong>代表案例</strong>：未上市櫃新創生技公司股權評價、複雜結構型金融商品之內部折現模型。</p>
+          <p><strong>品質評價</strong>：主觀性最高，準則強制要求於財報附註充分揭露<strong>敏感度分析 (Sensitivity Analysis)</strong>。</p>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img4_char04.png" alt="審計員" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-auditor">執業會計師</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">張會計師的查核秘辛 🔍</div>
+            <div class="dialogue-text">
+              「在實務查核中，Level 3 往往是會計師與財務長攻防最激烈的戰場！因為只要把折現率假設下調 1%，資產現值就可能虛增好幾億，極易成為盈餘操縱的溫床！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 9: 附錄 1A：現金轉權責基礎公式
+         ========================================== -->
+    <section class="slide" data-slide="9" data-notes="詳細推導現金收付轉權責發生的算式。教導助教的口訣：資產期末加期初減，負債期末減期初加。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Appendix 1A · 經典計算專題</span>
+          <h1 class="slide-h1">現金基礎轉換為權責發生基礎 (Cash to Accrual) 💰</h1>
+          <div class="slide-subtitle">掌握應計與遞延項目在期初、期末之調節算式</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>🧮 必考計算公式</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">💰 服務收入轉換公式</div>
+            <div class="code-box" style="margin-bottom:8px;">
+              權責收入 = 收取現金 - 期初應收 + 期末應收 + 期初預收 - 期末預收
+            </div>
+            <p style="font-size:0.96rem; line-height:1.55;">
+              • <strong>減期初應收</strong>：前期勞務在本期收現，剔除。<br>
+              • <strong>加期末應收</strong>：本期已履約賺得但未收現，計入。<br>
+              • <strong>加期初預收</strong>：前期預收款於本期履約，計入。<br>
+              • <strong>減期末預收</strong>：本期預收但未履約，遞延至未來。
+            </p>
+          </div>
+
+          <div class="card alt">
+            <div class="card-title">🧾 營業費用轉換公式</div>
+            <div class="code-box" style="margin-bottom:8px;">
+              權責費用 = 支付現金 + 期初預付 - 期末預付 - 期初應付 + 期末應付
+            </div>
+            <p style="font-size:0.96rem; line-height:1.55;">
+              • <strong>加期初預付</strong>：前期預付於本期耗用，計入費用。<br>
+              • <strong>減期末預付</strong>：本期支付但效益未耗用，遞延資產。<br>
+              • <strong>減期初應付</strong>：本期付款係清償前期債務，剔除。<br>
+              • <strong>加期末應付</strong>：本期已耗用但尚未付款，計入費用。
+            </p>
+          </div>
+        </div>
+
+        <div class="dialogue-box">
+          <div class="dialogue-avatar-wrapper">
+            <img src="../../assets/img2_char02.png" alt="助教" class="dialogue-avatar">
+            <span class="dialogue-role-badge badge-ta">學習助教</span>
+          </div>
+          <div class="dialogue-content">
+            <div class="dialogue-name">兔兔助教的速記魔法：對稱口訣法 🐰</div>
+            <div class="dialogue-text">
+              「請全體同學背起來：<strong>資產類科目（應收、預付）是『期末加、期初減』</strong>；<strong>負債類科目（預收、應付）正好相反『期初加、期末減』</strong>！掌握這個對稱性，考卷上的題目隨便套都對！」
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 10: 附錄 1A：李萬醫師經典工作底稿釋例
+         ========================================== -->
+    <section class="slide" data-slide="10" data-notes="走過 Illustration 1A.8 的數字演練，讓學生看到工作底稿各欄位如何由現金基礎調節至權責發生基礎淨利。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Appendix 1A · 釋例演練</span>
+          <h1 class="slide-h1">經典釋例演練：李萬醫師診所轉換工作底稿 🩺</h1>
+          <div class="slide-subtitle">Kieso Illustration 1A.8 實戰轉換數據演繹</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>📊 手帳工作底稿</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="grid-template-columns: 1.32fr 1fr; gap: 16px; align-items: stretch;">
+          <!-- Left: Table Card (Clean pastel design, strictly zero scroll) -->
+          <div class="card pure" style="padding:12px 16px; justify-content:center;">
+            <div style="font-weight:800; font-size:1.02rem; color:var(--primary); margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+              <span>📋 李萬醫師診所：調節數據表</span>
+              <span style="font-size:0.84rem; color:var(--text-muted); font-weight:normal;">金額單位：美元</span>
+            </div>
+            <table class="pastel-table">
+              <thead>
+                <tr>
+                  <th>帳戶項目 (Account Titles)</th>
+                  <th style="text-align:right;">現金收付</th>
+                  <th style="text-align:right;">加項 (+)</th>
+                  <th style="text-align:right;">減項 (−)</th>
+                  <th style="text-align:right;">權責發生</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>客戶收現</strong></td>
+                  <td style="text-align:right; font-weight:800;">$300,000</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;&nbsp;− 應收期初 / + 應收期末</td>
+                  <td></td>
+                  <td style="text-align:right; color:#528c61;">$9,000</td>
+                  <td style="text-align:right; color:#d96f86;">$12,000</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;&nbsp;− 預收收入，12/31 (期末)</td>
+                  <td></td>
+                  <td></td>
+                  <td style="text-align:right; color:#d96f86;">$4,000</td>
+                  <td></td>
+                </tr>
+                <tr style="background:var(--primary-soft); font-weight:800;">
+                  <td>服務收入小計</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td style="text-align:right; color:var(--primary); font-size:0.96rem;">$293,000</td>
+                </tr>
+                <tr>
+                  <td><strong>各項費用支付現金</strong></td>
+                  <td style="text-align:right; font-weight:800;">$170,000</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;&nbsp;+ 預付期初 / − 預付期末</td>
+                  <td></td>
+                  <td style="text-align:right; color:#528c61;">$1,800</td>
+                  <td style="text-align:right; color:#d96f86;">$2,700</td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;&nbsp;− 應付期初 / + 應付期末</td>
+                  <td></td>
+                  <td style="text-align:right; color:#528c61;">$5,500</td>
+                  <td style="text-align:right; color:#d96f86;">$2,000</td>
+                  <td></td>
+                </tr>
+                <tr style="background:var(--primary-soft); font-weight:800;">
+                  <td>營業費用小計</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td style="text-align:right; color:#c88349; font-size:0.96rem;">$172,600</td>
+                </tr>
+                <tr style="background:#eaf3ed; font-weight:800;">
+                  <td><strong>本期淨利比較</strong></td>
+                  <td style="text-align:right; color:var(--text-muted); font-size:0.90rem;">$130,000<br><span style="font-weight:normal; font-size:0.80rem;">(現金淨流入)</span></td>
+                  <td colspan="2" style="text-align:center; color:var(--primary); font-size:0.90rem;">調節差額<br>-$9,600</td>
+                  <td style="text-align:right; color:#15803d; font-size:1.02rem;">$120,400<br><span style="font-weight:normal; font-size:0.80rem; color:#15803d;">(權責淨利)</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Right: Dialogue + Key Takeaway Card -->
+          <div style="display:flex; flex-direction:column; justify-content:space-between; gap:12px;">
+            <div class="dialogue-box">
+              <div class="dialogue-avatar-wrapper">
+                <img src="../../assets/img4_char01.png" alt="會計師" class="dialogue-avatar">
+                <span class="dialogue-role-badge badge-auditor">執業會計師</span>
+              </div>
+              <div class="dialogue-content">
+                <div class="dialogue-name">張會計師核心點評 💼</div>
+                <div class="dialogue-text">
+                  「李萬醫師診所現金淨流入高達 $130,000，但真正反映本期勞務成果與耗用資源之權責淨利其實只有 <strong>$120,400</strong>！現金多不等於賺得多，權責發生才能反映真實經濟實質！」
+                </div>
+              </div>
+            </div>
+
+            <div class="card alt" style="padding:14px 18px; flex:1; justify-content:center;">
+              <div class="card-title" style="margin-bottom:6px; font-size:1.06rem;">📝 轉換速算核心秘訣</div>
+              <ul style="font-size:0.94rem; line-height:1.55;">
+                <li><strong>收入調節</strong>：收現 $300,000 − 淨減 $7,000 = <strong>$293,000</strong></li>
+                <li><strong>費用調節</strong>：付現 $170,000 + 淨增 $2,600 = <strong>$172,600</strong></li>
+                <li><strong>對稱口訣</strong>：資產「期末加期初減」，負債「期初加期末減」！</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 11: 附錄 1B：迴轉分錄之規則與分錄
+         ========================================== -->
+    <section class="slide" data-slide="11" data-notes="說明迴轉分錄的三原則。示範次期初迴轉後，發薪日可以直接借薪資費用，不用回去查帳沖應付薪資。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Appendix 1B · 實務記帳技術</span>
+          <h1 class="slide-h1">迴轉分錄之規則與經典分錄模型 (Reversing Entries) 🔄</h1>
+          <div class="slide-subtitle">次期期初的防錯魔術：為什麼實務會計偏愛迴轉分錄？</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>✨ 實務防錯利器</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-3">
+          <div class="card pure" style="border-top:3px solid #528c61;">
+            <strong style="color:#528c61; font-size:1.04rem;">1. 應計項目 (Accruals)</strong>
+            <p style="margin-top:4px; font-size:0.95rem;">應計費用、應計收入期末調整後，<strong>次期初一律作迴轉</strong>。</p>
+          </div>
+          <div class="card pure" style="border-top:3px solid #ad7448;">
+            <strong style="color:#ad7448; font-size:1.04rem;">2. 遞延項目 (Deferrals)</strong>
+            <p style="margin-top:4px; font-size:0.95rem;">原始以<strong>虛帳戶（費用/收入）入帳者作迴轉</strong>；實帳戶不迴轉。</p>
+          </div>
+          <div class="card pure" style="border-top:3px solid #d96f86;">
+            <strong style="color:#d96f86; font-size:1.04rem;">3. 估計項目 (Estimates)</strong>
+            <p style="margin-top:4px; font-size:0.95rem;">折舊、攤銷、壞帳等估計調整分錄，<strong>一律不作迴轉</strong>。</p>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title" style="font-size:1.06rem;">✅ 有作迴轉分錄 (Reversing Used)</div>
+            <div class="code-box">
+              【10/31 期末應計調整】 借：薪資費用 1,200 / 貸：應付薪資 1,200<br>
+              【11/1 次期初迴轉】 <span style="color:#ad7448; font-weight:700;">借：應付薪資 1,200 / 貸：薪資費用 1,200</span><br>
+              【11/8 後續日常發薪】 借：薪資費用 2,500 / 貸：現金 2,500<br>
+              <em>（費用帳戶貸1,200與借2,500自動互抵，淨額1,300完全正確！）</em>
+            </div>
+          </div>
+
+          <div class="card alt">
+            <div class="card-title" style="font-size:1.06rem; color:#d96f86;">❌ 未作迴轉分錄 (Not Used)</div>
+            <div class="code-box">
+              【10/31 期末應計調整】 借：薪資費用 1,200 / 貸：應付薪資 1,200<br>
+              【11/1 次期初】 不作任何分錄 (No entry)<br>
+              【11/8 後續日常發薪】 <span style="color:#d96f86; font-weight:700;">借：應付薪資 1,200 / 薪資費用 1,300 / 貸：現金 2,500</span><br>
+              <em>（會計人員必須手動查前期負債餘額，容易漏沖出錯）</em>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 12: 課堂互動小測驗 (動態表情反饋，零遮擋)
+         ========================================== -->
+    <section class="slide" data-slide="12" data-notes="讓聽眾現場互動選擇，檢驗剛剛所學。點擊選項即可立即顯示正確與否、詳解以及可愛的反應貼紙！">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Interactive Quiz · 課堂即時檢測</span>
+          <h1 class="slide-h1">觀念小擂台：下列哪一項調整分錄「次期初不可作迴轉」？ 🎯</h1>
+          <div class="slide-subtitle">測試你對 Appendix 1B 迴轉分錄三大判別法則的掌握度</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>🏆 互動挑戰</span>
+        </div>
+      </div>
+
+      <div class="slide-body">
+        <div class="grid-2" style="grid-template-columns: 1.25fr 1fr; gap: 18px; align-items: start;">
+          <div class="quiz-options">
+            <button class="quiz-btn" onclick="checkAnswer(this, false, 'A')">
+              <span>A. 12/31 認列之應計員工年終獎金分錄（借：獎金費用，貸：應付獎金）</span>
+            </button>
+            <button class="quiz-btn" onclick="checkAnswer(this, true, 'B')">
+              <span>B. 12/31 提列之廠房設備折舊分錄（借：折舊費用，貸：累計折舊）</span>
+            </button>
+            <button class="quiz-btn" onclick="checkAnswer(this, false, 'C')">
+              <span>C. 12/31 認列之應計利息收入分錄（借：應收利息，貸：利息收入）</span>
+            </button>
+            <button class="quiz-btn" onclick="checkAnswer(this, false, 'D')">
+              <span>D. 原始購入文具全額借記「文具費用」，期末未耗用轉列「用品盤存」之分錄</span>
+            </button>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <div id="quiz-result" class="quiz-feedback">
+              💡 請點選左側選項進行測驗！
+            </div>
+
+            <div class="dialogue-box" style="margin-top:0;">
+              <div class="dialogue-avatar-wrapper">
+                <img src="../../assets/img1_char05.png" alt="教授" class="dialogue-avatar" id="quiz-avatar">
+                <span class="dialogue-role-badge badge-prof" id="quiz-badge">主講教授</span>
+              </div>
+              <div class="dialogue-content">
+                <div class="dialogue-name" id="quiz-speaker">柯教授的解題引導 🧸</div>
+                <div class="dialogue-text" id="quiz-explanation">
+                  「請回想三大原則：應計項目必轉；遞延項目採虛帳戶法者轉；只有<strong>累積性質的估計評價項目（折舊、攤銷、壞帳）是永久累積資產抵減帳戶，絕不能迴轉</strong>！」
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         Slide 13: 結語與全章總結
+         ========================================== -->
+    <section class="slide" data-slide="13" data-notes="全章回顧，給予學生鼓勵，並預告接下來的章節。">
+      <div class="washi-tape"></div>
+      <div class="slide-header">
+        <div>
+          <span class="slide-tag">Part 3 · 總結與展望</span>
+          <h1 class="slide-h1">全章學習精要與下一站預告 🌸</h1>
+          <div class="slide-subtitle">奠定會計哲學基礎，邁向中會高階殿堂</div>
+        </div>
+        <div class="sticker-stamp">
+          <span>🎉 Chapter 1 完成</span>
+        </div>
+      </div>
+
+      <div class="slide-body" style="justify-content: center;">
+        <div class="grid-2" style="align-items: center;">
+          <div class="card pure">
+            <div class="card-title">🌟 第一章必考精華 Recap</div>
+            <ul style="font-size:0.98rem; line-height:1.55;">
+              <li><strong>資本配置與 IFRS 誕生</strong>：全球化要求單一高品質標準。</li>
+              <li><strong>觀念架構三層次</strong>：目標（決策有用）$\rightarrow$ 橋樑（品質與要素）$\rightarrow$ 實施（假設、原則與限制）。</li>
+              <li><strong>品質特性辨析</strong>：基本品質（攸關性、忠實表述）是門檻；強化品質是加分。</li>
+              <li><strong>公允價值三層級</strong>：Level 1（活絡市場公開報價）$\rightarrow$ Level 3（內部模型，最需警戒）。</li>
+              <li><strong>計算與記帳實務</strong>：現金轉權責對稱公式、迴轉分錄三大判別黃金律。</li>
+            </ul>
+          </div>
+
+          <div class="card alt" style="align-items:center; text-align:center; padding:18px 24px;">
+            <img src="../../assets/img1_char06.png" alt="Cheers" style="width:140px; margin-bottom:8px;">
+            <div style="font-size:1.15rem; font-weight:800; color:var(--text-main);">
+              「恭喜各位同學完成第一章！」
+            </div>
+            <p style="font-size:0.94rem; color:var(--text-muted); margin-top:4px; max-width:360px; line-height:1.5;">
+              建立了觀念架構思維，後續遇到收入五步驟、租賃負債或金融資產減損，都能一眼看穿背後的底層邏輯！
+            </p>
+            <div style="margin-top:12px;">
+              <button class="nav-btn" style="display:inline-flex;" onclick="goToSlide(1)">
+                <span>🔄 重新回顧第一張投影片</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer Nav Controls (Compact: ~46px) -->
+  <footer>
+    <div class="nav-controls">
+      <button id="btn-prev" class="nav-btn" onclick="prevSlide()">
+        <span>◀ 上一張</span>
+      </button>
+      <button id="btn-next" class="nav-btn" onclick="nextSlide()">
+        <span>下一張 ▶</span>
+      </button>
+    </div>
+    
+    <div class="slide-indicator">
+      SLIDE <span id="current-slide-num" style="color:var(--primary); font-weight:800;">1</span> / <span id="total-slides-num">13</span>
+    </div>
+
+    <div>
+      <span style="font-size:0.8rem; color:var(--text-muted);">
+        ⌨️ 導航：方向鍵 / Space / Click
+      </span>
+    </div>
+  </footer>
+
+  <!-- Speaker Notes Modal -->
+  <div id="notes-modal">
+    <h3>
+      <span>📝 演講備忘錄 (Speaker Notes)</span>
+      <button style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:1.1rem;" onclick="toggleNotes()">✕</button>
+    </h3>
+    <div id="notes-content" style="font-size:0.86rem; line-height:1.5; color:var(--text-main); margin-top:8px;">
+      講稿加載中...
+    </div>
+  </div>
+
+  <!-- Overview Grid Modal -->
+  <div id="overview-modal" onclick="if(event.target === this) toggleOverview()">
+    <div style="max-width:1200px; margin:0 auto 16px auto; display:flex; justify-content:space-between; align-items:center;">
+      <h2 style="color:var(--text-main); font-size:1.3rem; font-weight:800;">🗂️ 投影片總覽導航</h2>
+      <button class="btn-header" onclick="toggleOverview()">✕ 關閉</button>
+    </div>
+    <div class="overview-grid" id="overview-grid">
+      <!-- Generated dynamically by JS -->
+    </div>
+  </div>
+
+  <script>
+    // State
+    let currentSlide = 1;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    document.getElementById('total-slides-num').innerText = totalSlides;
+
+    // Support URL Hash (#1 ~ #13)
+    const hashMatch = window.location.hash.match(/#(\d+)/);
+    if (hashMatch) {
+      const target = parseInt(hashMatch[1], 10);
+      if (target >= 1 && target <= totalSlides) currentSlide = target;
+    }
+
+    // Switch Slide Function
+    function updateSlide() {
+      slides.forEach((s, idx) => {
+        const slideNum = idx + 1;
+        if (slideNum === currentSlide) {
+          s.classList.add('active');
+        } else {
+          s.classList.remove('active');
+        }
+      });
+
+      // Update counters & progress
+      document.getElementById('current-slide-num').innerText = currentSlide;
+      const progressPercent = ((currentSlide - 1) / (totalSlides - 1)) * 100;
+      document.getElementById('progress-bar').style.width = progressPercent + '%';
+
+      // Update button disabled state
+      document.getElementById('btn-prev').disabled = (currentSlide === 1);
+      document.getElementById('btn-next').disabled = (currentSlide === totalSlides);
+      history.replaceState(null, '', '#' + currentSlide);
+
+      // Update notes
+      const activeSlideElem = document.querySelector(`.slide[data-slide="${currentSlide}"]`);
+      if (activeSlideElem) {
+        const noteText = activeSlideElem.getAttribute('data-notes') || '本頁無特定講稿備忘錄。';
+        document.getElementById('notes-content').innerText = noteText;
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        currentSlide++;
+        updateSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 1) {
+        currentSlide--;
+        updateSlide();
+      }
+    }
+
+    function goToSlide(num) {
+      if (num >= 1 && num <= totalSlides) {
+        currentSlide = num;
+        updateSlide();
+        closeModals();
+      }
+    }
+
+    // Interactive Tab Function
+    function switchTab(tabKey) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+
+      if (tabKey === 'lvl1') {
+        event.currentTarget.classList.add('active');
+        document.getElementById('tab-lvl1').classList.add('active');
+      } else if (tabKey === 'lvl2') {
+        event.currentTarget.classList.add('active');
+        document.getElementById('tab-lvl2').classList.add('active');
+      } else if (tabKey === 'lvl3') {
+        event.currentTarget.classList.add('active');
+        document.getElementById('tab-lvl3').classList.add('active');
+      }
+    }
+
+    // Quiz Check
+    function checkAnswer(btn, isCorrect, choice) {
+      const parent = btn.parentElement;
+      const buttons = parent.querySelectorAll('.quiz-btn');
+      buttons.forEach(b => {
+        b.disabled = true;
+      });
+
+      const resultBox = document.getElementById('quiz-result');
+      resultBox.style.display = 'block';
+
+      const avatar = document.getElementById('quiz-avatar');
+      const speaker = document.getElementById('quiz-speaker');
+      const explanation = document.getElementById('quiz-explanation');
+
+      if (isCorrect) {
+        btn.classList.add('correct');
+        resultBox.style.background = '#ecfdf5';
+        resultBox.style.border = '1.5px solid #34d399';
+        resultBox.style.color = '#065f46';
+        resultBox.innerHTML = `<strong>🎉 太棒了！回答完全正確！</strong> 選項 B（折舊分錄）屬於估計性評價項目，為資產永久累計抵減帳戶，<strong>絕不能在次期期初作迴轉</strong>！`;
+        
+        // Change sticker to celebration pose inside avatar box
+        avatar.src = '../../assets/img1_char01.png';
+        speaker.innerText = '柯教授開心稱讚 🌸';
+        explanation.innerText = '「太厲害了！完全抓到精髓！折舊、攤銷與壞帳是資產抵減帳戶的常態累積，絕對不需要也不應該迴轉！」';
+      } else {
+        btn.classList.add('wrong');
+        buttons[1].classList.add('correct');
+        resultBox.style.background = '#fef2f2';
+        resultBox.style.border = '1.5px solid #f87171';
+        resultBox.style.color = '#991b1b';
+        resultBox.innerHTML = `<strong>⚠️ 答錯囉！正確答案是 (B)</strong> 選項 B 之折舊費用與累計折舊屬於估計項目，絕不迴轉！而 A、C 屬於應計項目必須迴轉；D 原始以費用入帳，期末轉列資產，次期初亦應作迴轉。`;
+        
+        // Change sticker to thinking / encouragement pose
+        avatar.src = '../../assets/img2_char04.png';
+        const badge = document.getElementById('quiz-badge');
+        badge.className = 'dialogue-role-badge badge-ta';
+        badge.innerText = '學習助教';
+        speaker.innerText = '兔兔助教鼓勵提示 🐰';
+        explanation.innerText = '「別灰心！再記一次口訣：應計必轉、虛帳轉、折舊壞帳絕不轉！下次一定能做對！」';
+      }
+    }
+
+    // Notes Modal
+    function toggleNotes() {
+      const modal = document.getElementById('notes-modal');
+      modal.style.display = (modal.style.display === 'block') ? 'none' : 'block';
+    }
+
+    // Overview Modal
+    function toggleOverview() {
+      const modal = document.getElementById('overview-modal');
+      if (modal.style.display === 'block') {
+        modal.style.display = 'none';
+      } else {
+        renderOverview();
+        modal.style.display = 'block';
+      }
+    }
+
+    function renderOverview() {
+      const grid = document.getElementById('overview-grid');
+      grid.innerHTML = '';
+      slides.forEach((s, idx) => {
+        const num = idx + 1;
+        const title = s.querySelector('.slide-h1')?.innerText || `Slide ${num}`;
+        const card = document.createElement('div');
+        card.className = 'overview-card';
+        if (num === currentSlide) {
+          card.style.borderColor = 'var(--primary)';
+          card.style.background = 'var(--primary-soft)';
+        }
+        card.innerHTML = `
+          <div class="overview-num">SLIDE ${num}</div>
+          <div class="overview-title">${title}</div>
+        `;
+        card.onclick = () => goToSlide(num);
+        grid.appendChild(card);
+      });
+    }
+
+    function closeModals() {
+      document.getElementById('overview-modal').style.display = 'none';
+      document.getElementById('notes-modal').style.display = 'none';
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+          console.warn('Fullscreen request failed:', err);
+        });
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    // Keyboard Shortcuts
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key.toLowerCase() === 'f') {
+        toggleFullscreen();
+      } else if (e.key.toLowerCase() === 'n') {
+        toggleNotes();
+      } else if (e.key.toLowerCase() === 'o') {
+        toggleOverview();
+      } else if (e.key === 'Escape') {
+        closeModals();
+      }
+    });
+
+    // Touch swipe support for mobile/tablets
+    let touchStartX = 0;
+    let touchEndX = 0;
+    window.addEventListener('touchstart', (e) => {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+    window.addEventListener('touchend', (e) => {
+      touchEndX = e.changedTouches[0].screenX;
+      if (touchStartX - touchEndX > 50) nextSlide();
+      if (touchEndX - touchStartX > 50) prevSlide();
+    });
+
+    // Init
+    updateSlide();
+  </script>
+</body>
+</html>
